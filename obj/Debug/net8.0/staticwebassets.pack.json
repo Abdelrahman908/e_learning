@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning-main\\wwwroot\\images\\profiles\\722fab0f-016a-4c95-b6b2-04f4ff376c2e.jpg",
+      "PackagePath": "staticwebassets\\images\\profiles\\722fab0f-016a-4c95-b6b2-04f4ff376c2e.jpg"
+    },
+    {
+      "Id": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning-main\\wwwroot\\images\\profiles\\8e4f1d6f-e90f-420e-bc2b-c3c5d9ace16a.jpg",
+      "PackagePath": "staticwebassets\\images\\profiles\\8e4f1d6f-e90f-420e-bc2b-c3c5d9ace16a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning-main\\wwwroot\\images\\profiles\\abf2a9d4-637d-42e0-bf66-390849f2e34b.jpg",
+      "PackagePath": "staticwebassets\\images\\profiles\\abf2a9d4-637d-42e0-bf66-390849f2e34b.jpg"
+    },
+    {
+      "Id": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning-main\\wwwroot\\swagger-authtoken.js",
+      "PackagePath": "staticwebassets\\swagger-authtoken.js"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.e_learning.props",
+      "PackagePath": "build\\e_learning.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.e_learning.props",
+      "PackagePath": "buildMultiTargeting\\e_learning.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.e_learning.props",
+      "PackagePath": "buildTransitive\\e_learning.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.e_learning.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.e_learning.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
