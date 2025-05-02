@@ -88,7 +88,7 @@ namespace e_learning.Controllers
             var totalStudents = await _context.Users.CountAsync(u => u.Role == "Student");
             var totalInstructors = await _context.Users.CountAsync(u => u.Role == "Instructor");
             var totalCourses = await _context.Courses.CountAsync();
-            var activeCourses = await _context.Courses.CountAsync(c => c.IsActive);
+            var activeCourses = await _context.Courses.CountAsync(c => c.IsActive == true);
             var totalRevenue = await _context.Payments.SumAsync(p => p.Amount);
             var totalEnrollments = await _context.Enrollments.CountAsync();
 

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using e_learning.Data;
 using e_learning.Models;
+using e_learning.DTOs.Responses;
 using System.Security.Claims;
 
 namespace e_learning.Controllers
@@ -19,7 +20,7 @@ namespace e_learning.Controllers
             _context = context;
         }
 
-        // ✅ عرض كل الكورسات المتاحة
+        /// <summary>عرض جميع الكورسات</summary>
         [HttpGet("all-courses")]
         public async Task<IActionResult> GetAllCourses()
         {
@@ -27,65 +28,61 @@ namespace e_learning.Controllers
                 .Include(c => c.Instructor)
                 .ToListAsync();
 
-            return Ok(courses);
+            return Ok(new ApiResponse<IEnumerable<Course>>(true, "تم جلب الكورسات بنجاح", courses));
         }
 
-        // ✅ تسجيل الطالب في كورس
+        /// <summary>تسجيل الطالب في كورس</summary>
         [HttpPost("enroll/{courseId}")]
         public async Task<IActionResult> Enroll(int courseId)
         {
             var userId = GetUserId();
             if (userId == null)
-                return Unauthorized("⚠️ لم يتم التحقق من هوية المستخدم.");
+                return Unauthorized(new ApiResponse(false, "لم يتم التحقق من هوية المستخدم"));
 
             var course = await _context.Courses
                 .Include(c => c.Instructor)
                 .FirstOrDefaultAsync(c => c.Id == courseId);
 
             if (course == null)
-                return NotFound("❌ الكورس غير موجود.");
+                return NotFound(new ApiResponse(false, "الكورس غير موجود"));
 
             var alreadyEnrolled = await _context.Enrollments
                 .AnyAsync(e => e.CourseId == courseId && e.UserId == userId);
 
             if (alreadyEnrolled)
-                return BadRequest("⚠️ أنت بالفعل مشترك في هذا الكورس.");
+                return BadRequest(new ApiResponse(false, "أنت بالفعل مشترك في هذا الكورس"));
 
-            var enrollment = new Enrollment
+            _context.Enrollments.Add(new Enrollment
             {
                 UserId = userId.Value,
                 CourseId = courseId
-            };
+            });
 
-            _context.Enrollments.Add(enrollment);
-
-            // 🔔 إشعار للمدرّس
             if (course.InstructorId != userId)
             {
                 var student = await _context.Users.FindAsync(userId);
                 if (student != null)
                 {
-                    var notification = new Notification
+                    _context.Notifications.Add(new Notification
                     {
                         Title = "📥 انضمام جديد",
                         Message = $"👤 {student.FullName} انضم إلى كورسك: {course.Title}",
-                        UserId = course.InstructorId
-                    };
-                    _context.Notifications.Add(notification);
+                        UserId = course.InstructorId // تم تعديلها من .ToString() إلى int
+                    });
                 }
             }
 
             await _context.SaveChangesAsync();
-            return Ok("✅ تم التسجيل بنجاح.");
+            return Ok(new ApiResponse(true, "تم التسجيل في الكورس بنجاح"));
         }
 
-        // ✅ عرض كورسات الطالب
+        /// <summary>عرض كورسات الطالب</summary>
         [HttpGet("my-courses")]
         public async Task<IActionResult> GetMyCourses()
         {
             var userId = GetUserId();
             if (userId == null)
-                return Unauthorized("⚠️ لم يتم التحقق من هوية المستخدم.");
+                return Unauthorized(new ApiResponse(false, "لم يتم التحقق من هوية المستخدم"));
 
             var courseIds = await _context.Enrollments
                 .Where(e => e.UserId == userId)
@@ -98,14 +95,13 @@ namespace e_learning.Controllers
                 .Include(c => c.Instructor)
                 .ToListAsync();
 
-            return Ok(courses);
+            return Ok(new ApiResponse<IEnumerable<Course>>(true, "تم جلب الكورسات الخاصة بك", courses));
         }
 
-        // 🧠 استخراج UserId من التوكن
         private int? GetUserId()
         {
             var claim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return int.TryParse(claim, out int id) ? id : (int?)null;
+            return int.TryParse(claim, out int id) ? id : null;
         }
     }
 }

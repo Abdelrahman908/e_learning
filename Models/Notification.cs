@@ -1,18 +1,30 @@
-﻿namespace e_learning.Models
+﻿using e_learning.Models;
+using System.ComponentModel.DataAnnotations;
+
+public class Notification
 {
-    public class Notification
-    {
-        public int Id { get; set; }
+    [Key]
+    public Guid Id { get; set; }
 
-        public int UserId { get; set; }
+    [Required]
+    [MaxLength(100)]
+    public string Title { get; set; } = string.Empty;
 
-        public string? Title { get; set; } // ✅ ضيف دي 👈
-        public string? Message { get; set; }
-        public bool IsRead { get; set; } = false;
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    [Required]
+    public string Message { get; set; } = string.Empty;
 
-        // الربط مع المستخدم
+    [Required]
+    public int UserId { get; set; }  // تم تعديل النوع من string إلى int
 
-        public User User { get; set; }
-    }
+    public string? SenderId { get; set; }
+
+    public bool IsRead { get; set; } = false;
+
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+    public DateTime? UpdatedAt { get; set; }
+
+    public string NotificationType { get; set; } = "General";
+
+    public User? User { get; set; }
 }

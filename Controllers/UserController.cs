@@ -76,7 +76,7 @@ namespace e_learning.Controllers
             {
                 FullName = dto.FullName,
                 Email = dto.Email,
-                Password = dto.Password,
+                PasswordHash = dto.Password,
                 Role = dto.Role
             };
 

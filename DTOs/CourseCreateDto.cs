@@ -1,33 +1,24 @@
-﻿namespace e_learning.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
+
+namespace e_learning.DTOs.Courses
 {
-    namespace e_learning.DTOs
+    public class CourseCreateDto
     {
-        public class CourseCreateDto
-        {
-            public string Title { get; set; } = string.Empty;
-            public string? Description { get; set; }
-            public decimal Price { get; set; }
+        [Required]
+        public string Name { get; set; }
 
-            // ✅ صورة رمزية للكورس
-            public string? ThumbnailUrl { get; set; }
+        public string Description { get; set; }
 
-            // ✅ مدة الكورس (بالدقائق أو بالساعات)
-            public int? DurationInMinutes { get; set; }
-
-            // ✅ الفئة (تصنيف الكورس)
-            public string? Category { get; set; }
-
-            // ✅ مستوى الكورس (مبتدئ، متوسط، متقدم)
-            public string? Level { get; set; }
-            public IFormFile? Image { get; set; }
+        public decimal Price { get; set; }
+        public bool IsActive { get; set; }
 
 
-            // ✅ هل الكورس مفعل عند الإنشاء؟
-            public bool IsActive { get; set; } = true;
+        [Required]
+        public int CategoryId { get; set; }
 
+        [Required]
+        public int InstructorId { get; set; }
 
-
-        }
     }
-
 }

@@ -14,13 +14,11 @@
             "dotnetRunMessages": true,
             "launchBrowser": true,
             "launchUrl": "swagger",
-            "applicationUrl": "https://localhost:7056;http://localhost:5000", // ✅ أضف رابط https
+            "applicationUrl": "https://localhost:7056;http://localhost:5000",
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             }
-        }
-
-    },
+        },
         "IIS Express": {
             "commandName": "IISExpress",
             "launchBrowser": true,
@@ -30,4 +28,4 @@
             }
         }
     }
-
+}

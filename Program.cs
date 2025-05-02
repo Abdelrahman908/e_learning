@@ -3,78 +3,141 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using Serilog;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using e_learning.Data;
-using e_learning.Services;
 using e_learning.Hubs;
+using e_learning.Models;
 using e_learning.Service;
+using e_learning.Services;
+using e_learning.DTOs.Responses;
+using e_learning.Service.Interfaces;
+using e_learning.Service.Implementations;
+using e_learning.Repositories.Interfaces;
+using e_learning.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ✨ JWT KEY
-var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!);
+// 1. Serilog Logging
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .WriteTo.Console()
+    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+builder.Host.UseSerilog();
 
-// ✨ Add DbContext
+// 2. Database Configuration
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-// ✨ Add Authentication JWT
-builder.Services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        sqlOptions => sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(30), null));
+
+    if (builder.Environment.IsDevelopment())
+    {
+        options.EnableDetailedErrors();
+        options.EnableSensitiveDataLogging();
+        options.LogTo(Console.WriteLine);
+    }
+});
+
+// 3. JWT Authentication
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]!);
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 .AddJwtBearer(options =>
 {
-    options.RequireHttpsMetadata = false;
-    options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(key)
+        ValidIssuer = jwtSettings["Issuer"],
+        ValidAudience = jwtSettings["Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ClockSkew = TimeSpan.Zero
+    };
+
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            var accessToken = context.Request.Query["access_token"];
+            var path = context.HttpContext.Request.Path;
+
+            if (!string.IsNullOrEmpty(accessToken) &&
+                (path.StartsWithSegments("/notificationHub") || path.StartsWithSegments("/chatHub")))
+            {
+                context.Token = accessToken;
+            }
+            return Task.CompletedTask;
+        },
+        OnAuthenticationFailed = context =>
+        {
+            Log.Error(context.Exception, "JWT Authentication Failed");
+            return Task.CompletedTask;
+        }
     };
 });
 
-// ✨ Add SignalR
-builder.Services.AddSignalR();
-
-// ✨ Add Controllers
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
+// 4. Rate Limiting
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddFixedWindowLimiter("fixed", limiterOptions =>
     {
-        options.JsonSerializerOptions.PropertyNamingPolicy = null;
-        options.JsonSerializerOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+        limiterOptions.Window = TimeSpan.FromSeconds(10);
+        limiterOptions.PermitLimit = 5;
+        limiterOptions.QueueLimit = 2;
     });
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+});
 
-// ✨ Enable CORS
+// 5. CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.AllowAnyOrigin()
+        policy.WithOrigins("http://localhost:3000", "https://localhost:3000", "https://yourapp.com")
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowCredentials()
+              .SetPreflightMaxAge(TimeSpan.FromMinutes(10));
     });
 });
 
-// ✨ Add Swagger + JWT Support
+// 6. Swagger Configuration
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "E-Learning API", Version = "v1" });
-
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Description = "اكتب 'Bearer' متبوعًا بمسافة ثم التوكن",
+        Title = "E-Learning API",
+        Version = "v1",
+        Description = "API لنظام التعلم الإلكتروني",
+        Contact = new OpenApiContact
+        {
+            Name = "فريق التطوير",
+            Email = "dev@elearning.com",
+            Url = new Uri("https://elearning.com/support")
+        },
+        License = new OpenApiLicense { Name = "MIT" }
+    });
+
+    var securityScheme = new OpenApiSecurityScheme
+    {
+        Description = "أدخل التوكن بهذا الشكل: Bearer {token}",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer"
-    });
+        Scheme = "Bearer",
+        BearerFormat = "JWT"
+    };
 
+    c.AddSecurityDefinition("Bearer", securityScheme);
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -86,38 +149,157 @@ builder.Services.AddSwaggerGen(c =>
                     Id = "Bearer"
                 }
             },
-            new string[] {}
+            Array.Empty<string>()
         }
     });
 });
 
-// ✨ Inject Services
-builder.Services.AddScoped<EmailService>();
-builder.Services.AddHttpClient<RecommendationService>();
-builder.Services.AddScoped<AuthService>();
-builder.Services.AddSingleton<RateLimiterService>();
-
-var app = builder.Build();
-
-// ✨ Middlewares
-app.UseSwagger();
-app.UseSwaggerUI(c =>
+// 7. SignalR
+builder.Services.AddSignalR(options =>
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "E-Learning API v1");
-    c.InjectJavascript("/swagger-authtoken.js"); // 🔥 سكريبت إضافة التوكن تلقائي
+    options.EnableDetailedErrors = builder.Environment.IsDevelopment();
+    options.ClientTimeoutInterval = TimeSpan.FromMinutes(2);
+    options.KeepAliveInterval = TimeSpan.FromSeconds(15);
 });
 
-app.UseHttpsRedirection();
-app.UseCors("AllowAll");
+// 8. Controllers + JSON Settings
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = null;
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    });
 
+// 9. Custom Services
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+
+builder.Services.AddScoped<IEmailConfirmationService, EmailConfirmationService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IPasswordValidator, PasswordValidator>();
+builder.Services.AddSingleton<RateLimiterService>();
+builder.Services.AddHttpClient<RecommendationService>();
+
+// 10. Health Checks
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<AppDbContext>("Database");
+
+// Build App
+var app = builder.Build();
+
+// Exception Handler early to catch startup errors
+app.UseExceptionHandler("/error");
+
+// Migrate & Seed Database
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var dbContext = services.GetRequiredService<AppDbContext>();
+        await dbContext.Database.MigrateAsync();
+        await SeedData.Initialize(services);
+        Log.Information("Database updated successfully");
+    }
+    catch (Exception ex)
+    {
+        Log.Error(ex, "Database migration failed");
+    }
+}
+
+// Development Tools
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "E-Learning API v1");
+        c.ConfigObject.DisplayRequestDuration = true;
+        c.InjectStylesheet("/swagger-ui/custom.css");
+        c.DisplayOperationId();
+        c.EnableDeepLinking();
+    });
+    app.UseDeveloperExceptionPage();
+}
+
+// Middleware Pipeline
+app.UseSerilogRequestLogging();
+app.UseHttpsRedirection();
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = ctx => ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=604800")
+});
+app.UseRouting();
+app.UseCors("AllowAll");
+app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Endpoints
 app.MapControllers();
-app.UseStaticFiles();
+app.MapHealthChecks("/health");
+app.MapHub<NotificationHub>("/notificationHub").RequireCors("AllowAll").RequireAuthorization();
+app.MapHub<ChatHub>("/chatHub").RequireCors("AllowAll").RequireAuthorization();
 
-// ✨ Map SignalR Hubs
-app.MapHub<NotificationHub>("/notificationHub");
-app.MapHub<ChatHub>("/chatHub");
+// Global Error Endpoint
+app.Map("/error", (HttpContext context) =>
+{
+    var exception = context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>()?.Error;
+    Log.Error(exception, "Unexpected Error Occurred");
+    return Results.Json(new ApiResponse(false, "حدث خطأ غير متوقع"), statusCode: StatusCodes.Status500InternalServerError);
+});
 
-app.Run();
+// Run App
+try
+{
+    Log.Information("Starting application...");
+    await app.RunAsync();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
+
+// Data Seeder
+public static class SeedData
+{
+    public static async Task Initialize(IServiceProvider serviceProvider)
+    {
+        using var scope = serviceProvider.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+        if (!await context.Users.AnyAsync())
+        {
+            var users = new List<User>
+            {
+                new User
+                {
+                    FullName = "مدير النظام",
+                    Email = "admin@elearning.com",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin@123"),
+                    Role = "Admin",
+                    IsEmailConfirmed = true,
+                    CreatedAt = DateTime.UtcNow
+                },
+                new User
+                {
+                    FullName = "مدرس نموذجي",
+                    Email = "instructor@elearning.com",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("Instructor@123"),
+                    Role = "Instructor",
+                    IsEmailConfirmed = true,
+                    CreatedAt = DateTime.UtcNow
+                }
+            };
+            await context.Users.AddRangeAsync(users);
+            await context.SaveChangesAsync();
+        }
+    }
+}

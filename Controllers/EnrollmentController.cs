@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using e_learning.Data;
+using e_learning.DTOs.Responses;
 using e_learning.Models;
 using System.Security.Claims;
 
@@ -9,7 +10,7 @@ namespace e_learning.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize] // 🔐 Requires login
+    [Authorize]
     public class EnrollmentController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -19,26 +20,26 @@ namespace e_learning.Controllers
             _context = context;
         }
 
-        // ✅ Enroll in a course
+        /// <summary>تسجيل الطالب في كورس</summary>
         [HttpPost("{courseId}")]
         public async Task<IActionResult> Enroll(int courseId)
         {
             var userId = GetUserId();
             if (userId == null)
-                return Unauthorized("⚠️ لم يتم التحقق من هوية المستخدم.");
+                return Unauthorized(new ApiResponse(false, "⚠️ لم يتم التحقق من هوية المستخدم."));
 
             var course = await _context.Courses
                 .Include(c => c.Instructor)
                 .FirstOrDefaultAsync(c => c.Id == courseId);
 
             if (course == null)
-                return NotFound("❌ الكورس غير موجود.");
+                return NotFound(new ApiResponse(false, "❌ الكورس غير موجود."));
 
             var alreadyEnrolled = await _context.Enrollments
                 .AnyAsync(e => e.CourseId == courseId && e.UserId == userId);
 
             if (alreadyEnrolled)
-                return BadRequest("⚠️ أنت مسجل بالفعل في هذا الكورس.");
+                return BadRequest(new ApiResponse(false, "⚠️ أنت مسجل بالفعل في هذا الكورس."));
 
             var enrollment = new Enrollment
             {
@@ -48,45 +49,42 @@ namespace e_learning.Controllers
 
             _context.Enrollments.Add(enrollment);
 
-            // 🔔 Send notification to instructor
+            // إضافة إشعار للمُدرس عند انضمام طالب جديد
             if (course.InstructorId != userId)
             {
                 var student = await _context.Users.FindAsync(userId);
-
                 if (student != null)
                 {
-                    var notification = new Notification
+                    _context.Notifications.Add(new Notification
                     {
                         Title = "📥 انضمام جديد",
                         Message = $"👤 {student.FullName} انضم إلى كورسك: {course.Title}",
-                        UserId = course.InstructorId
-                    };
-                    _context.Notifications.Add(notification);
+                        UserId = course.InstructorId // تم تعديلها لتكون int بدلًا من ToString()
+                    });
                 }
             }
 
             await _context.SaveChangesAsync();
-            return Ok("✅ تم التسجيل بنجاح");
+            return Ok(new ApiResponse(true, "✅ تم التسجيل بنجاح"));
         }
 
-        // 📄 عرض الكورسات اللي الطالب مسجّل فيها
+        /// <summary>عرض كورسات الطالب</summary>
         [HttpGet("my-courses")]
         public async Task<IActionResult> GetMyCourses()
         {
             var userId = GetUserId();
             if (userId == null)
-                return Unauthorized("⚠️ لم يتم التحقق من هوية المستخدم.");
+                return Unauthorized(new ApiResponse(false, "⚠️ لم يتم التحقق من هوية المستخدم."));
 
             var enrollments = await _context.Enrollments
                 .Where(e => e.UserId == userId)
                 .Include(e => e.Course)
-                .ThenInclude(c => c.Instructor)
+                    .ThenInclude(c => c.Instructor)
                 .ToListAsync();
 
-            return Ok(enrollments);
+            return Ok(new ApiResponse<object>(true, "✅ تم جلب الكورسات بنجاح", enrollments));
         }
 
-        // 🔎 Extract user id safely from JWT
         private int? GetUserId()
         {
             var claim = User.FindFirstValue(ClaimTypes.NameIdentifier);

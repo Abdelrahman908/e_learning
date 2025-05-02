@@ -8,8 +8,10 @@ namespace e_learning.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
+        // الجداول
         public DbSet<User> Users { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<Review> Reviews { get; set; }
@@ -23,115 +25,143 @@ namespace e_learning.Data
         public DbSet<Payment> Payments { get; set; }
         public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
 
+        // جداول إضافية
+        public DbSet<EmailConfirmationCode> EmailConfirmationCodes { get; set; }
+        public DbSet<PasswordResetCode> PasswordResetCodes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // User ↔ Profile
+            // ✅ إعداد دقة decimal
+            modelBuilder.Entity<Course>()
+                .Property(c => c.Price)
+                .HasColumnType("decimal(18,2)");
+
+            modelBuilder.Entity<Payment>()
+                .Property(p => p.Amount)
+                .HasColumnType("decimal(18,2)");
+
+            // ✅ العلاقات
             modelBuilder.Entity<Profile>()
                 .HasOne(p => p.User)
                 .WithOne(u => u.Profile)
                 .HasForeignKey<Profile>(p => p.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // User ↔ Enrollment
             modelBuilder.Entity<Enrollment>()
                 .HasOne(e => e.User)
                 .WithMany(u => u.Enrollments)
                 .HasForeignKey(e => e.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Course ↔ Enrollment
             modelBuilder.Entity<Enrollment>()
                 .HasOne(e => e.Course)
                 .WithMany(c => c.Enrollments)
                 .HasForeignKey(e => e.CourseId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // User ↔ Review
             modelBuilder.Entity<Review>()
                 .HasOne(r => r.User)
                 .WithMany(u => u.Reviews)
                 .HasForeignKey(r => r.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Course ↔ Review
             modelBuilder.Entity<Review>()
                 .HasOne(r => r.Course)
                 .WithMany(c => c.Reviews)
                 .HasForeignKey(r => r.CourseId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Instructor ↔ Course
             modelBuilder.Entity<Course>()
                 .HasOne(c => c.Instructor)
                 .WithMany(u => u.Courses)
                 .HasForeignKey(c => c.InstructorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Course ↔ Lesson
+            modelBuilder.Entity<Course>()
+                .HasOne(c => c.Category)
+                .WithMany(cat => cat.Courses)
+                .HasForeignKey(c => c.CategoryId);
+
             modelBuilder.Entity<Lesson>()
                 .HasOne(l => l.Course)
                 .WithMany(c => c.Lessons)
                 .HasForeignKey(l => l.CourseId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Course ↔ Quiz
             modelBuilder.Entity<Quiz>()
                 .HasOne(q => q.Course)
                 .WithMany(c => c.Quizzes)
                 .HasForeignKey(q => q.CourseId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Quiz ↔ Question
             modelBuilder.Entity<Question>()
                 .HasOne(q => q.Quiz)
                 .WithMany(qz => qz.Questions)
                 .HasForeignKey(q => q.QuizId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Question ↔ Choice
             modelBuilder.Entity<Choice>()
                 .HasOne(c => c.Question)
                 .WithMany(q => q.Choices)
                 .HasForeignKey(c => c.QuestionId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Quiz ↔ QuizResult
             modelBuilder.Entity<QuizResult>()
                 .HasOne(qr => qr.Quiz)
                 .WithMany()
                 .HasForeignKey(qr => qr.QuizId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // User ↔ QuizResult
             modelBuilder.Entity<QuizResult>()
                 .HasOne(qr => qr.User)
-                .WithMany()
+                .WithMany(u => u.QuizResults)
                 .HasForeignKey(qr => qr.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Notification ↔ User
             modelBuilder.Entity<Notification>()
                 .HasOne(n => n.User)
                 .WithMany(u => u.Notifications)
                 .HasForeignKey(n => n.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Payment ↔ User
             modelBuilder.Entity<Payment>()
                 .HasOne(p => p.User)
-                .WithMany()
+                .WithMany(u => u.Payments)
                 .HasForeignKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Payment ↔ Course
             modelBuilder.Entity<Payment>()
                 .HasOne(p => p.Course)
                 .WithMany()
                 .HasForeignKey(p => p.CourseId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // ✅ إعدادات الجداول الجديدة
+            modelBuilder.Entity<EmailConfirmationCode>(entity =>
+            {
+                entity.HasIndex(e => e.Email).IsUnique(false);
+                entity.Property(e => e.Code).IsRequired().HasMaxLength(6);
+                entity.Property(e => e.ExpiryDate).IsRequired();
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETDATE()");
+            });
+
+            modelBuilder.Entity<PasswordResetCode>(entity =>
+            {
+                entity.HasIndex(e => e.Email).IsUnique(false);
+                entity.Property(e => e.Code).IsRequired().HasMaxLength(6);
+                entity.Property(e => e.ExpiryDate).IsRequired();
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETDATE()");
+            });
+
+            modelBuilder.Entity<UserRefreshToken>(entity =>
+            {
+                entity.HasIndex(e => e.UserId).IsUnique(false);
+                entity.HasIndex(e => e.RefreshToken).IsUnique();
+                entity.Property(e => e.ExpiryDate).IsRequired();
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETDATE()");
+            });
         }
     }
 }

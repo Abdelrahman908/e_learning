@@ -1,7 +1,11 @@
 ﻿using e_learning.Data;
+using e_learning.DTOs;
+using e_learning.DTOs.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 
 namespace e_learning.Controllers
@@ -9,102 +13,150 @@ namespace e_learning.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [EnableRateLimiting("fixed")]
+    [Produces("application/json")]
     public class NotificationController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly ILogger<NotificationController> _logger;
+        private readonly int _currentUserId;
 
-        public NotificationController(AppDbContext context)
+        public NotificationController(
+            AppDbContext context,
+            ILogger<NotificationController> logger,
+            IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _logger = logger;
+            // تأكد من تحويل _currentUserId إلى int
+            _currentUserId = int.TryParse(httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var userId) ? userId : 0;
         }
 
-        // ✅ عرض كل الإشعارات للمستخدم الحالي
         [HttpGet]
-        public async Task<IActionResult> GetMyNotifications()
+        [ProducesResponseType(typeof(ApiResponse<IEnumerable<NotificationDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetMyNotifications([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            var userId = GetUserId();
-            if (userId == null) return Unauthorized();
-
-            var notifications = await _context.Notifications
-                .Where(n => n.UserId == userId)
-                .OrderByDescending(n => n.CreatedAt)
-                .Select(n => new
+            try
+            {
+                if (_currentUserId == 0)
                 {
-                    n.Id,
-                    n.Title,
-                    n.Message,
-                    n.IsRead,
-                    n.CreatedAt
-                })
-                .ToListAsync();
+                    _logger.LogWarning("Unauthorized attempt to access notifications");
+                    return Unauthorized(new ApiResponse(false, "غير مصرح به"));
+                }
 
-            return Ok(notifications);
+                var query = _context.Notifications
+                    .AsNoTracking()
+                    .Where(n => n.UserId == _currentUserId)  // مقارنة مع int
+                    .OrderByDescending(n => n.CreatedAt);
+
+                var totalCount = await query.CountAsync();
+                var notifications = await query
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .Select(n => new NotificationDto
+                    {
+                        Id = n.Id,
+                        Title = n.Title,
+                        Message = n.Message,
+                        UserId = n.UserId,
+                        SenderId = n.SenderId,
+                        IsRead = n.IsRead,
+                        CreatedAt = n.CreatedAt,
+                        UpdatedAt = n.UpdatedAt,
+                        NotificationType = n.NotificationType,
+                    })
+                    .ToListAsync();
+
+                return Ok(new ApiResponse<object>(true, "تم جلب الإشعارات بنجاح", new
+                {
+                    Total = totalCount,
+                    Page = page,
+                    PageSize = pageSize,
+                    Notifications = notifications
+                }));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching notifications for user {UserId}", _currentUserId); // تصحيح الـ logging
+                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse(false, "حدث خطأ أثناء معالجة طلبك"));
+            }
         }
 
-        // ✅ تحديد إشعار كمقروء
-        [HttpPost("{id}/mark-as-read")]
-        public async Task<IActionResult> MarkAsRead(int id)
+        [HttpPatch("{id:guid}/read-status")]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateReadStatus(Guid id, [FromBody] bool isRead)
         {
-            var userId = GetUserId();
-            if (userId == null) return Unauthorized();
+            try
+            {
+                if (_currentUserId == 0)
+                {
+                    _logger.LogWarning("Unauthorized attempt to update notification status");
+                    return Unauthorized(new ApiResponse(false, "غير مصرح به"));
+                }
 
-            var notification = await _context.Notifications
-                .FirstOrDefaultAsync(n => n.Id == id && n.UserId == userId);
+                var notification = await _context.Notifications
+                    .FirstOrDefaultAsync(n => n.Id == id && n.UserId == _currentUserId);
 
-            if (notification == null)
-                return NotFound("❌ الإشعار غير موجود أو لا تملكه.");
+                if (notification == null)
+                {
+                    _logger.LogWarning("Notification not found - NotificationId: {NotificationId}, UserId: {UserId}", id, _currentUserId);
+                    return NotFound(new ApiResponse(false, "الإشعار غير موجود أو لا تملكه"));
+                }
 
-            notification.IsRead = true;
-            await _context.SaveChangesAsync();
+                notification.IsRead = isRead;
+                notification.CreatedAt = DateTime.UtcNow;
+                await _context.SaveChangesAsync();
 
-            return Ok("✅ تم تحديد الإشعار كمقروء.");
+                _logger.LogInformation("Notification {NotificationId} read status updated to {IsRead} by {UserId}", id, isRead, _currentUserId);
+                return Ok(new ApiResponse(true, "تم تحديث حالة الإشعار بنجاح"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating notification status for NotificationId: {NotificationId}", id); // تصحيح الـ logging
+                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse(false, "حدث خطأ أثناء معالجة طلبك"));
+            }
         }
 
-        // ✅ حذف إشعار
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteNotification(int id)
+        [HttpDelete("{id:guid}")]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeleteNotification(Guid id)
         {
-            var userId = GetUserId();
-            if (userId == null) return Unauthorized();
+            try
+            {
+                if (_currentUserId == 0)
+                {
+                    _logger.LogWarning("Unauthorized attempt to delete notification");
+                    return Unauthorized(new ApiResponse(false, "غير مصرح به"));
+                }
 
-            var notification = await _context.Notifications
-                .FirstOrDefaultAsync(n => n.Id == id && n.UserId == userId);
+                var notification = await _context.Notifications
+                    .FirstOrDefaultAsync(n => n.Id == id && n.UserId == _currentUserId);
 
-            if (notification == null)
-                return NotFound("❌ الإشعار غير موجود أو لا تملكه.");
+                if (notification == null)
+                {
+                    _logger.LogWarning("Notification not found for deletion - NotificationId: {NotificationId}, UserId: {UserId}", id, _currentUserId);
+                    return NotFound(new ApiResponse(false, "الإشعار غير موجود أو لا تملكه"));
+                }
 
-            _context.Notifications.Remove(notification);
-            await _context.SaveChangesAsync();
+                _context.Notifications.Remove(notification);
+                await _context.SaveChangesAsync();
 
-            return Ok("✅ تم حذف الإشعار بنجاح.");
+                _logger.LogInformation("Notification deleted - NotificationId: {NotificationId} by UserId: {UserId}", id, _currentUserId);
+                return Ok(new ApiResponse(true, "تم حذف الإشعار بنجاح"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting notification - NotificationId: {NotificationId}", id); // تصحيح الـ logging
+                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse(false, "حدث خطأ أثناء معالجة طلبك"));
+            }
         }
-
-        // 🧠 استخراج الـ UserId من التوكن
-        private int? GetUserId()
-        {
-            var claim = User.FindFirst(ClaimTypes.NameIdentifier);
-            return claim != null ? int.Parse(claim.Value) : null;
-        }
-
-        // ✅ حذف كل الإشعارات للمستخدم الحالي
-        [HttpDelete("delete-all")]
-        public async Task<IActionResult> DeleteAllNotifications()
-        {
-            var userId = GetUserId();
-            if (userId == null) return Unauthorized();
-
-            var notifications = await _context.Notifications
-                .Where(n => n.UserId == userId)
-                .ToListAsync();
-
-            if (!notifications.Any())
-                return NotFound("🚫 لا توجد إشعارات لحذفها.");
-
-            _context.Notifications.RemoveRange(notifications);
-            await _context.SaveChangesAsync();
-
-            return Ok("✅ تم حذف كل الإشعارات الخاصة بك بنجاح.");
-        }
-
     }
 }

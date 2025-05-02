@@ -10,7 +10,7 @@ namespace e_learning.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize] // 🔐 حماية جميع العمليات بالتوكن
+    [Authorize]
     public class ProfileController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -20,7 +20,6 @@ namespace e_learning.Controllers
             _context = context;
         }
 
-        // ✅ إنشاء بروفايل
         [HttpPost]
         public async Task<IActionResult> CreateProfile([FromBody] CreateProfileDto dto)
         {
@@ -53,7 +52,6 @@ namespace e_learning.Controllers
             }
         }
 
-        // ✅ عرض البروفايل الخاص بالمستخدم
         [HttpGet("me")]
         public async Task<IActionResult> GetMyProfile()
         {
@@ -86,28 +84,54 @@ namespace e_learning.Controllers
             }
         }
 
-        // ✅ تعديل البروفايل
-        [HttpPut]
+        [HttpPatch]
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileDto dto)
         {
             try
             {
                 var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-
-                var profile = await _context.Profiles.FirstOrDefaultAsync(p => p.UserId == userId);
+                var profile = await _context.Profiles
+                    .Include(p => p.User)
+                    .FirstOrDefaultAsync(p => p.UserId == userId);
 
                 if (profile == null)
                     return NotFound("البروفايل غير موجود.");
 
-                profile.Bio = dto.Bio ?? profile.Bio;
-                profile.ProfilePicture = dto.ProfilePicture ?? profile.ProfilePicture;
-                profile.Address = dto.Address ?? profile.Address;
-                profile.Phone = dto.Phone ?? profile.Phone;
-                profile.UpdatedAt = DateTime.UtcNow;
+                // تحديث الحقول المرسلة فقط
+                if (dto.Bio != null) profile.Bio = dto.Bio;
+                if (dto.ProfilePicture != null) profile.ProfilePicture = dto.ProfilePicture;
+                if (dto.Address != null) profile.Address = dto.Address;
+                if (dto.Phone != null) profile.Phone = dto.Phone;
 
+                // تحديث بيانات المستخدم إذا كانت موجودة
+                if (profile.User != null)
+                {
+                    if (dto.FullName != null) profile.User.FullName = dto.FullName;
+                    if (dto.Email != null) profile.User.Email = dto.Email;
+                }
+
+                profile.UpdatedAt = DateTime.UtcNow;
                 await _context.SaveChangesAsync();
 
-                return Ok("تم تحديث البروفايل ✅");
+                // إعادة البيانات المحدثة باستخدام DTO
+                var updatedProfile = new ProfileResponseDto
+                {
+                    Id = profile.Id,
+                    Bio = profile.Bio,
+                    ProfilePicture = profile.ProfilePicture,
+                    Address = profile.Address,
+                    Phone = profile.Phone,
+                    UserId = profile.UserId,
+                    UserName = profile.User.FullName,  // جلب اسم المستخدم
+                    Email = profile.User.Email,        // جلب البريد الإلكتروني
+                    UpdatedAt = profile.UpdatedAt
+                };
+
+                return Ok(new
+                {
+                    Message = "تم تحديث البروفايل ✅",
+                    Profile = updatedProfile
+                });
             }
             catch (Exception ex)
             {
@@ -115,7 +139,7 @@ namespace e_learning.Controllers
             }
         }
 
-        // ✅ حذف البروفايل
+
         [HttpDelete]
         public async Task<IActionResult> DeleteProfile()
         {
@@ -139,7 +163,6 @@ namespace e_learning.Controllers
             }
         }
 
-        // ✅ رفع صورة بروفايل
         [HttpPost("upload-picture")]
         public async Task<IActionResult> UploadProfilePicture(IFormFile file)
         {

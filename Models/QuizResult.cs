@@ -1,4 +1,6 @@
-﻿namespace e_learning.Models
+﻿using System;
+
+namespace e_learning.Models
 {
     public class QuizResult
     {
@@ -15,5 +17,4 @@
 
         public DateTime SubmittedAt { get; set; } = DateTime.UtcNow;
     }
-
 }

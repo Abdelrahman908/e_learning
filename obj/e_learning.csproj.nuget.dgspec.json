@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning-main\\e_learning.csproj": {}
+    "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\e_learning.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning-main\\e_learning.csproj": {
+    "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\e_learning.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning-main\\e_learning.csproj",
+        "projectUniqueName": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\e_learning.csproj",
         "projectName": "e_learning",
-        "projectPath": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning-main\\e_learning.csproj",
+        "projectPath": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\e_learning.csproj",
         "packagesPath": "C:\\Users\\ta\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning-main\\obj\\",
+        "outputPath": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -62,19 +62,41 @@
               "target": "Package",
               "version": "[8.0.15, )"
             },
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Microsoft.AspNetCore.SignalR": {
               "target": "Package",
               "version": "[1.2.0, )"
             },
+            "Microsoft.AspNetCore.SignalR.Client": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[9.0.4, )"
+              "version": "[8.0.0, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.4, )"
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[9.0.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
