@@ -9,6 +9,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using e_learning.DTOs;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using e_learning.DTOs.Courses.e_learning.DTOs.Courses;
 
 namespace e_learning.Controllers
 {
@@ -27,10 +30,16 @@ namespace e_learning.Controllers
 
         // POST: api/Course
         [HttpPost]
+        [Authorize(Roles = "Instructor")]
         public async Task<IActionResult> AddCourse([FromBody] CourseCreateDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            var userIdClaim = User.FindFirst("sub")?.Value ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out var userId))
+                return Unauthorized("User ID not found or invalid in token.");
 
             var course = new Course
             {
@@ -39,7 +48,8 @@ namespace e_learning.Controllers
                 Price = dto.Price,
                 IsActive = dto.IsActive,
                 CategoryId = dto.CategoryId,
-                InstructorId = dto.InstructorId
+                InstructorId = userId, // استخدام int بدلاً من Guid
+                CreatedBy = userId
             };
 
             _context.Courses.Add(course);
@@ -128,7 +138,6 @@ namespace e_learning.Controllers
             if (course == null)
                 return NotFound("Course not found.");
 
-            // التحقق من الحقول المرسلة وتحديثها فقط إذا كانت غير فارغة أو null
             if (!string.IsNullOrWhiteSpace(model.Name))
                 course.Name = model.Name;
 
@@ -144,13 +153,12 @@ namespace e_learning.Controllers
             if (model.IsActive.HasValue)
                 course.IsActive = model.IsActive.Value;
 
-            if (model.CategoryId > 0) // إذا كانت قيمة CategoryId صالحة
+            if (model.CategoryId > 0)
                 course.CategoryId = model.CategoryId;
 
-            if (model.InstructorId > 0) // إذا كانت قيمة InstructorId صالحة
+            if (model.InstructorId > 0)
                 course.InstructorId = model.InstructorId;
 
-            // إذا تم إرسال صورة جديدة، يتم تحديث الصورة
             if (model.ImageFile != null && model.ImageFile.Length > 0)
             {
                 var fileName = Guid.NewGuid() + Path.GetExtension(model.ImageFile.FileName);
@@ -163,7 +171,6 @@ namespace e_learning.Controllers
                 course.ImageUrl = $"/images/courses/{fileName}";
             }
 
-            // حفظ التغييرات في قاعدة البيانات
             await _context.SaveChangesAsync();
 
             return Ok("Course updated with image successfully.");

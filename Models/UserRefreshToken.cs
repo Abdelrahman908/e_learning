@@ -1,13 +1,19 @@
-﻿namespace e_learning.Models
-{
-    public class UserRefreshToken
-    {
-        public int Id { get; set; }
-        public int UserId { get; set; }
-        public string RefreshToken { get; set; } = string.Empty;
-        public DateTime ExpiryDate { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+﻿using e_learning.Models;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
-        public User User { get; set; } // العلاقة مع جدول الـ Users
-    }
+public class UserRefreshToken
+{
+    public int Id { get; set; }
+
+    [Required]
+    [ForeignKey(nameof(User))]
+    public int UserId { get; set; }  // تغيير من string إلى int
+
+    public User User { get; set; } = null!;
+
+    public string RefreshToken { get; set; } = string.Empty;
+    public DateTime ExpiryDate { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public int ExpiresIn { get; set; }
 }

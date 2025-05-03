@@ -1,245 +1,203 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using e_learning.Data;
-using e_learning.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using e_learning.DTOs;
+using e_learning.Service.Interfaces;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System;
 
 namespace e_learning.Controllers
 {
+    [Route("api/courses/{courseId}/lessons/{lessonId}/quizzes")]
     [ApiController]
-    [Route("api/[controller]")]
-    public class QuizController : ControllerBase
+    [Authorize]
+    public class QuizzesController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IQuizService _quizService;
+        private readonly ILogger<QuizzesController> _logger;
 
-        public QuizController(AppDbContext context)
+        public QuizzesController(IQuizService quizService, ILogger<QuizzesController> logger)
         {
-            _context = context;
+            _quizService = quizService;
+            _logger = logger;
         }
 
-        // 🔨 إنشاء كويز مع أسئلة
+        private bool TryGetUserId(out int userId)
+        {
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return int.TryParse(userIdString, out userId);
+        }
+
         [HttpPost]
-        [Authorize(Roles = "Instructor")]
-        public async Task<IActionResult> CreateQuiz([FromBody] QuizCreateDto dto)
+        [Authorize(Roles = "Instructor,Admin")]
+        public async Task<IActionResult> CreateQuiz(
+            int courseId,
+            int lessonId,
+            [FromBody] CreateQuizDto dto)
         {
-            var quiz = new Quiz
+            if (!TryGetUserId(out int userId))
             {
-                Title = dto.Title,
-                CourseId = dto.CourseId,
-                Questions = dto.Questions.Select(q => new Question
-                {
-                    Text = q.Text,
-                    Choices = q.Choices.Select(c => new Choice
-                    {
-                        Text = c.Text,
-                        IsCorrect = c.IsCorrect
-                    }).ToList()
-                }).ToList()
-            };
-
-            _context.Quizzes.Add(quiz);
-            await _context.SaveChangesAsync();
-            return Ok(new { message = "✅ تم إنشاء الكويز بنجاح", quiz.Id });
-        }
-
-        // 🔨 عرض كل الكويزات (Instructor/Student)
-        [HttpGet]
-        [Authorize(Roles = "Instructor, Student")]
-        public async Task<IActionResult> GetAllQuizzes()
-        {
-            var role = User.FindFirstValue(ClaimTypes.Role);
-
-            if (role == "Instructor")
-            {
-                var quizzes = await _context.Quizzes
-                    .Include(q => q.Course)
-                    .Include(q => q.Questions)
-                    .Include(q => q.QuizResults)
-                    .Select(q => new
-                    {
-                        q.Id,
-                        q.Title,
-                        CourseTitle = q.Course.Title,
-                        QuestionsCount = q.Questions.Count,
-                        StudentsSubmitted = q.QuizResults.Count
-                    })
-                    .ToListAsync();
-
-                return Ok(quizzes);
+                return Unauthorized("Invalid user ID format");
             }
-            else
-            {
-                var quizzes = await _context.Quizzes
-                    .Include(q => q.Course)
-                    .Select(q => new
-                    {
-                        q.Id,
-                        q.Title,
-                        CourseTitle = q.Course.Title
-                    })
-                    .ToListAsync();
 
-                return Ok(quizzes);
+            try
+            {
+                var quiz = await _quizService.CreateQuiz(dto, userId);
+                return CreatedAtAction(
+                    nameof(GetQuizDetails),
+                    new { courseId, lessonId, quizId = quiz.Id },
+                    quiz);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating quiz");
+                return StatusCode(500, "An error occurred while creating the quiz");
             }
         }
 
-        // 🔨 عرض كويز بتفاصيل (Instructor/Student)
-        [HttpGet("{id}")]
-        [Authorize(Roles = "Instructor, Student")]
-        public async Task<IActionResult> GetQuizById(int id)
+        [HttpGet("{quizId}")]
+        [Authorize(Roles = "Instructor,Admin")]
+        public async Task<IActionResult> GetQuizDetails(
+            int courseId,
+            int lessonId,
+            int quizId)
         {
-            var quiz = await _context.Quizzes
-                .Include(q => q.Questions)
-                    .ThenInclude(q => q.Choices)
-                .FirstOrDefaultAsync(q => q.Id == id);
-
-            if (quiz == null)
-                return NotFound("❌ الكويز غير موجود.");
-
-            var role = User.FindFirstValue(ClaimTypes.Role);
-
-            if (role == "Instructor")
+            try
             {
-                var instructorView = new
-                {
-                    quiz.Id,
-                    quiz.Title,
-                    Questions = quiz.Questions.Select(q => new
-                    {
-                        q.Id,
-                        q.Text,
-                        Choices = q.Choices.Select(c => new
-                        {
-                            c.Id,
-                            c.Text,
-                            c.IsCorrect
-                        })
-                    })
-                };
-                return Ok(instructorView);
+                var quiz = await _quizService.GetQuizDetails(quizId);
+                return quiz == null ? NotFound("Quiz not found") : Ok(quiz);
             }
-            else
+            catch (Exception ex)
             {
-                var studentView = new
-                {
-                    quiz.Id,
-                    quiz.Title,
-                    Questions = quiz.Questions.Select(q => new
-                    {
-                        q.Id,
-                        q.Text,
-                        Choices = q.Choices.Select(c => new
-                        {
-                            c.Id,
-                            c.Text
-                        })
-                    })
-                };
-                return Ok(studentView);
+                _logger.LogError(ex, "Error getting quiz details");
+                return StatusCode(500, "An error occurred while retrieving quiz details");
             }
         }
 
-        // 🔨 عرض نتائج الطلاب في كويز
-        [HttpGet("{quizId}/results")]
-        [Authorize(Roles = "Instructor")]
-        public async Task<IActionResult> GetQuizResults(int quizId)
+        [HttpGet("{quizId}/student-view")]
+        [Authorize(Roles = "Student")]
+        public async Task<IActionResult> GetQuizForStudent(
+            int courseId,
+            int lessonId,
+            int quizId)
         {
-            var quiz = await _context.Quizzes
-                .Include(q => q.QuizResults)
-                    .ThenInclude(qr => qr.User)
-                .FirstOrDefaultAsync(q => q.Id == quizId);
-
-            if (quiz == null)
-                return NotFound("❌ الكويز غير موجود.");
-
-            var results = quiz.QuizResults.Select(r => new
+            try
             {
-                StudentName = r.User.FullName,
-                r.TotalQuestions,
-                r.CorrectAnswers,
-                Score = $"{(r.CorrectAnswers * 100) / r.TotalQuestions}%"
-            });
-
-            return Ok(results);
-        }
-
-        // 🔨 بحث وفلترة في الكويزات
-        [HttpGet("search")]
-        [Authorize(Roles = "Instructor, Student")]
-        public async Task<IActionResult> SearchQuizzes(string? keyword)
-        {
-            var quizzes = await _context.Quizzes
-                .Include(q => q.Course)
-                .Where(q => string.IsNullOrEmpty(keyword) || q.Title.Contains(keyword) || q.Course.Title.Contains(keyword))
-                .Select(q => new
-                {
-                    q.Id,
-                    q.Title,
-                    CourseTitle = q.Course.Title
-                })
-                .ToListAsync();
-
-            return Ok(quizzes);
-        }
-
-        // 🔨 تعديل كويز
-        [HttpPut("{id}")]
-        [Authorize(Roles = "Instructor")]
-        public async Task<IActionResult> UpdateQuiz(int id, [FromBody] QuizCreateDto dto)
-        {
-            var quiz = await _context.Quizzes
-                .Include(q => q.Questions)
-                    .ThenInclude(q => q.Choices)
-                .FirstOrDefaultAsync(q => q.Id == id);
-
-            if (quiz == null)
-                return NotFound("❌ الكويز غير موجود.");
-
-            var course = await _context.Courses.FindAsync(dto.CourseId);
-            if (course == null)
-                return BadRequest("❌ الكورس غير موجود.");
-
-            quiz.Title = dto.Title;
-            quiz.CourseId = dto.CourseId;
-
-            _context.Choices.RemoveRange(quiz.Questions.SelectMany(q => q.Choices));
-            _context.Questions.RemoveRange(quiz.Questions);
-
-            quiz.Questions = dto.Questions.Select(q => new Question
+                var quiz = await _quizService.GetQuizForStudent(quizId);
+                return Ok(quiz);
+            }
+            catch (Exception ex)
             {
-                Text = q.Text,
-                Choices = q.Choices.Select(c => new Choice
-                {
-                    Text = c.Text,
-                    IsCorrect = c.IsCorrect
-                }).ToList()
-            }).ToList();
-
-            await _context.SaveChangesAsync();
-            return Ok("✅ تم تعديل الكويز بنجاح.");
+                _logger.LogError(ex, "Error getting student quiz view");
+                return StatusCode(500, "An error occurred while retrieving quiz");
+            }
         }
 
-        // 🔨 حذف كويز
-        [HttpDelete("{id}")]
-        [Authorize(Roles = "Instructor")]
-        public async Task<IActionResult> DeleteQuiz(int id)
+        [HttpPost("{quizId}/start")]
+        [Authorize(Roles = "Student")]
+        public async Task<IActionResult> StartQuiz(
+            int courseId,
+            int lessonId,
+            int quizId)
         {
-            var quiz = await _context.Quizzes
-                .Include(q => q.Questions)
-                    .ThenInclude(q => q.Choices)
-                .FirstOrDefaultAsync(q => q.Id == id);
+            if (!TryGetUserId(out int userId))
+            {
+                return BadRequest("Invalid user ID format");
+            }
 
-            if (quiz == null)
-                return NotFound("❌ الكويز غير موجود.");
+            try
+            {
+                var result = await _quizService.StartQuiz(userId, quizId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error starting quiz");
+                return BadRequest(ex.Message);
+            }
+        }
 
-            _context.Choices.RemoveRange(quiz.Questions.SelectMany(q => q.Choices));
-            _context.Questions.RemoveRange(quiz.Questions);
-            _context.Quizzes.Remove(quiz);
+        [HttpPost("{quizId}/submit")]
+        [Authorize(Roles = "Student")]
+        public async Task<IActionResult> SubmitQuiz(
+            int courseId,
+            int lessonId,
+            int quizId,
+            [FromBody] Dictionary<int, string> answers)
+        {
+            if (!TryGetUserId(out int userId))
+            {
+                return BadRequest("Invalid user ID format");
+            }
 
-            await _context.SaveChangesAsync();
-            return Ok("✅ تم حذف الكويز بنجاح.");
+            try
+            {
+                var result = await _quizService.SubmitQuiz(userId, quizId, answers);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error submitting quiz");
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("results/{resultId}")]
+        public async Task<IActionResult> GetQuizResult(
+            int courseId,
+            int lessonId,
+            int resultId)
+        {
+            try
+            {
+                var result = await _quizService.GetQuizResult(resultId);
+                return result == null ? NotFound() : Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting quiz result");
+                return StatusCode(500, "An error occurred while retrieving quiz result");
+            }
+        }
+
+        [HttpGet("{quizId}/stats")]
+        [Authorize(Roles = "Instructor,Admin")]
+        public async Task<IActionResult> GetQuizStatistics(
+            int courseId,
+            int lessonId,
+            int quizId)
+        {
+            try
+            {
+                var stats = await _quizService.GetQuizStatistics(quizId);
+                return Ok(stats);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting quiz statistics");
+                return StatusCode(500, "An error occurred while retrieving quiz statistics");
+            }
+        }
+
+        [HttpDelete("{quizId}")]
+        [Authorize(Roles = "Instructor,Admin")]
+        public async Task<IActionResult> DeleteQuiz(
+            int courseId,
+            int lessonId,
+            int quizId)
+        {
+            try
+            {
+                var success = await _quizService.DeleteQuiz(quizId);
+                return success ? NoContent() : NotFound();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting quiz");
+                return StatusCode(500, "An error occurred while deleting the quiz");
+            }
         }
     }
 }

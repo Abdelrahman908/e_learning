@@ -1,5 +1,6 @@
-﻿using e_learning.DTOs;
-using e_learning.DTOs.Courses;
+﻿using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+
 namespace e_learning.Service.Interfaces
 {
     public interface IFileService

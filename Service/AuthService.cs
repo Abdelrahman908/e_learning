@@ -37,20 +37,17 @@ namespace e_learning.Services
         {
             try
             {
-                // التحقق من صحة كلمة المرور
                 if (!_passwordValidator.Validate(dto.Password, out var passwordError))
                 {
                     return new AuthResult { Message = passwordError, Success = false };
                 }
 
-                // التحقق من عدم وجود البريد مسبقاً
                 if (await _context.Users.AnyAsync(u => u.Email == dto.Email))
                 {
                     _logger.LogWarning("Duplicate email registration attempt: {Email}", dto.Email);
                     return new AuthResult { Message = "البريد الإلكتروني مسجل بالفعل", Success = false };
                 }
 
-                // إنشاء مستخدم جديد
                 var user = new User
                 {
                     FullName = dto.FullName.Trim(),
@@ -64,7 +61,6 @@ namespace e_learning.Services
                 await _context.Users.AddAsync(user);
                 await _context.SaveChangesAsync();
 
-                // إنشاء وإرسال كود التأكيد
                 var confirmationCode = GenerateSixDigitCode();
                 await StoreConfirmationCode(dto.Email, confirmationCode);
 
@@ -72,7 +68,6 @@ namespace e_learning.Services
                 if (!emailSent)
                 {
                     _logger.LogError("Failed to send confirmation email to {Email}", dto.Email);
-                    // يمكنك التعامل مع حالة فشل الإرسال حسب احتياجاتك
                 }
 
                 _logger.LogInformation("New user registered - ID: {UserId}", user.Id);
@@ -104,27 +99,22 @@ namespace e_learning.Services
                 var user = await _context.Users
                     .FirstOrDefaultAsync(u => u.Email == dto.Email);
 
-                // التحقق من صحة بيانات الدخول
                 if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
                 {
                     _logger.LogWarning("Failed login attempt for {Email}", dto.Email);
                     return new AuthResult { Message = "بيانات الدخول غير صحيحة", Success = false };
                 }
 
-                // التحقق من تأكيد البريد الإلكتروني
                 if (!user.IsEmailConfirmed)
                 {
                     _logger.LogWarning("Login attempt with unconfirmed email: {Email}", dto.Email);
                     return new AuthResult { Message = "يجب تأكيد البريد الإلكتروني أولاً", Success = false };
                 }
 
-                // إنشاء التوكنات
                 var token = GenerateJwtToken(user);
                 var refreshToken = GenerateSecureRefreshToken();
 
-                // تخزين توكن التحديث
                 await StoreRefreshToken(user.Id, refreshToken);
-
                 _logger.LogInformation("Successful login for {Email}", dto.Email);
 
                 return new AuthResult
@@ -150,7 +140,7 @@ namespace e_learning.Services
             }
         }
 
-        public async Task<AuthResult> RefreshTokenAsync(RefreshTokenDto dto)
+        public async Task<AuthResult> RefreshTokenAsync(RefreshTokenRequest dto)
         {
             try
             {
@@ -158,7 +148,6 @@ namespace e_learning.Services
                     .Include(rt => rt.User)
                     .FirstOrDefaultAsync(rt => rt.RefreshToken == dto.RefreshToken);
 
-                // التحقق من صلاحية توكن التحديث
                 if (refreshToken == null || refreshToken.ExpiryDate < DateTime.UtcNow)
                 {
                     _logger.LogWarning("Invalid refresh token attempt");
@@ -172,11 +161,9 @@ namespace e_learning.Services
                     return new AuthResult { Message = "المستخدم غير موجود", Success = false };
                 }
 
-                // إنشاء توكنات جديدة
                 var newJwtToken = GenerateJwtToken(user);
                 var newRefreshToken = GenerateSecureRefreshToken();
 
-                // إزالة التوكن القديم وإضافة الجديد
                 _context.UserRefreshTokens.Remove(refreshToken);
                 await StoreRefreshToken(user.Id, newRefreshToken);
 
@@ -283,13 +270,11 @@ namespace e_learning.Services
         {
             try
             {
-                // التحقق من صحة كلمة المرور الجديدة
                 if (!_passwordValidator.Validate(dto.NewPassword, out var passwordError))
                 {
                     return new AuthResult { Message = passwordError, Success = false };
                 }
 
-                // التحقق من صحة كود إعادة التعيين
                 var isValidCode = await ValidatePasswordResetCode(dto.Email, dto.Code);
                 if (!isValidCode)
                 {
@@ -304,12 +289,8 @@ namespace e_learning.Services
                     return new AuthResult { Message = "المستخدم غير موجود", Success = false };
                 }
 
-                // تحديث كلمة المرور
                 user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
-
-                // إبطال جميع توكنات التحديث القديمة
                 await InvalidateUserRefreshTokens(user.Id);
-
                 await _context.SaveChangesAsync();
                 await RemovePasswordResetCode(dto.Email);
 
@@ -454,7 +435,7 @@ namespace e_learning.Services
             {
                 UserId = userId,
                 RefreshToken = refreshToken,
-                ExpiryDate = DateTime.UtcNow.AddDays(_configuration.GetValue<int>("Jwt:RefreshTokenExpiryInDays", 7)),
+                ExpiryDate = DateTime.UtcNow.AddDays(_configuration.GetValue<int>("Jwt:RefreshTokenExpiryInDays")),
                 CreatedAt = DateTime.UtcNow
             });
             await _context.SaveChangesAsync();
@@ -466,11 +447,8 @@ namespace e_learning.Services
                 .Where(rt => rt.UserId == userId)
                 .ToListAsync();
 
-            if (tokens.Any())
-            {
-                _context.UserRefreshTokens.RemoveRange(tokens);
-                await _context.SaveChangesAsync();
-            }
+            _context.UserRefreshTokens.RemoveRange(tokens);
+            await _context.SaveChangesAsync();
         }
 
         #endregion

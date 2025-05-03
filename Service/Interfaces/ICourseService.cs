@@ -1,5 +1,6 @@
 ﻿using e_learning.DTOs;
 using e_learning.DTOs.Courses;
+using e_learning.DTOs.Courses.e_learning.DTOs.Courses;
 namespace e_learning.Service.Interfaces
 {
     public interface ICourseService

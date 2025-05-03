@@ -1,10 +1,17 @@
-﻿namespace e_learning.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace e_learning.DTOs
 {
     public class SubmitQuizDto
     {
-        public List<AnswerDto> Answers { get; set; } = new();
+        [Required(ErrorMessage = "الإجابات مطلوبة")]
+        public Dictionary<int, string> Answers { get; set; }
+        // Key: QuestionId
+        // Value: 
+        //   - For MultipleChoice: ChoiceId as string
+        //   - For Text: Answer text
     }
 
-   
+
 
 }

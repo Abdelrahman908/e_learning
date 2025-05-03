@@ -10,17 +10,19 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using e_learning.Data;
 using e_learning.Hubs;
 using e_learning.Models;
-using e_learning.Service;
-using e_learning.Services;
 using e_learning.DTOs.Responses;
 using e_learning.Service.Interfaces;
 using e_learning.Service.Implementations;
 using e_learning.Repositories.Interfaces;
 using e_learning.Repositories;
+using e_learning.Service;
+using e_learning.Services;
+using e_learning.Mappings;
+using AutoMapper;
+
 
 var builder = WebApplication.CreateBuilder(args);
-
-// 1. Serilog Logging
+// 1. Configure Serilog Logging
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
     .WriteTo.Console()
@@ -171,12 +173,26 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
     });
 
-// 9. Custom Services
+// 9. Register All Services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+builder.Services.AddScoped<ILessonService, LessonService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
+// Add AutoMapper
+builder.Services.AddAutoMapper(typeof(QuizProfile).Assembly);
+
+// Register services
+builder.Services.AddScoped<IQuizService, QuizService>();
+
+builder.Services.AddScoped<IProgressService, ProgressService>();
+builder.Services.AddScoped<ILessonFileService, LessonFileService>();
+// تسجيل خدمات الملفات
+builder.Services.AddScoped<IFileService, LessonFileService>();
+builder.Services.AddScoped<ILessonFileService, LessonFileService>();
+builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IEmailConfirmationService, EmailConfirmationService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IPasswordValidator, PasswordValidator>();
@@ -185,7 +201,8 @@ builder.Services.AddHttpClient<RecommendationService>();
 
 // 10. Health Checks
 builder.Services.AddHealthChecks()
-    .AddDbContextCheck<AppDbContext>("Database");
+    .AddDbContextCheck<AppDbContext>("Database")
+    .AddCheck<FileStorageHealthCheck>("File Storage");
 
 // Build App
 var app = builder.Build();
@@ -296,10 +313,73 @@ public static class SeedData
                     Role = "Instructor",
                     IsEmailConfirmed = true,
                     CreatedAt = DateTime.UtcNow
+                },
+                new User
+                {
+                    FullName = "طالب نموذجي",
+                    Email = "student@elearning.com",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("Student@123"),
+                    Role = "Student",
+                    IsEmailConfirmed = true,
+                    CreatedAt = DateTime.UtcNow
                 }
             };
             await context.Users.AddRangeAsync(users);
             await context.SaveChangesAsync();
+        }
+
+        // Seed initial courses if none exist
+        if (!await context.Courses.AnyAsync() && await context.Users.AnyAsync(u => u.Role == "Instructor"))
+        {
+            var instructor = await context.Users.FirstAsync(u => u.Role == "Instructor");
+
+            var courses = new List<Course>
+            {
+                new Course
+                {
+                    Title = "دورة البرمجة الأساسية",
+                    Description = "تعلم أساسيات البرمجة للمبتدئين",
+                    InstructorId = instructor.Id,
+                    Price = 0,
+                    CreatedAt = DateTime.UtcNow
+                },
+                new Course
+                {
+                    Title = "تعلم ASP.NET Core",
+                    Description = "دورة متقدمة لتعلم تطوير الويب باستخدام ASP.NET Core",
+                    InstructorId = instructor.Id,
+                    Price = 100,
+                    CreatedAt = DateTime.UtcNow
+                }
+            };
+
+            await context.Courses.AddRangeAsync(courses);
+            await context.SaveChangesAsync();
+        }
+    }
+}
+
+// Health Check for File Storage
+public class FileStorageHealthCheck : IHealthCheck
+{
+    public Task<HealthCheckResult> CheckHealthAsync(
+        HealthCheckContext context,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var tempPath = Path.GetTempPath();
+            var testFile = Path.Combine(tempPath, $"healthcheck_{Guid.NewGuid()}.tmp");
+
+            File.WriteAllText(testFile, "Health check test");
+            File.Delete(testFile);
+
+            return Task.FromResult(HealthCheckResult.Healthy("File storage is working properly"));
+        }
+        catch (Exception ex)
+        {
+            return Task.FromResult(
+                HealthCheckResult.Unhealthy("File storage is not accessible", ex));
         }
     }
 }

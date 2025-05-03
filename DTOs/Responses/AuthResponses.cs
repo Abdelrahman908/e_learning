@@ -2,7 +2,7 @@
 {
     public class RegisterResponse
     {
-        public int UserId { get; set; }
+        public int UserId { get; set; }  // تغيير من Guid إلى int
     }
 
     public class LoginResponse
@@ -21,7 +21,7 @@
 
     public class UserInfoDto
     {
-        public int Id { get; set; }
+        public int Id { get; set; }  // تغيير من Guid إلى int
         public string FullName { get; set; }
         public string Email { get; set; }
         public string Role { get; set; }

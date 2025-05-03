@@ -1,8 +1,6 @@
 ﻿using e_learning.Data;
 using e_learning.DTOs;
-using e_learning.Models;
 using e_learning.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
@@ -11,8 +9,11 @@ using System.Security.Cryptography;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using Microsoft.AspNetCore.Identity;
+using e_learning.Models;
 using e_learning.DTOs.Responses;
+using e_learning.Service.Interfaces;
+using RefreshTokenResponse = e_learning.DTOs.Responses.RefreshTokenResponse;
+
 
 namespace e_learning.Controllers
 {
@@ -26,19 +27,22 @@ namespace e_learning.Controllers
         private readonly IEmailService _emailService;
         private readonly ILogger<AuthController> _logger;
         private readonly IPasswordValidator _passwordValidator;
+        private readonly ITokenService _tokenService;
 
         public AuthController(
             AppDbContext context,
             IConfiguration configuration,
             IEmailService emailService,
             ILogger<AuthController> logger,
-            IPasswordValidator passwordValidator)
+            IPasswordValidator passwordValidator,
+            ITokenService tokenService)
         {
             _context = context;
             _configuration = configuration;
             _emailService = emailService;
             _logger = logger;
             _passwordValidator = passwordValidator;
+            _tokenService = tokenService;
         }
 
         [HttpPost("register")]
@@ -134,7 +138,6 @@ namespace e_learning.Controllers
                 var refreshToken = GenerateSecureRefreshToken();
 
                 await StoreRefreshToken(user.Id, refreshToken);
-
                 _logger.LogInformation("تم تسجيل دخول ناجح لـ: {Email}", dto.Email);
 
                 return Ok(new ApiResponse<LoginResponse>(true, "تم تسجيل الدخول بنجاح",
@@ -274,46 +277,60 @@ namespace e_learning.Controllers
 
         [HttpPost("refresh-token")]
         [ProducesResponseType(typeof(ApiResponse<RefreshTokenResponse>), 200)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
         [ProducesResponseType(typeof(ApiResponse), 401)]
-        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenDto dto)
+        [ProducesResponseType(typeof(ApiResponse), 500)]
+        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
         {
             try
             {
+                if (string.IsNullOrEmpty(request.RefreshToken))
+                {
+                    return BadRequest(new ApiResponse(false, "Refresh token is required"));
+                }
+
                 var refreshToken = await _context.UserRefreshTokens
                     .Include(rt => rt.User)
-                    .FirstOrDefaultAsync(rt => rt.RefreshToken == dto.RefreshToken);
+                    .FirstOrDefaultAsync(rt => rt.RefreshToken == request.RefreshToken);
 
-                if (refreshToken == null || refreshToken.ExpiryDate < DateTime.UtcNow)
+                if (refreshToken == null)
                 {
-                    _logger.LogWarning("محاولة استخدام توكن تحديث غير صالح");
-                    return Unauthorized(new ApiResponse(false, "توكن التحديث غير صالح أو منتهي الصلاحية"));
+                    return Unauthorized(new ApiResponse(false, "Invalid refresh token"));
+                }
+
+                if (refreshToken.ExpiryDate < DateTime.UtcNow)
+                {
+                    return Unauthorized(new ApiResponse(false, "Refresh token has expired"));
                 }
 
                 if (refreshToken.User == null)
                 {
-                    _logger.LogError("توكن التحديث بدون مستخدم مرتبط - Token: {TokenId}", refreshToken.Id);
-                    return Unauthorized(new ApiResponse(false, "المستخدم غير موجود"));
+                    _logger.LogError("Refresh token {TokenId} has no associated user", refreshToken.Id);
+                    return Unauthorized(new ApiResponse(false, "User not found"));
                 }
 
-                var newJwtToken = GenerateJwtToken(refreshToken.User);
-                var newRefreshToken = GenerateSecureRefreshToken();
+                var newJwtToken = _tokenService.GenerateJwtToken(refreshToken.User);
+                var newRefreshToken = _tokenService.GenerateRefreshToken();
 
-                _context.UserRefreshTokens.Remove(refreshToken);
-                await StoreRefreshToken(refreshToken.UserId, newRefreshToken);
+                refreshToken.RefreshToken = newRefreshToken;
+                refreshToken.ExpiryDate = DateTime.UtcNow.AddDays(7);
+                refreshToken.CreatedAt = DateTime.UtcNow;
 
-                _logger.LogInformation("تم تجديد التوكن للمستخدم: {UserId}", refreshToken.UserId);
+                _context.UserRefreshTokens.Update(refreshToken);
+                await _context.SaveChangesAsync();
 
-                return Ok(new ApiResponse<RefreshTokenResponse>(true, "تم تجديد التوكن بنجاح",
-                    new RefreshTokenResponse
-                    {
-                        Token = newJwtToken,
-                        RefreshToken = newRefreshToken
-                    }));
+                return Ok(new ApiResponse<e_learning.DTOs.RefreshTokenResponse>(true, "Token refreshed successfully",
+                     new e_learning.DTOs.RefreshTokenResponse
+            {
+                         Token = newJwtToken,
+                        RefreshToken = newRefreshToken,
+                     ExpiresIn = (int)TimeSpan.FromMinutes(30).TotalSeconds
+                      }));
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "خطأ أثناء تجديد التوكن");
-                return StatusCode(500, new ApiResponse(false, "حدث خطأ أثناء معالجة طلبك"));
+                _logger.LogError(ex, "Error refreshing token");
+                return StatusCode(500, new ApiResponse(false, "An error occurred while processing your request"));
             }
         }
 
@@ -389,9 +406,15 @@ namespace e_learning.Controllers
 
         private async Task RemoveConfirmationCode(string email)
         {
-            var codes = _context.EmailConfirmationCodes.Where(e => e.Email == email.ToLower());
-            _context.EmailConfirmationCodes.RemoveRange(codes);
-            await _context.SaveChangesAsync();
+            var codes = await _context.EmailConfirmationCodes
+                .Where(e => e.Email == email.ToLower())
+                .ToListAsync();
+
+            if (codes.Any())
+            {
+                _context.EmailConfirmationCodes.RemoveRange(codes);
+                await _context.SaveChangesAsync();
+            }
         }
 
         private async Task StorePasswordResetCode(string email, string code)
@@ -417,9 +440,15 @@ namespace e_learning.Controllers
 
         private async Task RemovePasswordResetCode(string email)
         {
-            var codes = _context.PasswordResetCodes.Where(p => p.Email == email.ToLower());
-            _context.PasswordResetCodes.RemoveRange(codes);
-            await _context.SaveChangesAsync();
+            var codes = await _context.PasswordResetCodes
+                .Where(p => p.Email == email.ToLower())
+                .ToListAsync();
+
+            if (codes.Any())
+            {
+                _context.PasswordResetCodes.RemoveRange(codes);
+                await _context.SaveChangesAsync();
+            }
         }
 
         private async Task StoreRefreshToken(int userId, string refreshToken)

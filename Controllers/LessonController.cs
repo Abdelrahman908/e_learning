@@ -1,72 +1,158 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using e_learning.Data;
-using e_learning.Models;
-using System.Collections.Generic;
-using System.IO;
+using e_learning.Service.Interfaces;
+using System.Security.Claims;
+using e_learning.DTOs;
+using e_learning.DTOs.Responses;
+using e_learning.DTOs.e_learning.DTOs.Lessons;
 using System.Threading.Tasks;
-using System;
+using Microsoft.AspNetCore.Http;
 
 namespace e_learning.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/courses/{courseId}/[controller]")]
     [ApiController]
-    public class LessonController : ControllerBase
+    [Authorize]
+    [Produces("application/json")]
+    public class LessonsController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly ILessonService _lessonService;
+        private readonly ILessonFileService _lessonFileService;
 
-        public LessonController(AppDbContext context)
+        public LessonsController(
+            ILessonService lessonService,
+            ILessonFileService lessonFileService)
         {
-            _context = context;
+            _lessonService = lessonService;
+            _lessonFileService = lessonFileService;
         }
 
-        // ✅ جلب جميع الدروس
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Lesson>>> GetLessons()
+        [ProducesResponseType(typeof(ApiResponse<List<LessonBriefDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ApiResponse<List<LessonBriefDto>>>> GetLessons(int courseId)
         {
-            return await _context.Lessons.Include(l => l.Course).ToListAsync();
+            var response = await _lessonService.GetCourseLessons(courseId, User);
+            return HandleResponse(response);
         }
 
-        // 🔐 فقط المدرس يضيف دروس
-        [Authorize(Roles = "Instructor")]
+        [Authorize(Roles = "Instructor,Admin")]
         [HttpPost]
-        public async Task<ActionResult<Lesson>> CreateLesson(Lesson lesson)
+        [ProducesResponseType(typeof(ApiResponse<LessonResponseDto>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<ApiResponse<LessonResponseDto>>> CreateLesson(
+            int courseId,
+            [FromBody] CreateLessonDto dto)
         {
-            _context.Lessons.Add(lesson);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetLessons), new { id = lesson.Id }, lesson);
-        }
-
-        // 📥 رفع ملف مرتبط بالدرس (فقط للمدرسين)
-        [Authorize(Roles = "Instructor")]
-        [HttpPost("{lessonId}/upload-material")]
-        public async Task<IActionResult> UploadMaterial(int lessonId, IFormFile file)
-        {
-            var lesson = await _context.Lessons.FindAsync(lessonId);
-            if (lesson == null)
-                return NotFound("❌ الدرس غير موجود.");
-
-            if (file == null || file.Length == 0)
-                return BadRequest("⚠️ الملف غير موجود أو فارغ.");
-
-            var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
-            if (!Directory.Exists(folderPath))
-                Directory.CreateDirectory(folderPath);
-
-            var fileName = $"{Guid.NewGuid()}_{file.FileName}";
-            var fullPath = Path.Combine(folderPath, fileName);
-
-            using (var stream = new FileStream(fullPath, FileMode.Create))
+            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out int userId))
             {
-                await file.CopyToAsync(stream);
+                return BadRequest(ApiResponse<LessonResponseDto>.Error("معرف المستخدم غير صالح"));
             }
 
-            lesson.AttachmentUrl = $"/uploads/{fileName}";
-            await _context.SaveChangesAsync();
-
-            return Ok(new { message = "✅ تم رفع الملف بنجاح.", url = lesson.AttachmentUrl });
+            var response = await _lessonService.CreateLesson(courseId, dto, userId);
+            return HandleCreatedResponse(response, nameof(GetLesson), new { courseId });
         }
+
+        [HttpGet("{lessonId}")]
+        [ProducesResponseType(typeof(ApiResponse<LessonResponseDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ApiResponse<LessonResponseDto>>> GetLesson(
+            int courseId,
+            int lessonId)
+        {
+            var response = await _lessonService.GetLessonDetails(courseId, lessonId, User);
+            return HandleResponse(response);
+        }
+
+        [Authorize(Roles = "Instructor,Admin")]
+        [HttpPost("{lessonId}/materials")]
+        [RequestSizeLimit(50_000_000)]
+        [ProducesResponseType(typeof(ApiResponse<LessonMaterialDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ApiResponse<LessonMaterialDto>>> UploadMaterial(
+            int courseId,
+            int lessonId,
+            [FromForm] UploadMaterialDto dto)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var response = await _lessonFileService.SaveLessonMaterialAsync(lessonId, dto, userId);
+            return HandleResponse(response);
+        }
+
+        [Authorize(Roles = "Instructor,Admin")]
+        [HttpPut("{lessonId}")]
+        [ProducesResponseType(typeof(ApiResponse<LessonResponseDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ApiResponse<LessonResponseDto>>> UpdateLesson(
+            int courseId,
+            int lessonId,
+            [FromBody] UpdateLessonDto dto)
+        {
+            var response = await _lessonService.UpdateLesson(courseId, lessonId, dto);
+            return HandleResponse(response);
+        }
+
+        [Authorize(Roles = "Instructor,Admin")]
+        [HttpDelete("{lessonId}")]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ApiResponse>> DeleteLesson(int courseId, int lessonId)
+        {
+            var response = await _lessonService.DeleteLesson(courseId, lessonId);
+            return HandleNoContentResponse(response);
+        }
+
+        [Authorize(Roles = "Instructor,Admin")]
+        [HttpDelete("materials/{materialId}")]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ApiResponse>> DeleteMaterial(int courseId, int materialId)
+        {
+            var response = await _lessonFileService.DeleteLessonMaterialAsync(materialId);
+            return HandleNoContentResponse(response);
+        }
+
+        #region Helper Methods
+        private ActionResult HandleResponse<T>(ApiResponse<T> response)
+        {
+            // تحقق من Success وهي خاصية bool وليست دالة
+            if (response == null || response.Success == false)
+            {
+                return StatusCode(response?.StatusCode ?? 400, response);
+            }
+            return Ok(response); // في حالة نجاح الاستجابة
+        }
+
+        private ActionResult HandleCreatedResponse<T>(
+            ApiResponse<T> response,
+            string actionName,
+            object routeValues)
+        {
+            // تحقق من Success وهي خاصية bool وليست دالة
+            if (response == null || response.Success == false)
+            {
+                return StatusCode(response?.StatusCode ?? 400, response);
+            }
+            return CreatedAtAction(actionName, routeValues, response); // في حالة نجاح الاستجابة
+        }
+
+        private ActionResult HandleNoContentResponse(ApiResponse response)
+        {
+            // تحقق من Success وهي خاصية bool وليست دالة
+            if (response == null || response.Success == false)
+            {
+                return StatusCode(response?.StatusCode ?? 400, response);
+            }
+            return NoContent(); // في حالة نجاح الاستجابة
+        }
+        #endregion
+
+
+
+
     }
 }

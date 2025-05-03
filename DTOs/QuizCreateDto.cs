@@ -1,21 +1,23 @@
-﻿namespace e_learning.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+using e_learning.DTOs;
+
+public class CreateQuizDto
 {
-    public class QuizCreateDto
-    {
-        public string Title { get; set; } = string.Empty;
-        public int CourseId { get; set; }
-        public List<QuestionCreateDto> Questions { get; set; } = new();
-    }
+    [Required(ErrorMessage = "عنوان الكويز مطلوب")]
+    [StringLength(200, ErrorMessage = "العنوان يجب أن لا يتجاوز 200 حرف")]
+    public string Title { get; set; }
 
-    public class QuestionCreateDto
-    {
-        public string Text { get; set; } = string.Empty;
-        public List<ChoiceCreateDto> Choices { get; set; } = new();
-    }
+    [StringLength(500, ErrorMessage = "الوصف يجب أن لا يتجاوز 500 حرف")]
+    public string Description { get; set; }
 
-    public class ChoiceCreateDto
-    {
-        public string Text { get; set; } = string.Empty;
-        public bool IsCorrect { get; set; }
-    }
+    [Range(0, 100, ErrorMessage = "النسبة المطلوبة يجب أن تكون بين 0 و 100")]
+    public int PassingScore { get; set; } = 70;
+
+    public bool IsMandatory { get; set; } = true;
+    public int MaxAttempts { get; set; } = 3;
+    public int TimeLimitMinutes { get; set; } = 30;
+
+    [Required(ErrorMessage = "الأسئلة مطلوبة")]
+    [MinLength(1, ErrorMessage = "يجب إضافة سؤال واحد على الأقل")]
+    public List<QuestionDto> Questions { get; set; }
 }

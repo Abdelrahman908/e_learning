@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "kEu48Ma+JFulabojRuvkyTHGxnru7SxT2ZtrscZbPp0=",
+  "Hash": "VTwW8aHIuqGYnGy+ZZUnIX7b7EGyqvD2xbd0YTm8vvs=",
   "Source": "e_learning",
   "BasePath": "_content/e_learning",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "e_learning\\wwwroot",
       "Source": "e_learning",
-      "ContentRoot": "C:\\Users\\ta\\OneDrive\\Desktop\\gpfirst\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\",
       "BasePath": "_content/e_learning",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\ta\\OneDrive\\Desktop\\gpfirst\\wwwroot\\images\\profiles\\722fab0f-016a-4c95-b6b2-04f4ff376c2e.jpg",
+      "Identity": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\profiles\\722fab0f-016a-4c95-b6b2-04f4ff376c2e.jpg",
       "SourceId": "e_learning",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\ta\\OneDrive\\Desktop\\gpfirst\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\",
       "BasePath": "_content/e_learning",
       "RelativePath": "images/profiles/722fab0f-016a-4c95-b6b2-04f4ff376c2e#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -38,10 +38,10 @@
       "OriginalItemSpec": "wwwroot\\images\\profiles\\722fab0f-016a-4c95-b6b2-04f4ff376c2e.jpg"
     },
     {
-      "Identity": "C:\\Users\\ta\\OneDrive\\Desktop\\gpfirst\\wwwroot\\images\\profiles\\8e4f1d6f-e90f-420e-bc2b-c3c5d9ace16a.jpg",
+      "Identity": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\profiles\\8e4f1d6f-e90f-420e-bc2b-c3c5d9ace16a.jpg",
       "SourceId": "e_learning",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\ta\\OneDrive\\Desktop\\gpfirst\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\",
       "BasePath": "_content/e_learning",
       "RelativePath": "images/profiles/8e4f1d6f-e90f-420e-bc2b-c3c5d9ace16a#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -59,10 +59,10 @@
       "OriginalItemSpec": "wwwroot\\images\\profiles\\8e4f1d6f-e90f-420e-bc2b-c3c5d9ace16a.jpg"
     },
     {
-      "Identity": "C:\\Users\\ta\\OneDrive\\Desktop\\gpfirst\\wwwroot\\images\\profiles\\abf2a9d4-637d-42e0-bf66-390849f2e34b.jpg",
+      "Identity": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\profiles\\abf2a9d4-637d-42e0-bf66-390849f2e34b.jpg",
       "SourceId": "e_learning",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\ta\\OneDrive\\Desktop\\gpfirst\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\",
       "BasePath": "_content/e_learning",
       "RelativePath": "images/profiles/abf2a9d4-637d-42e0-bf66-390849f2e34b#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -80,10 +80,10 @@
       "OriginalItemSpec": "wwwroot\\images\\profiles\\abf2a9d4-637d-42e0-bf66-390849f2e34b.jpg"
     },
     {
-      "Identity": "C:\\Users\\ta\\OneDrive\\Desktop\\gpfirst\\wwwroot\\swagger-authtoken.js",
+      "Identity": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\swagger-authtoken.js",
       "SourceId": "e_learning",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\ta\\OneDrive\\Desktop\\gpfirst\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\",
       "BasePath": "_content/e_learning",
       "RelativePath": "swagger-authtoken#[.{fingerprint}]?.js",
       "AssetKind": "All",
@@ -104,7 +104,7 @@
   "Endpoints": [
     {
       "Route": "images/profiles/722fab0f-016a-4c95-b6b2-04f4ff376c2e.jpg",
-      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\gpfirst\\wwwroot\\images\\profiles\\722fab0f-016a-4c95-b6b2-04f4ff376c2e.jpg",
+      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\profiles\\722fab0f-016a-4c95-b6b2-04f4ff376c2e.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -141,7 +141,7 @@
     },
     {
       "Route": "images/profiles/722fab0f-016a-4c95-b6b2-04f4ff376c2e.s2j80z4o38.jpg",
-      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\gpfirst\\wwwroot\\images\\profiles\\722fab0f-016a-4c95-b6b2-04f4ff376c2e.jpg",
+      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\profiles\\722fab0f-016a-4c95-b6b2-04f4ff376c2e.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -186,7 +186,7 @@
     },
     {
       "Route": "images/profiles/8e4f1d6f-e90f-420e-bc2b-c3c5d9ace16a.jpg",
-      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\gpfirst\\wwwroot\\images\\profiles\\8e4f1d6f-e90f-420e-bc2b-c3c5d9ace16a.jpg",
+      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\profiles\\8e4f1d6f-e90f-420e-bc2b-c3c5d9ace16a.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -223,7 +223,7 @@
     },
     {
       "Route": "images/profiles/8e4f1d6f-e90f-420e-bc2b-c3c5d9ace16a.s2j80z4o38.jpg",
-      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\gpfirst\\wwwroot\\images\\profiles\\8e4f1d6f-e90f-420e-bc2b-c3c5d9ace16a.jpg",
+      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\profiles\\8e4f1d6f-e90f-420e-bc2b-c3c5d9ace16a.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -268,7 +268,7 @@
     },
     {
       "Route": "images/profiles/abf2a9d4-637d-42e0-bf66-390849f2e34b.jpg",
-      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\gpfirst\\wwwroot\\images\\profiles\\abf2a9d4-637d-42e0-bf66-390849f2e34b.jpg",
+      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\profiles\\abf2a9d4-637d-42e0-bf66-390849f2e34b.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -305,7 +305,7 @@
     },
     {
       "Route": "images/profiles/abf2a9d4-637d-42e0-bf66-390849f2e34b.s2j80z4o38.jpg",
-      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\gpfirst\\wwwroot\\images\\profiles\\abf2a9d4-637d-42e0-bf66-390849f2e34b.jpg",
+      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\profiles\\abf2a9d4-637d-42e0-bf66-390849f2e34b.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -350,7 +350,7 @@
     },
     {
       "Route": "swagger-authtoken.1w2rcxkyxj.js",
-      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\gpfirst\\wwwroot\\swagger-authtoken.js",
+      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\swagger-authtoken.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -395,7 +395,7 @@
     },
     {
       "Route": "swagger-authtoken.js",
-      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\gpfirst\\wwwroot\\swagger-authtoken.js",
+      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\swagger-authtoken.js",
       "Selectors": [],
       "ResponseHeaders": [
         {

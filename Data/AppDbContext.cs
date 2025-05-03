@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using e_learning.Models;
+using e_learning.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
+using e_learning.Models.e_learning.Models;
 using e_learning.models;
 
 namespace e_learning.Data
@@ -8,24 +11,31 @@ namespace e_learning.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        // الجداول
+        // الجداول الأساسية
         public DbSet<User> Users { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<LessonMaterial> LessonMaterials { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<Review> Reviews { get; set; }
+
+        // جداول الاختبارات
         public DbSet<Quiz> Quizzes { get; set; }
         public DbSet<Question> Questions { get; set; }
-        public DbSet<Choice> Choices { get; set; }
+        public DbSet<Answer> Answers { get; set; }
         public DbSet<QuizResult> QuizResults { get; set; }
+        public DbSet<UserAnswer> UserAnswers { get; set; }
+
+        // جداول التقدم
+        public DbSet<LessonProgress> LessonProgresses { get; set; }
+
+        // جداول أخرى
         public DbSet<Message> Messages { get; set; }
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
-
-        // جداول إضافية
         public DbSet<EmailConfirmationCode> EmailConfirmationCodes { get; set; }
         public DbSet<PasswordResetCode> PasswordResetCodes { get; set; }
 
@@ -33,7 +43,7 @@ namespace e_learning.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // ✅ إعداد دقة decimal
+            // 1. إعدادات الدقة للأرقام
             modelBuilder.Entity<Course>()
                 .Property(c => c.Price)
                 .HasColumnType("decimal(18,2)");
@@ -42,7 +52,7 @@ namespace e_learning.Data
                 .Property(p => p.Amount)
                 .HasColumnType("decimal(18,2)");
 
-            // ✅ العلاقات
+            // 2. إعدادات العلاقات الأساسية
             modelBuilder.Entity<Profile>()
                 .HasOne(p => p.User)
                 .WithOne(u => u.Profile)
@@ -61,18 +71,6 @@ namespace e_learning.Data
                 .HasForeignKey(e => e.CourseId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Review>()
-                .HasOne(r => r.User)
-                .WithMany(u => u.Reviews)
-                .HasForeignKey(r => r.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Review>()
-                .HasOne(r => r.Course)
-                .WithMany(c => c.Reviews)
-                .HasForeignKey(r => r.CourseId)
-                .OnDelete(DeleteBehavior.Restrict);
-
             modelBuilder.Entity<Course>()
                 .HasOne(c => c.Instructor)
                 .WithMany(u => u.Courses)
@@ -84,17 +82,38 @@ namespace e_learning.Data
                 .WithMany(cat => cat.Courses)
                 .HasForeignKey(c => c.CategoryId);
 
+            // 3. إعدادات الدروس والمواد التعليمية
             modelBuilder.Entity<Lesson>()
                 .HasOne(l => l.Course)
                 .WithMany(c => c.Lessons)
                 .HasForeignKey(l => l.CourseId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Quiz>()
-                .HasOne(q => q.Course)
-                .WithMany(c => c.Quizzes)
-                .HasForeignKey(q => q.CourseId)
+            modelBuilder.Entity<Lesson>()
+                .Property(l => l.Type)
+                .HasConversion<string>()
+                .HasMaxLength(20);
+
+            modelBuilder.Entity<LessonMaterial>()
+                .HasOne(m => m.Lesson)
+                .WithMany(l => l.Materials)
+                .HasForeignKey(m => m.LessonId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<LessonMaterial>()
+                .Property(m => m.FileSize)
+                .HasColumnType("bigint");
+
+            // 4. إعدادات الاختبارات والأسئلة (تم التحديث)
+            modelBuilder.Entity<Quiz>()
+                .HasOne(q => q.Lesson)
+                .WithMany(l => l.Quizzes)
+                .HasForeignKey(q => q.LessonId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Quiz>()
+                .Property(q => q.PassingScore)
+                .HasDefaultValue(70);
 
             modelBuilder.Entity<Question>()
                 .HasOne(q => q.Quiz)
@@ -102,43 +121,72 @@ namespace e_learning.Data
                 .HasForeignKey(q => q.QuizId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Choice>()
-                .HasOne(c => c.Question)
-                .WithMany(q => q.Choices)
-                .HasForeignKey(c => c.QuestionId)
+            modelBuilder.Entity<Question>()
+                .HasMany(q => q.Answers)
+                .WithOne(a => a.Question)
+                .HasForeignKey(a => a.QuestionId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Answer>()
+                .Property(a => a.IsCorrect)
+                .HasDefaultValue(false);
 
             modelBuilder.Entity<QuizResult>()
                 .HasOne(qr => qr.Quiz)
-                .WithMany()
+                .WithMany(q => q.Results)
                 .HasForeignKey(qr => qr.QuizId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<QuizResult>()
                 .HasOne(qr => qr.User)
                 .WithMany(u => u.QuizResults)
-                .HasForeignKey(qr => qr.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Notification>()
-                .HasOne(n => n.User)
-                .WithMany(u => u.Notifications)
-                .HasForeignKey(n => n.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Payment>()
-                .HasOne(p => p.User)
-                .WithMany(u => u.Payments)
-                .HasForeignKey(p => p.UserId)
+                .HasForeignKey(qr => qr.UserId) // تغيير من UserGuid إلى UserId
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Payment>()
-                .HasOne(p => p.Course)
+            modelBuilder.Entity<QuizResult>()
+                .Property(qr => qr.Score)
+                .HasColumnType("decimal(5,2)");
+
+            modelBuilder.Entity<UserAnswer>()
+                .HasOne(ua => ua.QuizResult)
+                .WithMany(qr => qr.UserAnswers)
+                .HasForeignKey(ua => ua.QuizResultId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<UserAnswer>()
+                .HasOne(ua => ua.Question)
                 .WithMany()
-                .HasForeignKey(p => p.CourseId)
+                .HasForeignKey(ua => ua.QuestionId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // ✅ إعدادات الجداول الجديدة
+            modelBuilder.Entity<UserAnswer>()
+                .HasOne(ua => ua.Answer)
+                .WithMany()
+                .HasForeignKey(ua => ua.AnswerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // 5. إعدادات تقدم المستخدم (تم التحديث)
+            modelBuilder.Entity<LessonProgress>()
+                .HasOne(lp => lp.Lesson)
+                .WithMany(l => l.Progresses)
+                .HasForeignKey(lp => lp.LessonId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<LessonProgress>()
+                .HasOne(lp => lp.User)
+                .WithMany(u => u.LessonProgresses)
+                .HasForeignKey(lp => lp.UserId) // تغيير من UserGuid إلى UserId
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<LessonProgress>()
+                .Property(lp => lp.IsCompleted)
+                .HasDefaultValue(false);
+
+            modelBuilder.Entity<LessonProgress>()
+                .Property(lp => lp.ProgressPercentage)
+                .HasDefaultValue(0);
+
+            // 6. إعدادات الجداول المساعدة
             modelBuilder.Entity<EmailConfirmationCode>(entity =>
             {
                 entity.HasIndex(e => e.Email).IsUnique(false);
@@ -155,13 +203,54 @@ namespace e_learning.Data
                 entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETDATE()");
             });
 
-            modelBuilder.Entity<UserRefreshToken>(entity =>
-            {
-                entity.HasIndex(e => e.UserId).IsUnique(false);
-                entity.HasIndex(e => e.RefreshToken).IsUnique();
-                entity.Property(e => e.ExpiryDate).IsRequired();
-                entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETDATE()");
-            });
+            // إعدادات UserRefreshToken
+            modelBuilder.Entity<UserRefreshToken>()
+                .HasIndex(e => e.RefreshToken)
+                .IsUnique();
+
+            modelBuilder.Entity<UserRefreshToken>()
+                .Property(e => e.ExpiryDate)
+                .IsRequired();
+
+            modelBuilder.Entity<UserRefreshToken>()
+                .Property(e => e.CreatedAt)
+                .HasDefaultValueSql("GETDATE()");
+
+            modelBuilder.Entity<UserRefreshToken>()
+                .HasOne(urt => urt.User)
+                .WithMany()
+                .HasForeignKey(urt => urt.UserId) // تغيير من UserGuid إلى UserId
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // 7. إعدادات الفهرس والأداء
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
+            modelBuilder.Entity<Course>()
+                .HasIndex(c => c.Title)
+                .IsUnique(false);
+
+            modelBuilder.Entity<Lesson>()
+                .HasIndex(l => new { l.CourseId, l.Order })
+                .IsUnique();
+
+            modelBuilder.Entity<QuizResult>()
+                .HasIndex(qr => new { qr.QuizId, qr.UserId, qr.CompletedAt })
+                .IsUnique(false);
+
+            // 8. القيم الافتراضية والتواريخ
+            modelBuilder.Entity<Course>()
+                .Property(c => c.CreatedAt)
+                .HasDefaultValueSql("GETDATE()");
+
+            modelBuilder.Entity<Lesson>()
+                .Property(l => l.CreatedAt)
+                .HasDefaultValueSql("GETDATE()");
+
+            modelBuilder.Entity<Quiz>()
+                .Property(q => q.CreatedAt)
+                .HasDefaultValueSql("GETDATE()");
         }
     }
 }

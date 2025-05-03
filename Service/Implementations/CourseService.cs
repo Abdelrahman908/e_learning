@@ -4,6 +4,7 @@ using e_learning.Service.Interfaces;
 using e_learning.Models;
 using e_learning.Data;
 using e_learning.Service.Implementations;
+using e_learning.DTOs.Courses.e_learning.DTOs.Courses;
 
 namespace e_learning.Service.Implementations
 {
@@ -67,8 +68,7 @@ namespace e_learning.Service.Implementations
             {
                 Name = courseDto.Name,
                 Description = courseDto.Description,
-                CategoryId = courseDto.CategoryId, // هنا التصحيح
-                InstructorId = courseDto.InstructorId,
+                CategoryId = courseDto.CategoryId
             };
 
 

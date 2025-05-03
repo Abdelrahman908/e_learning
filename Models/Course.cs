@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using e_learning.models;
 using e_learning.Models;
 
@@ -15,14 +16,13 @@ public class Course
     public bool? IsActive { get; set; } = true;
 
     public int CategoryId { get; set; }
-
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime? UpdatedAt { get; set; }
+    public int CreatedBy { get; set; }  // تغيير من Guid إلى int
 
     public Category Category { get; set; }
 
-
-
-    public int InstructorId { get; set; }
-
+    public int InstructorId { get; set; }  // تغيير من Guid إلى int
     [ForeignKey("InstructorId")]
     public User? Instructor { get; set; }  // المدرّس
 
@@ -32,3 +32,4 @@ public class Course
     public ICollection<Lesson>? Lessons { get; set; }
     public ICollection<Quiz>? Quizzes { get; set; }
 }
+
