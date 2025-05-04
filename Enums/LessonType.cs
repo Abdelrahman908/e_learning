@@ -4,11 +4,11 @@
     {
         public enum LessonType
         {
-            Video,    // درس فيديو
-            Pdf,      // درس PDF
-            Text,     // درس نصي
-            Quiz,     // اختبار
-            Mixed     // خليط (فيديو + PDF)
+            Video,    
+            Pdf,      
+            Text,     
+            Quiz,    
+            Mixed     
         }
     }
 }

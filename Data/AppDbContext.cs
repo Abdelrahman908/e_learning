@@ -140,7 +140,7 @@ namespace e_learning.Data
             modelBuilder.Entity<QuizResult>()
                 .HasOne(qr => qr.User)
                 .WithMany(u => u.QuizResults)
-                .HasForeignKey(qr => qr.UserId) // تغيير من UserGuid إلى UserId
+                .HasForeignKey(qr => qr.UserId) 
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<QuizResult>()
@@ -165,6 +165,21 @@ namespace e_learning.Data
                 .HasForeignKey(ua => ua.AnswerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Notification>()
+                .HasOne(n => n.User)
+                .WithMany(u => u.Notifications)
+                .HasForeignKey(n => n.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Notification>()
+                .HasOne(n => n.Sender)
+                .WithMany()
+                .HasForeignKey(n => n.SenderId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
+
             // 5. إعدادات تقدم المستخدم (تم التحديث)
             modelBuilder.Entity<LessonProgress>()
                 .HasOne(lp => lp.Lesson)
@@ -175,7 +190,7 @@ namespace e_learning.Data
             modelBuilder.Entity<LessonProgress>()
                 .HasOne(lp => lp.User)
                 .WithMany(u => u.LessonProgresses)
-                .HasForeignKey(lp => lp.UserId) // تغيير من UserGuid إلى UserId
+                .HasForeignKey(lp => lp.UserId) 
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<LessonProgress>()
@@ -219,7 +234,7 @@ namespace e_learning.Data
             modelBuilder.Entity<UserRefreshToken>()
                 .HasOne(urt => urt.User)
                 .WithMany()
-                .HasForeignKey(urt => urt.UserId) // تغيير من UserGuid إلى UserId
+                .HasForeignKey(urt => urt.UserId) 
                 .OnDelete(DeleteBehavior.Cascade);
 
             // 7. إعدادات الفهرس والأداء

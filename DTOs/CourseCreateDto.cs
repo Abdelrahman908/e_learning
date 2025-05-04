@@ -3,19 +3,23 @@ using Microsoft.AspNetCore.Http;
 
 namespace e_learning.DTOs.Courses
 {
-    using System.ComponentModel.DataAnnotations;
-    using Microsoft.AspNetCore.Http;
-
-    namespace e_learning.DTOs.Courses
+    public class CourseCreateDto
     {
-        public class CourseCreateDto
-        {
-            public string Name { get; set; }
-            public string Description { get; set; }
+        [Required]
+        [MaxLength(100)]
+        public string Name { get; set; } = null!;
 
-            public decimal Price { get; set; }
-            public bool IsActive { get; set; }
-            public int CategoryId { get; set; } // تم تغييره من Guid إلى int
-        }
+        [MaxLength(1000)]
+        public string? Description { get; set; }
+
+        [Range(0, double.MaxValue)]
+        public decimal Price { get; set; }
+
+        public bool IsActive { get; set; } = true;
+
+        [Required]
+        public int CategoryId { get; set; }
+
+        public IFormFile? Image { get; set; } // للرفع من الواجهة
     }
 }

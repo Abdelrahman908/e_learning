@@ -28,7 +28,6 @@ namespace e_learning.Controllers
         {
             _context = context;
             _logger = logger;
-            // تأكد من تحويل _currentUserId إلى int
             _currentUserId = int.TryParse(httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var userId) ? userId : 0;
         }
 
@@ -48,7 +47,7 @@ namespace e_learning.Controllers
 
                 var query = _context.Notifications
                     .AsNoTracking()
-                    .Where(n => n.UserId == _currentUserId)  // مقارنة مع int
+                    .Where(n => n.UserId == _currentUserId)
                     .OrderByDescending(n => n.CreatedAt);
 
                 var totalCount = await query.CountAsync();
@@ -79,17 +78,17 @@ namespace e_learning.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error fetching notifications for user {UserId}", _currentUserId); // تصحيح الـ logging
+                _logger.LogError(ex, "Error fetching notifications for user {UserId}", _currentUserId);
                 return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse(false, "حدث خطأ أثناء معالجة طلبك"));
             }
         }
 
-        [HttpPatch("{id:guid}/read-status")]
+        [HttpPatch("{id:int}/read-status")]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateReadStatus(Guid id, [FromBody] bool isRead)
+        public async Task<IActionResult> UpdateReadStatus(int id, [FromBody] bool isRead)
         {
             try
             {
@@ -109,7 +108,7 @@ namespace e_learning.Controllers
                 }
 
                 notification.IsRead = isRead;
-                notification.CreatedAt = DateTime.UtcNow;
+                notification.UpdatedAt = DateTime.UtcNow;
                 await _context.SaveChangesAsync();
 
                 _logger.LogInformation("Notification {NotificationId} read status updated to {IsRead} by {UserId}", id, isRead, _currentUserId);
@@ -117,17 +116,17 @@ namespace e_learning.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error updating notification status for NotificationId: {NotificationId}", id); // تصحيح الـ logging
+                _logger.LogError(ex, "Error updating notification status for NotificationId: {NotificationId}", id);
                 return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse(false, "حدث خطأ أثناء معالجة طلبك"));
             }
         }
 
-        [HttpDelete("{id:guid}")]
+        [HttpDelete("{id:int}")]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> DeleteNotification(Guid id)
+        public async Task<IActionResult> DeleteNotification(int id)
         {
             try
             {
@@ -154,7 +153,7 @@ namespace e_learning.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error deleting notification - NotificationId: {NotificationId}", id); // تصحيح الـ logging
+                _logger.LogError(ex, "Error deleting notification - NotificationId: {NotificationId}", id);
                 return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse(false, "حدث خطأ أثناء معالجة طلبك"));
             }
         }

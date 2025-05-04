@@ -1,4 +1,0 @@
-wwwroot\images\profiles\722fab0f-016a-4c95-b6b2-04f4ff376c2e.jpg
-wwwroot\images\profiles\8e4f1d6f-e90f-420e-bc2b-c3c5d9ace16a.jpg
-wwwroot\images\profiles\abf2a9d4-637d-42e0-bf66-390849f2e34b.jpg
-wwwroot\swagger-authtoken.js

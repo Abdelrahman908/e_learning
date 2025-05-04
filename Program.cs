@@ -337,6 +337,7 @@ public static class SeedData
             {
                 new Course
                 {
+                    Name = "دورة البرمجة الأساسية",  // إضافة اسم الدورة هنا
                     Title = "دورة البرمجة الأساسية",
                     Description = "تعلم أساسيات البرمجة للمبتدئين",
                     InstructorId = instructor.Id,
@@ -345,6 +346,7 @@ public static class SeedData
                 },
                 new Course
                 {
+                    Name = " ASP.NET Core",
                     Title = "تعلم ASP.NET Core",
                     Description = "دورة متقدمة لتعلم تطوير الويب باستخدام ASP.NET Core",
                     InstructorId = instructor.Id,

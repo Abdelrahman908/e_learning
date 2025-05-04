@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using e_learning.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-using e_learning.DTOs.Courses.e_learning.DTOs.Courses;
 
 namespace e_learning.Controllers
 {
@@ -48,14 +47,14 @@ namespace e_learning.Controllers
                 Price = dto.Price,
                 IsActive = dto.IsActive,
                 CategoryId = dto.CategoryId,
-                InstructorId = userId, // استخدام int بدلاً من Guid
+                InstructorId = userId,
                 CreatedBy = userId
             };
 
             _context.Courses.Add(course);
             await _context.SaveChangesAsync();
 
-            return Ok(course);
+            return Ok(new { message = "Course added successfully", course });
         }
 
         // GET: api/Course/{id}
@@ -105,7 +104,7 @@ namespace e_learning.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, new { message = "Internal server error", details = ex.Message });
             }
         }
 
@@ -121,20 +120,20 @@ namespace e_learning.Controllers
             course.Title = courseRequest.Title;
             course.Description = courseRequest.Description;
             course.Price = courseRequest.Price;
-            course.IsActive = courseRequest.IsActive;
+            course.IsActive = courseRequest.IsActive.HasValue ? courseRequest.IsActive.Value : course.IsActive;  // Handling nullable bool
             course.CategoryId = courseRequest.CategoryId;
             course.InstructorId = courseRequest.InstructorId;
 
             await _context.SaveChangesAsync();
 
-            return Ok("Course updated successfully.");
+            return Ok(new { message = "Course updated successfully." });
         }
 
         // PUT: api/Course/update-with-image
-        [HttpPut("update-with-image")]
-        public async Task<IActionResult> UpdateCourseWithImage([FromForm] CourseUpdateDto model)
+        [HttpPut("update-with-image/{id}")]
+        public async Task<IActionResult> UpdateCourseWithImage(int id, [FromForm] CourseUpdateDto model)
         {
-            var course = await _context.Courses.FindAsync(model.Id);
+            var course = await _context.Courses.FindAsync(id);
             if (course == null)
                 return NotFound("Course not found.");
 
@@ -161,6 +160,13 @@ namespace e_learning.Controllers
 
             if (model.ImageFile != null && model.ImageFile.Length > 0)
             {
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
+                var extension = Path.GetExtension(model.ImageFile.FileName).ToLower();
+                if (!allowedExtensions.Contains(extension))
+                {
+                    return BadRequest("Invalid image format. Only .jpg, .jpeg, .png are allowed.");
+                }
+
                 var fileName = Guid.NewGuid() + Path.GetExtension(model.ImageFile.FileName);
                 var filePath = Path.Combine("wwwroot/images/courses", fileName);
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
@@ -173,7 +179,7 @@ namespace e_learning.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok("Course updated with image successfully.");
+            return Ok(new { message = "Course updated with image successfully." });
         }
 
         // DELETE: api/Course/{id}
@@ -183,6 +189,10 @@ namespace e_learning.Controllers
             var course = await _context.Courses.FindAsync(id);
             if (course == null)
                 return NotFound("Course not found.");
+
+            // Optionally remove related data like reviews
+            var reviews = _context.Reviews.Where(r => r.CourseId == id);
+            _context.Reviews.RemoveRange(reviews);
 
             _context.Courses.Remove(course);
             await _context.SaveChangesAsync();

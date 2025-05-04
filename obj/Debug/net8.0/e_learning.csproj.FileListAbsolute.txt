@@ -185,4 +185,3 @@ C:\Users\ta\OneDrive\Desktop\e_learning\obj\Debug\net8.0\refint\e_learning.dll
 C:\Users\ta\OneDrive\Desktop\e_learning\obj\Debug\net8.0\e_learning.pdb
 C:\Users\ta\OneDrive\Desktop\e_learning\obj\Debug\net8.0\e_learning.genruntimeconfig.cache
 C:\Users\ta\OneDrive\Desktop\e_learning\obj\Debug\net8.0\ref\e_learning.dll
-C:\Users\ta\OneDrive\Desktop\e_learning\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

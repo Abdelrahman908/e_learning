@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using e_learning.DTOs.Courses;
-using e_learning.Service.Interfaces;
 using e_learning.Models;
 using e_learning.Data;
-using e_learning.Service.Implementations;
-using e_learning.DTOs.Courses.e_learning.DTOs.Courses;
+using e_learning.Service.Interfaces;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace e_learning.Service.Implementations
 {
@@ -28,7 +29,9 @@ namespace e_learning.Service.Implementations
                 query = query.Where(c => c.Name.Contains(filter.SearchTerm));
             }
 
-            var courses = await query.ToListAsync();
+            var courses = await query
+                .AsNoTracking()  // لتقليل الحمل على الذاكرة في حالة الاستعلامات فقط
+                .ToListAsync();
 
             return courses.Select(c => new CourseDetailsDto
             {
@@ -37,12 +40,13 @@ namespace e_learning.Service.Implementations
                 Description = c.Description,
                 CategoryId = c.CategoryId,
                 CategoryName = c.Category.Name,
-
             });
         }
+
         public async Task<CourseDetailsDto?> GetCourseByIdAsync(int id)
         {
             var course = await _context.Courses
+                .Include(c => c.Category)  // إذا كنت بحاجة إلى جلب الـ Category هنا
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Id == id);
 
@@ -55,12 +59,9 @@ namespace e_learning.Service.Implementations
                 Name = course.Name,
                 Description = course.Description,
                 CategoryId = course.CategoryId,
-
+                CategoryName = course.Category?.Name, // تأكد من وجود Category
             };
         }
-
-
-
 
         public async Task CreateCourseAsync(CourseCreateDto courseDto)
         {
@@ -68,15 +69,13 @@ namespace e_learning.Service.Implementations
             {
                 Name = courseDto.Name,
                 Description = courseDto.Description,
-                CategoryId = courseDto.CategoryId
+                CategoryId = courseDto.CategoryId,
+                CreatedAt = DateTime.UtcNow // تأكد من إضافة الحقول مثل CreatedAt إذا كانت مهمة
             };
-
-
 
             _context.Courses.Add(course);
             await _context.SaveChangesAsync();
         }
-
 
         public async Task UpdateCourseAsync(int id, CourseUpdateDto courseDto)
         {
@@ -85,16 +84,13 @@ namespace e_learning.Service.Implementations
             if (course == null)
                 throw new KeyNotFoundException("Course not found");
 
-            course.Name = courseDto.Name;
-            course.Description = courseDto.Description;
+            course.Name = courseDto.Name ?? course.Name;
+            course.Description = courseDto.Description ?? course.Description;
             course.CategoryId = courseDto.CategoryId;
             course.InstructorId = courseDto.InstructorId;
 
-
             await _context.SaveChangesAsync();
         }
-
-
 
         public async Task DeleteCourseAsync(int id)
         {
@@ -108,6 +104,3 @@ namespace e_learning.Service.Implementations
         }
     }
 }
-
-
-
