@@ -3,7 +3,9 @@ using MimeKit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using e_learning.Service.Interfaces;
 
 namespace e_learning.Services
 {
@@ -11,15 +13,11 @@ namespace e_learning.Services
     {
         private readonly IConfiguration _config;
         private readonly ILogger<EmailService> _logger;
-        private readonly string _emailTemplatePath;
 
-        public EmailService(
-            IConfiguration config,
-            ILogger<EmailService> logger)
+        public EmailService(IConfiguration config, ILogger<EmailService> logger)
         {
             _config = config;
             _logger = logger;
-            _emailTemplatePath = _config["EmailSettings:TemplatePath"] ?? "Templates/Email";
         }
 
         public async Task<bool> SendConfirmationEmailAsync(string email, string confirmationCode)
@@ -27,6 +25,7 @@ namespace e_learning.Services
             var subject = "تأكيد البريد الإلكتروني";
             var body = $"<h2>رمز التأكيد: {confirmationCode}</h2><p>صالح لمدة 10 دقائق</p>";
             return await SendEmailAsync(email, subject, body);
+
         }
 
         public async Task<bool> SendPasswordResetEmailAsync(string email, string resetCode)
@@ -40,54 +39,49 @@ namespace e_learning.Services
         {
             try
             {
-                var emailSettings = _config.GetSection("EmailSettings");
+                var settings = _config.GetSection("EmailSettings");
+                var message = new MimeMessage();
 
-                var emailMessage = new MimeMessage();
-                emailMessage.From.Add(new MailboxAddress(
-                    emailSettings["SenderName"] ?? "نظام التعليم الإلكتروني",
-                    emailSettings["SenderEmail"] ?? "noreply@elearning.com"
+                message.From.Add(new MailboxAddress(
+                    settings["SenderName"] ?? "E-Learning System",
+                    settings["SenderEmail"] ?? "noreply@elearning.com"
                 ));
-                emailMessage.To.Add(MailboxAddress.Parse(toEmail));
-                emailMessage.Subject = subject;
+
+                message.To.Add(MailboxAddress.Parse(toEmail));
+                message.Subject = subject;
 
                 var builder = new BodyBuilder
                 {
                     HtmlBody = body,
-                    TextBody = StripHtml(body) // نسخة نصية للتوافق
+                    TextBody = StripHtml(body)
                 };
 
-                emailMessage.Body = builder.ToMessageBody();
+                message.Body = builder.ToMessageBody();
 
                 using var smtp = new SmtpClient();
-
                 await smtp.ConnectAsync(
-                    emailSettings["SmtpServer"] ?? "smtp.gmail.com",
-                    int.Parse(emailSettings["Port"] ?? "587"),
+                    settings["SmtpServer"] ?? "smtp.gmail.com",
+                    int.Parse(settings["Port"] ?? "587"),
                     MailKit.Security.SecureSocketOptions.StartTls
                 );
 
-                await smtp.AuthenticateAsync(
-                    emailSettings["Username"],
-                    emailSettings["Password"]
-                );
-
-                await smtp.SendAsync(emailMessage);
+                await smtp.AuthenticateAsync(settings["Username"], settings["Password"]);
+                await smtp.SendAsync(message);
                 await smtp.DisconnectAsync(true);
 
-                _logger.LogInformation($"تم إرسال البريد إلى {toEmail} بنجاح");
+                _logger.LogInformation($"Email sent to {toEmail}");
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"فشل إرسال البريد إلى {toEmail}");
+                _logger.LogError(ex, $"Failed to send email to {toEmail}");
                 return false;
             }
         }
 
         private string StripHtml(string html)
         {
-            // تنفيذ بسيط لإزالة الوسوم HTML
-            return System.Text.RegularExpressions.Regex.Replace(html, "<[^>]*>", "");
+            return Regex.Replace(html, "<[^>]*>", "");
         }
     }
 }

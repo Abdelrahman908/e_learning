@@ -1,0 +1,383 @@
+2025-05-14 16:48:22.890 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-14 16:48:23.364 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-14 16:48:35.143 +03:00 [INF] Executed DbCommand (665ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-14 16:48:36.304 +03:00 [INF] Executed DbCommand (858ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-14 16:48:36.364 +03:00 [INF] Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-14 16:48:36.878 +03:00 [INF] Executed DbCommand (47ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-14 16:48:39.392 +03:00 [INF] Executed DbCommand (1,960ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-05-14 16:48:39.480 +03:00 [INF] No migrations were applied. The database is already up to date.
+2025-05-14 16:48:40.598 +03:00 [INF] Executed DbCommand (45ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-14 16:48:41.108 +03:00 [INF] Executed DbCommand (333ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Courses] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-14 16:48:41.673 +03:00 [INF] Executed DbCommand (297ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[Role] = N'Instructor') THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-14 16:48:42.295 +03:00 [INF] Executed DbCommand (297ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Role] = N'Instructor'
+2025-05-14 16:48:44.934 +03:00 [INF] Executed DbCommand (1,559ms) [Parameters=[@p0='0', @p1='2025-05-14T13:48:42.5300769Z', @p2='0', @p3='تعلم أساسيات البرمجة للمبتدئين' (Size = 1000), @p4=NULL (Size = 4000), @p5='2', @p6='True', @p7='دورة البرمجة الأساسية' (Nullable = false) (Size = 100), @p8='0' (Precision = 18) (Scale = 2), @p9='دورة البرمجة الأساسية' (Size = 150), @p10=NULL (DbType = DateTime2), @p11='0', @p12='2025-05-14T13:48:42.5301591Z', @p13='0', @p14='دورة متقدمة لتعلم تطوير الويب باستخدام ASP.NET Core' (Size = 1000), @p15=NULL (Size = 4000), @p16='2', @p17='True', @p18=' ASP.NET Core' (Nullable = false) (Size = 100), @p19='100' (Precision = 18) (Scale = 2), @p20='تعلم ASP.NET Core' (Size = 150), @p21=NULL (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [Courses] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, 0),
+(@p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, 1)) AS i ([CategoryId], [CreatedAt], [CreatedBy], [Description], [ImageUrl], [InstructorId], [IsActive], [Name], [Price], [Title], [UpdatedAt], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([CategoryId], [CreatedAt], [CreatedBy], [Description], [ImageUrl], [InstructorId], [IsActive], [Name], [Price], [Title], [UpdatedAt])
+VALUES (i.[CategoryId], i.[CreatedAt], i.[CreatedBy], i.[Description], i.[ImageUrl], i.[InstructorId], i.[IsActive], i.[Name], i.[Price], i.[Title], i.[UpdatedAt])
+OUTPUT INSERTED.[Id], i._Position;
+2025-05-14 16:48:45.300 +03:00 [ERR] An exception occurred in the database while saving changes for context type 'e_learning.Data.AppDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The MERGE statement conflicted with the FOREIGN KEY constraint "FK_Courses_Categories_CategoryId". The conflict occurred in database "E_LearningDB", table "dbo.Categories", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:93396666-60ab-4e59-9f89-2134b00a56c2
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The MERGE statement conflicted with the FOREIGN KEY constraint "FK_Courses_Categories_CategoryId". The conflict occurred in database "E_LearningDB", table "dbo.Categories", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:93396666-60ab-4e59-9f89-2134b00a56c2
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-05-14 16:48:45.721 +03:00 [ERR] Database migration failed
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The MERGE statement conflicted with the FOREIGN KEY constraint "FK_Courses_Categories_CategoryId". The conflict occurred in database "E_LearningDB", table "dbo.Categories", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:93396666-60ab-4e59-9f89-2134b00a56c2
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at SeedData.Initialize(IServiceProvider serviceProvider) in C:\Users\ta\OneDrive\Desktop\e_learning\Program.cs:line 362
+   at Program.<Main>$(String[] args) in C:\Users\ta\OneDrive\Desktop\e_learning\Program.cs:line 224
+2025-05-14 16:48:48.217 +03:00 [INF] Starting application...
+2025-05-14 16:48:48.276 +03:00 [INF] User profile is available. Using 'C:\Users\ta\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-05-14 16:48:49.062 +03:00 [INF] Now listening on: https://localhost:7056
+2025-05-14 16:48:49.071 +03:00 [INF] Now listening on: http://localhost:5000
+2025-05-14 16:48:49.081 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-14 16:48:49.088 +03:00 [INF] Hosting environment: Development
+2025-05-14 16:48:49.090 +03:00 [INF] Content root path: C:\Users\ta\OneDrive\Desktop\e_learning
+2025-05-14 16:55:26.087 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/courses - null null
+2025-05-14 16:55:26.293 +03:00 [INF] HTTP GET /api/courses responded 307 in 5.3837 ms
+2025-05-14 16:55:26.352 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/courses - 307 0 null 270.9923ms
+2025-05-14 16:55:27.669 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/courses - null null
+2025-05-14 16:55:27.875 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/courses - null null
+2025-05-14 16:55:27.883 +03:00 [INF] HTTP OPTIONS /api/courses responded 307 in 0.1673 ms
+2025-05-14 16:55:27.894 +03:00 [INF] HTTP GET /api/courses responded 307 in 0.0444 ms
+2025-05-14 16:55:27.896 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5000/api/courses - 307 0 null 226.3686ms
+2025-05-14 16:55:27.904 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/courses - 307 0 null 28.6482ms
+2025-05-14 16:55:42.060 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/courses - null null
+2025-05-14 16:55:42.093 +03:00 [INF] HTTP GET /api/courses responded 307 in 0.0426 ms
+2025-05-14 16:55:42.097 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/courses - 307 0 null 36.5952ms
+2025-05-14 16:55:42.336 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/courses - null null
+2025-05-14 16:55:42.343 +03:00 [INF] HTTP GET /api/courses responded 307 in 0.0364 ms
+2025-05-14 16:55:42.361 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/courses - 307 0 null 25.1979ms
+2025-05-14 16:55:47.196 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/courses - null null
+2025-05-14 16:55:47.275 +03:00 [INF] HTTP GET /api/courses responded 307 in 0.0521 ms
+2025-05-14 16:55:47.293 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/courses - 307 0 null 96.8526ms
+2025-05-14 16:55:47.320 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/courses - null null
+2025-05-14 16:55:47.325 +03:00 [INF] HTTP GET /api/courses responded 307 in 0.0446 ms
+2025-05-14 16:55:47.334 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/courses - 307 0 null 14.0513ms
+2025-05-14 16:56:38.233 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/courses - null null
+2025-05-14 16:56:38.249 +03:00 [INF] HTTP GET /api/courses responded 307 in 0.0357 ms
+2025-05-14 16:56:38.251 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/courses - 307 0 null 17.4644ms
+2025-05-14 16:56:38.258 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/courses - null null
+2025-05-14 16:56:38.264 +03:00 [INF] HTTP GET /api/courses responded 307 in 0.0453 ms
+2025-05-14 16:56:38.266 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/courses - 307 0 null 8.5226ms
+2025-05-14 16:56:41.135 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/courses - null null
+2025-05-14 16:56:41.298 +03:00 [INF] HTTP OPTIONS /api/courses responded 307 in 0.0422 ms
+2025-05-14 16:56:41.304 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5000/api/courses - 307 0 null 168.8274ms
+2025-05-14 16:56:42.779 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/courses - null null
+2025-05-14 16:56:42.784 +03:00 [INF] HTTP OPTIONS /api/courses responded 307 in 0.0413 ms
+2025-05-14 16:56:42.795 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5000/api/courses - 307 0 null 16.4051ms
+2025-05-14 16:56:43.057 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/courses - null null
+2025-05-14 16:56:43.067 +03:00 [INF] HTTP OPTIONS /api/courses responded 307 in 0.0482 ms
+2025-05-14 16:56:43.070 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5000/api/courses - 307 0 null 13.337ms
+2025-05-14 16:56:43.233 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/courses - null null
+2025-05-14 16:56:43.237 +03:00 [INF] HTTP OPTIONS /api/courses responded 307 in 0.0386 ms
+2025-05-14 16:56:43.241 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5000/api/courses - 307 0 null 7.9438ms
+2025-05-14 16:56:43.394 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/courses - null null
+2025-05-14 16:56:43.402 +03:00 [INF] HTTP OPTIONS /api/courses responded 307 in 0.0492 ms
+2025-05-14 16:56:43.407 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5000/api/courses - 307 0 null 12.8066ms
+2025-05-14 16:56:43.553 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/courses - null null
+2025-05-14 16:56:43.601 +03:00 [INF] HTTP OPTIONS /api/courses responded 307 in 0.0461 ms
+2025-05-14 16:56:43.617 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5000/api/courses - 307 0 null 63.5766ms
+2025-05-14 16:56:43.704 +03:00 [INF] Request starting HTTP/1.1 OPTIONS http://localhost:5000/api/courses - null null
+2025-05-14 16:56:43.707 +03:00 [INF] HTTP OPTIONS /api/courses responded 307 in 0.0392 ms
+2025-05-14 16:56:43.714 +03:00 [INF] Request finished HTTP/1.1 OPTIONS http://localhost:5000/api/courses - 307 0 null 9.9392ms
+2025-05-14 16:56:55.511 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/courses - null null
+2025-05-14 16:56:55.521 +03:00 [INF] HTTP GET /api/courses responded 307 in 0.0442 ms
+2025-05-14 16:56:55.523 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/courses - 307 0 null 11.749ms
+2025-05-14 16:56:55.538 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/courses - null null
+2025-05-14 16:56:55.541 +03:00 [INF] HTTP GET /api/courses responded 307 in 0.6916 ms
+2025-05-14 16:56:55.547 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/courses - 307 0 null 9.2419ms
+2025-05-14 16:57:00.803 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/courses - null null
+2025-05-14 16:57:00.810 +03:00 [INF] HTTP GET /api/courses responded 307 in 0.0422 ms
+2025-05-14 16:57:00.814 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/courses - 307 0 null 11.3089ms
+2025-05-14 16:57:00.830 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/api/courses - null null
+2025-05-14 16:57:00.842 +03:00 [INF] HTTP GET /api/courses responded 307 in 0.6782 ms
+2025-05-14 16:57:00.845 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/api/courses - 307 0 null 14.9367ms
+2025-05-14 17:02:29.801 +03:00 [INF] Application is shutting down...
+2025-05-14 17:37:09.983 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-14 17:37:10.155 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-14 17:37:12.887 +03:00 [INF] Executed DbCommand (157ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-14 17:37:13.171 +03:00 [INF] Executed DbCommand (80ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-14 17:37:13.183 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-14 17:37:13.202 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-14 17:37:13.484 +03:00 [INF] Executed DbCommand (228ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-05-14 17:37:13.546 +03:00 [INF] No migrations were applied. The database is already up to date.
+2025-05-14 17:37:15.452 +03:00 [INF] Executed DbCommand (923ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-14 17:37:15.683 +03:00 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Courses] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-14 17:37:15.917 +03:00 [INF] Executed DbCommand (50ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[Role] = N'Instructor') THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-14 17:37:16.469 +03:00 [INF] Executed DbCommand (317ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Role] = N'Instructor'
+2025-05-14 17:37:19.163 +03:00 [INF] Executed DbCommand (1,388ms) [Parameters=[@p0='0', @p1='2025-05-14T14:37:16.7283555Z', @p2='0', @p3='تعلم أساسيات البرمجة للمبتدئين' (Size = 1000), @p4=NULL (Size = 4000), @p5='2', @p6='True', @p7='دورة البرمجة الأساسية' (Nullable = false) (Size = 100), @p8='0' (Precision = 18) (Scale = 2), @p9='دورة البرمجة الأساسية' (Size = 150), @p10=NULL (DbType = DateTime2), @p11='0', @p12='2025-05-14T14:37:16.7284102Z', @p13='0', @p14='دورة متقدمة لتعلم تطوير الويب باستخدام ASP.NET Core' (Size = 1000), @p15=NULL (Size = 4000), @p16='2', @p17='True', @p18=' ASP.NET Core' (Nullable = false) (Size = 100), @p19='100' (Precision = 18) (Scale = 2), @p20='تعلم ASP.NET Core' (Size = 150), @p21=NULL (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [Courses] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, 0),
+(@p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, 1)) AS i ([CategoryId], [CreatedAt], [CreatedBy], [Description], [ImageUrl], [InstructorId], [IsActive], [Name], [Price], [Title], [UpdatedAt], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([CategoryId], [CreatedAt], [CreatedBy], [Description], [ImageUrl], [InstructorId], [IsActive], [Name], [Price], [Title], [UpdatedAt])
+VALUES (i.[CategoryId], i.[CreatedAt], i.[CreatedBy], i.[Description], i.[ImageUrl], i.[InstructorId], i.[IsActive], i.[Name], i.[Price], i.[Title], i.[UpdatedAt])
+OUTPUT INSERTED.[Id], i._Position;
+2025-05-14 17:37:19.299 +03:00 [ERR] An exception occurred in the database while saving changes for context type 'e_learning.Data.AppDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The MERGE statement conflicted with the FOREIGN KEY constraint "FK_Courses_Categories_CategoryId". The conflict occurred in database "E_LearningDB", table "dbo.Categories", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:087415db-b2d0-47b9-ac23-fc83307d99a5
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The MERGE statement conflicted with the FOREIGN KEY constraint "FK_Courses_Categories_CategoryId". The conflict occurred in database "E_LearningDB", table "dbo.Categories", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:087415db-b2d0-47b9-ac23-fc83307d99a5
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-05-14 17:37:19.542 +03:00 [ERR] Database migration failed
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The MERGE statement conflicted with the FOREIGN KEY constraint "FK_Courses_Categories_CategoryId". The conflict occurred in database "E_LearningDB", table "dbo.Categories", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:087415db-b2d0-47b9-ac23-fc83307d99a5
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at SeedData.Initialize(IServiceProvider serviceProvider) in C:\Users\ta\OneDrive\Desktop\e_learning\Program.cs:line 362
+   at Program.<Main>$(String[] args) in C:\Users\ta\OneDrive\Desktop\e_learning\Program.cs:line 224
+2025-05-14 17:37:20.180 +03:00 [INF] Starting application...
+2025-05-14 17:37:20.288 +03:00 [INF] User profile is available. Using 'C:\Users\ta\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-05-14 17:37:21.124 +03:00 [INF] Now listening on: https://localhost:7056
+2025-05-14 17:37:21.165 +03:00 [INF] Now listening on: http://localhost:5000
+2025-05-14 17:37:21.178 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-14 17:37:21.180 +03:00 [INF] Hosting environment: Development
+2025-05-14 17:37:22.543 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger/index.html - null null
+2025-05-14 17:37:22.647 +03:00 [INF] Content root path: C:\Users\ta\OneDrive\Desktop\e_learning
+2025-05-14 17:37:23.029 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger/index.html - 200 null text/html;charset=utf-8 519.3271ms
+2025-05-14 17:37:29.709 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger-ui/custom.css - null null
+2025-05-14 17:37:30.773 +03:00 [INF] HTTP GET /swagger-ui/custom.css responded 404 in 1051.5988 ms
+2025-05-14 17:37:30.799 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger-ui/custom.css - 404 0 null 1089.9657ms
+2025-05-14 17:37:30.828 +03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7056/swagger-ui/custom.css, Response status code: 404
+2025-05-14 17:37:31.119 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger/v1/swagger.json - null null
+2025-05-14 17:37:32.024 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 904.9076ms
+2025-05-14 19:40:17.669 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger/v1/swagger.json - null null
+2025-05-14 19:40:18.458 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 803.3984ms

@@ -15,5 +15,8 @@ public class UserRefreshToken
     public string RefreshToken { get; set; } = string.Empty;
     public DateTime ExpiryDate { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public bool IsUsed { get; set; }   // ✅ Add this
+    public bool IsRevoked { get; set; } // ✅ Optional but commonly used
+
     public int ExpiresIn { get; set; }
 }

@@ -36,9 +36,8 @@ namespace e_learning.Models
         [Required]
         public int CourseId { get; set; }
         public Course Course { get; set; }
-
         public Quiz Quiz { get; set; }
-        public ICollection<Quiz> Quizzes { get; set; } = new List<Quiz>();
+
 
         public ICollection<LessonMaterial> Materials { get; set; } = new List<LessonMaterial>();
         public ICollection<LessonProgress> Progresses { get; set; } = new List<LessonProgress>();

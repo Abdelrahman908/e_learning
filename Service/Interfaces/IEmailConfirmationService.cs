@@ -1,5 +1,4 @@
-﻿// في مجلد Services/IEmailConfirmationService.cs
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace e_learning.Services
 {

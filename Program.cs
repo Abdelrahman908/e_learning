@@ -103,7 +103,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.WithOrigins("http://localhost:3000", "https://localhost:3000", "https://yourapp.com")
+        policy.WithOrigins("http://localhost:3000", "https://localhost:3000", "http://localhost:3001", "http://localhost:5173")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials()
@@ -180,6 +180,10 @@ builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<ILessonService, LessonService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddMemoryCache();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IEmailConfirmationService, EmailConfirmationService>();
+
 
 // Add AutoMapper
 builder.Services.AddAutoMapper(typeof(QuizProfile).Assembly);
@@ -203,6 +207,9 @@ builder.Services.AddHttpClient<RecommendationService>();
 builder.Services.AddHealthChecks()
     .AddDbContextCheck<AppDbContext>("Database")
     .AddCheck<FileStorageHealthCheck>("File Storage");
+// Infrastructure Services
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient();
 
 // Build App
 var app = builder.Build();
@@ -252,6 +259,7 @@ app.UseStaticFiles(new StaticFileOptions
 app.UseRouting();
 app.UseCors("AllowAll");
 app.UseRateLimiter();
+//app.UseCors("AllowFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -1,0 +1,1386 @@
+2025-05-16 00:29:11.429 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - null null
+2025-05-16 00:29:11.734 +03:00 [INF] CORS policy execution successful.
+2025-05-16 00:29:11.746 +03:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 24.6021 ms
+2025-05-16 00:29:11.751 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - 204 null null 331.1216ms
+2025-05-16 00:29:11.758 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 73
+2025-05-16 00:29:11.767 +03:00 [INF] CORS policy execution successful.
+2025-05-16 00:29:11.774 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 00:29:11.796 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-16 00:29:11.806 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-16 00:29:12.340 +03:00 [INF] Executed DbCommand (155ms) [Parameters=[@__dto_Email_0='shahdn672@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-16 00:29:12.721 +03:00 [WRN] محاولة دخول ببريد غير مؤكد: shahdn672@gmail.com
+2025-05-16 00:29:12.731 +03:00 [INF] Executing UnauthorizedObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-16 00:29:12.735 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 922.8926ms
+2025-05-16 00:29:12.748 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-16 00:29:12.749 +03:00 [INF] HTTP POST /api/Auth/login responded 401 in 982.6096 ms
+2025-05-16 00:29:12.763 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 401 null application/json; charset=utf-8 1005.4234ms
+2025-05-16 00:29:37.483 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/confirm-email - null null
+2025-05-16 00:29:37.490 +03:00 [INF] CORS policy execution successful.
+2025-05-16 00:29:37.497 +03:00 [INF] HTTP OPTIONS /api/Auth/confirm-email responded 204 in 9.0760 ms
+2025-05-16 00:29:37.500 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/confirm-email - 204 null null 16.6137ms
+2025-05-16 00:29:37.504 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/confirm-email - application/json 47
+2025-05-16 00:29:37.517 +03:00 [INF] CORS policy execution successful.
+2025-05-16 00:29:37.518 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 00:29:37.528 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.ConfirmEmail (e_learning)'
+2025-05-16 00:29:37.675 +03:00 [INF] Route matched with {action = "ConfirmEmail", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ConfirmEmail(e_learning.DTOs.ConfirmEmailDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-16 00:29:38.251 +03:00 [INF] Executed DbCommand (103ms) [Parameters=[@__ToLower_0='shahdn672@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Code], [e].[CreatedAt], [e].[Email], [e].[ExpiryDate]
+FROM [EmailConfirmationCodes] AS [e]
+WHERE [e].[Email] = @__ToLower_0 AND [e].[ExpiryDate] > GETUTCDATE()
+ORDER BY [e].[ExpiryDate] DESC
+2025-05-16 00:29:38.263 +03:00 [INF] Executing BadRequestObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-16 00:29:38.265 +03:00 [INF] Executed action e_learning.Controllers.AuthController.ConfirmEmail (e_learning) in 587.6697ms
+2025-05-16 00:29:38.267 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.ConfirmEmail (e_learning)'
+2025-05-16 00:29:38.268 +03:00 [INF] HTTP POST /api/Auth/confirm-email responded 400 in 751.6762 ms
+2025-05-16 00:29:38.276 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/confirm-email - 400 null application/json; charset=utf-8 770.8149ms
+2025-05-16 00:29:42.043 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/resend-confirmation-code - null null
+2025-05-16 00:29:42.048 +03:00 [INF] CORS policy execution successful.
+2025-05-16 00:29:42.049 +03:00 [INF] HTTP OPTIONS /api/Auth/resend-confirmation-code responded 204 in 2.7115 ms
+2025-05-16 00:29:42.051 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/resend-confirmation-code - 204 null null 7.8131ms
+2025-05-16 00:29:42.056 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/resend-confirmation-code - application/json 31
+2025-05-16 00:29:42.066 +03:00 [INF] CORS policy execution successful.
+2025-05-16 00:29:42.067 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 00:29:42.068 +03:00 [INF] HTTP POST /api/Auth/resend-confirmation-code responded 404 in 2.2367 ms
+2025-05-16 00:29:42.074 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/resend-confirmation-code - 404 0 null 17.7355ms
+2025-05-16 00:29:42.080 +03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST https://localhost:7056/api/Auth/resend-confirmation-code, Response status code: 404
+2025-05-16 00:29:48.699 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/resend-confirmation-code - application/json 31
+2025-05-16 00:29:48.728 +03:00 [INF] CORS policy execution successful.
+2025-05-16 00:29:48.730 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 00:29:48.732 +03:00 [INF] HTTP POST /api/Auth/resend-confirmation-code responded 404 in 4.1204 ms
+2025-05-16 00:29:48.747 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/resend-confirmation-code - 404 0 null 48.5783ms
+2025-05-16 00:29:48.813 +03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST https://localhost:7056/api/Auth/resend-confirmation-code, Response status code: 404
+2025-05-16 00:33:20.707 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/register - null null
+2025-05-16 00:33:20.720 +03:00 [INF] CORS policy execution successful.
+2025-05-16 00:33:20.725 +03:00 [INF] HTTP OPTIONS /api/Auth/register responded 204 in 5.1425 ms
+2025-05-16 00:33:20.728 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/register - 204 null null 20.9918ms
+2025-05-16 00:33:20.732 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/register - application/json 94
+2025-05-16 00:33:20.745 +03:00 [INF] CORS policy execution successful.
+2025-05-16 00:33:20.746 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 00:33:20.752 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-16 00:33:20.756 +03:00 [INF] Route matched with {action = "Register", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Register(e_learning.DTOs.UserRegisterDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-16 00:33:20.816 +03:00 [INF] Executed DbCommand (39ms) [Parameters=[@__dto_Email_0='malaknasr544@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[Email] = @__dto_Email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-16 00:33:21.432 +03:00 [INF] Executed DbCommand (102ms) [Parameters=[@p0='2025-05-15T21:33:21.2451731Z', @p1='malaknasr544@gmail.com' (Size = 450), @p2='malak' (Size = 4000), @p3='False', @p4='$2a$11$yXmQpVa6j5QElqzeUcSdaebI8FR8hA75jzhGKoWl41xceTekarSZ6' (Size = 4000), @p5='Student' (Nullable = false) (Size = 4000), @p6=NULL (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Users] ([CreatedAt], [Email], [FullName], [IsEmailConfirmed], [PasswordHash], [Role], [UpdatedAt])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-16 00:33:21.509 +03:00 [INF] Executed DbCommand (26ms) [Parameters=[@p0='109062' (Nullable = false) (Size = 6), @p1='2025-05-15T21:33:21.4725114Z', @p2='malaknasr544@gmail.com' (Nullable = false) (Size = 450), @p3='2025-05-15T21:43:21.4725279Z'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [EmailConfirmationCodes] ([Code], [CreatedAt], [Email], [ExpiryDate])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3);
+2025-05-16 00:33:24.792 +03:00 [INF] تم إرسال البريد إلى malaknasr544@gmail.com بنجاح
+2025-05-16 00:33:24.795 +03:00 [INF] تم تسجيل مستخدم جديد - ID: 9
+2025-05-16 00:33:24.801 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RegisterResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-16 00:33:24.814 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Register (e_learning) in 4053.9734ms
+2025-05-16 00:33:24.823 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-16 00:33:24.825 +03:00 [INF] HTTP POST /api/Auth/register responded 200 in 4080.9426 ms
+2025-05-16 00:33:24.845 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/register - 200 null application/json; charset=utf-8 4112.3071ms
+2025-05-16 00:34:40.425 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/confirm-email - application/json 50
+2025-05-16 00:34:40.442 +03:00 [INF] CORS policy execution successful.
+2025-05-16 00:34:40.451 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 00:34:40.453 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.ConfirmEmail (e_learning)'
+2025-05-16 00:34:40.455 +03:00 [INF] Route matched with {action = "ConfirmEmail", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ConfirmEmail(e_learning.DTOs.ConfirmEmailDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-16 00:34:40.520 +03:00 [INF] Executed DbCommand (35ms) [Parameters=[@__ToLower_0='malaknasr544@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Code], [e].[CreatedAt], [e].[Email], [e].[ExpiryDate]
+FROM [EmailConfirmationCodes] AS [e]
+WHERE [e].[Email] = @__ToLower_0 AND [e].[ExpiryDate] > GETUTCDATE()
+ORDER BY [e].[ExpiryDate] DESC
+2025-05-16 00:34:40.588 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[@__dto_Email_0='malaknasr544@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-16 00:34:40.746 +03:00 [INF] Executed DbCommand (39ms) [Parameters=[@p1='9', @p0='True'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Users] SET [IsEmailConfirmed] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+2025-05-16 00:34:40.902 +03:00 [INF] Executed DbCommand (13ms) [Parameters=[@__ToLower_0='malaknasr544@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[Code], [e].[CreatedAt], [e].[Email], [e].[ExpiryDate]
+FROM [EmailConfirmationCodes] AS [e]
+WHERE [e].[Email] = @__ToLower_0
+2025-05-16 00:34:40.983 +03:00 [INF] Executed DbCommand (16ms) [Parameters=[@p0='6'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+DELETE FROM [EmailConfirmationCodes]
+OUTPUT 1
+WHERE [Id] = @p0;
+2025-05-16 00:34:41.015 +03:00 [INF] تم تأكيد البريد الإلكتروني لـ: malaknasr544@gmail.com
+2025-05-16 00:34:41.016 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-16 00:34:41.019 +03:00 [INF] Executed action e_learning.Controllers.AuthController.ConfirmEmail (e_learning) in 547.0008ms
+2025-05-16 00:34:41.021 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.ConfirmEmail (e_learning)'
+2025-05-16 00:34:41.025 +03:00 [INF] HTTP POST /api/Auth/confirm-email responded 200 in 582.9462 ms
+2025-05-16 00:34:41.032 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/confirm-email - 200 null application/json; charset=utf-8 607.4418ms
+2025-05-16 00:34:44.885 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/confirm-email - application/json 50
+2025-05-16 00:34:44.906 +03:00 [INF] CORS policy execution successful.
+2025-05-16 00:34:44.911 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 00:34:45.119 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.ConfirmEmail (e_learning)'
+2025-05-16 00:34:45.122 +03:00 [INF] Route matched with {action = "ConfirmEmail", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ConfirmEmail(e_learning.DTOs.ConfirmEmailDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-16 00:34:45.382 +03:00 [INF] Executed DbCommand (214ms) [Parameters=[@__ToLower_0='malaknasr544@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Code], [e].[CreatedAt], [e].[Email], [e].[ExpiryDate]
+FROM [EmailConfirmationCodes] AS [e]
+WHERE [e].[Email] = @__ToLower_0 AND [e].[ExpiryDate] > GETUTCDATE()
+ORDER BY [e].[ExpiryDate] DESC
+2025-05-16 00:34:45.390 +03:00 [INF] Executing BadRequestObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-16 00:34:45.397 +03:00 [INF] Executed action e_learning.Controllers.AuthController.ConfirmEmail (e_learning) in 260.0328ms
+2025-05-16 00:34:45.401 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.ConfirmEmail (e_learning)'
+2025-05-16 00:34:45.403 +03:00 [INF] HTTP POST /api/Auth/confirm-email responded 400 in 496.3148 ms
+2025-05-16 00:34:45.413 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/confirm-email - 400 null application/json; charset=utf-8 527.4912ms
+2025-05-16 00:34:47.855 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/resend-confirmation-code - application/json 34
+2025-05-16 00:34:47.869 +03:00 [INF] CORS policy execution successful.
+2025-05-16 00:34:47.871 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 00:34:47.879 +03:00 [INF] HTTP POST /api/Auth/resend-confirmation-code responded 404 in 10.7824 ms
+2025-05-16 00:34:47.884 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/resend-confirmation-code - 404 0 null 28.7941ms
+2025-05-16 00:34:47.908 +03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST https://localhost:7056/api/Auth/resend-confirmation-code, Response status code: 404
+2025-05-16 00:35:07.415 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/confirm-email - application/json 50
+2025-05-16 00:35:07.420 +03:00 [INF] CORS policy execution successful.
+2025-05-16 00:35:07.422 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 00:35:07.424 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.ConfirmEmail (e_learning)'
+2025-05-16 00:35:07.432 +03:00 [INF] Route matched with {action = "ConfirmEmail", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ConfirmEmail(e_learning.DTOs.ConfirmEmailDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-16 00:35:07.485 +03:00 [INF] Executed DbCommand (32ms) [Parameters=[@__ToLower_0='malaknasr544@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Code], [e].[CreatedAt], [e].[Email], [e].[ExpiryDate]
+FROM [EmailConfirmationCodes] AS [e]
+WHERE [e].[Email] = @__ToLower_0 AND [e].[ExpiryDate] > GETUTCDATE()
+ORDER BY [e].[ExpiryDate] DESC
+2025-05-16 00:35:07.497 +03:00 [INF] Executing BadRequestObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-16 00:35:07.501 +03:00 [INF] Executed action e_learning.Controllers.AuthController.ConfirmEmail (e_learning) in 64.4401ms
+2025-05-16 00:35:07.505 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.ConfirmEmail (e_learning)'
+2025-05-16 00:35:07.509 +03:00 [INF] HTTP POST /api/Auth/confirm-email responded 400 in 89.0463 ms
+2025-05-16 00:35:07.517 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/confirm-email - 400 null application/json; charset=utf-8 101.1497ms
+2025-05-16 00:35:30.686 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/register - application/json 90
+2025-05-16 00:35:30.711 +03:00 [INF] CORS policy execution successful.
+2025-05-16 00:35:30.714 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 00:35:30.715 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-16 00:35:30.718 +03:00 [INF] Route matched with {action = "Register", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Register(e_learning.DTOs.UserRegisterDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-16 00:35:30.883 +03:00 [INF] Executed DbCommand (97ms) [Parameters=[@__dto_Email_0='shahdn672@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[Email] = @__dto_Email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-16 00:35:31.224 +03:00 [WRN] محاولة تسجيل بريد موجود: shahdn672@gmail.com
+2025-05-16 00:35:31.227 +03:00 [INF] Executing ConflictObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-16 00:35:31.229 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Register (e_learning) in 481.0985ms
+2025-05-16 00:35:31.233 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-16 00:35:31.234 +03:00 [INF] HTTP POST /api/Auth/register responded 409 in 523.3952 ms
+2025-05-16 00:35:31.250 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/register - 409 null application/json; charset=utf-8 564.0705ms
+2025-05-16 00:35:55.333 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/resend-confirmation-code - application/json 31
+2025-05-16 00:35:55.409 +03:00 [INF] CORS policy execution successful.
+2025-05-16 00:35:55.413 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 00:35:55.424 +03:00 [INF] HTTP POST /api/Auth/resend-confirmation-code responded 404 in 14.3072 ms
+2025-05-16 00:35:55.427 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/resend-confirmation-code - 404 0 null 94.3355ms
+2025-05-16 00:35:55.627 +03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST https://localhost:7056/api/Auth/resend-confirmation-code, Response status code: 404
+2025-05-16 00:36:31.054 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/resend-confirmation-code - application/json 31
+2025-05-16 00:36:31.196 +03:00 [INF] CORS policy execution successful.
+2025-05-16 00:36:31.198 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 00:36:31.210 +03:00 [INF] HTTP POST /api/Auth/resend-confirmation-code responded 404 in 14.0623 ms
+2025-05-16 00:36:31.213 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/resend-confirmation-code - 404 0 null 159.2201ms
+2025-05-16 00:36:31.279 +03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST https://localhost:7056/api/Auth/resend-confirmation-code, Response status code: 404
+2025-05-16 01:43:43.780 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/auth/register - null null
+2025-05-16 01:43:43.864 +03:00 [INF] CORS policy execution successful.
+2025-05-16 01:43:43.888 +03:00 [INF] HTTP OPTIONS /api/auth/register responded 204 in 47.4474 ms
+2025-05-16 01:43:43.897 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/auth/register - 204 null null 124.9154ms
+2025-05-16 01:43:43.919 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/auth/register - application/json 89
+2025-05-16 01:43:43.924 +03:00 [INF] CORS policy execution successful.
+2025-05-16 01:43:43.936 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 01:43:43.966 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-16 01:43:43.997 +03:00 [INF] Route matched with {action = "Register", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Register(e_learning.DTOs.UserRegisterDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-16 01:43:44.526 +03:00 [INF] Executed DbCommand (171ms) [Parameters=[@__dto_Email_0='shahdn672@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[Email] = @__dto_Email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-16 01:43:44.543 +03:00 [WRN] محاولة تسجيل بريد موجود: shahdn672@gmail.com
+2025-05-16 01:43:44.551 +03:00 [INF] Executing ConflictObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-16 01:43:44.559 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Register (e_learning) in 555.6262ms
+2025-05-16 01:43:44.560 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-16 01:43:44.564 +03:00 [INF] HTTP POST /api/auth/register responded 409 in 640.8591 ms
+2025-05-16 01:43:44.573 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/auth/register - 409 null application/json; charset=utf-8 656.6258ms
+2025-05-16 01:43:56.010 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/auth/register - application/json 92
+2025-05-16 01:43:56.025 +03:00 [INF] CORS policy execution successful.
+2025-05-16 01:43:56.027 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 01:43:56.038 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-16 01:43:56.042 +03:00 [INF] Route matched with {action = "Register", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Register(e_learning.DTOs.UserRegisterDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-16 01:43:56.088 +03:00 [INF] Executed DbCommand (12ms) [Parameters=[@__dto_Email_0='shahdn672@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[Email] = @__dto_Email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-16 01:43:56.121 +03:00 [WRN] محاولة تسجيل بريد موجود: shahdn672@gmail.com
+2025-05-16 01:43:56.125 +03:00 [INF] Executing ConflictObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-16 01:43:56.138 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Register (e_learning) in 82.2122ms
+2025-05-16 01:43:56.143 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-16 01:43:56.144 +03:00 [INF] HTTP POST /api/auth/register responded 409 in 119.3508 ms
+2025-05-16 01:43:56.156 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/auth/register - 409 null application/json; charset=utf-8 147.3202ms
+2025-05-16 02:31:50.012 +03:00 [INF] Application is shutting down...
+2025-05-16 11:37:12.193 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-16 11:37:12.403 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 11:37:17.277 +03:00 [INF] Executed DbCommand (583ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-16 11:37:19.626 +03:00 [INF] Executed DbCommand (2,217ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-16 11:37:19.661 +03:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-16 11:37:19.680 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-16 11:37:22.161 +03:00 [INF] Executed DbCommand (2,429ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-05-16 11:37:22.290 +03:00 [INF] No migrations were applied. The database is already up to date.
+2025-05-16 11:37:23.526 +03:00 [INF] Executed DbCommand (193ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-16 11:37:23.764 +03:00 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Courses] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-16 11:37:24.692 +03:00 [INF] Executed DbCommand (710ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[Role] = N'Instructor') THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-16 11:37:25.608 +03:00 [INF] Executed DbCommand (342ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Role] = N'Instructor'
+2025-05-16 11:37:33.791 +03:00 [INF] Executed DbCommand (6,414ms) [Parameters=[@p0='0', @p1='2025-05-16T08:37:26.2693646Z', @p2='0', @p3='تعلم أساسيات البرمجة للمبتدئين' (Size = 1000), @p4=NULL (Size = 4000), @p5='2', @p6='True', @p7='دورة البرمجة الأساسية' (Nullable = false) (Size = 100), @p8='0' (Precision = 18) (Scale = 2), @p9='دورة البرمجة الأساسية' (Size = 150), @p10=NULL (DbType = DateTime2), @p11='0', @p12='2025-05-16T08:37:26.2694303Z', @p13='0', @p14='دورة متقدمة لتعلم تطوير الويب باستخدام ASP.NET Core' (Size = 1000), @p15=NULL (Size = 4000), @p16='2', @p17='True', @p18=' ASP.NET Core' (Nullable = false) (Size = 100), @p19='100' (Precision = 18) (Scale = 2), @p20='تعلم ASP.NET Core' (Size = 150), @p21=NULL (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [Courses] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, 0),
+(@p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, 1)) AS i ([CategoryId], [CreatedAt], [CreatedBy], [Description], [ImageUrl], [InstructorId], [IsActive], [Name], [Price], [Title], [UpdatedAt], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([CategoryId], [CreatedAt], [CreatedBy], [Description], [ImageUrl], [InstructorId], [IsActive], [Name], [Price], [Title], [UpdatedAt])
+VALUES (i.[CategoryId], i.[CreatedAt], i.[CreatedBy], i.[Description], i.[ImageUrl], i.[InstructorId], i.[IsActive], i.[Name], i.[Price], i.[Title], i.[UpdatedAt])
+OUTPUT INSERTED.[Id], i._Position;
+2025-05-16 11:37:33.949 +03:00 [ERR] An exception occurred in the database while saving changes for context type 'e_learning.Data.AppDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The MERGE statement conflicted with the FOREIGN KEY constraint "FK_Courses_Categories_CategoryId". The conflict occurred in database "E_LearningDB", table "dbo.Categories", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:9f85de30-425c-4206-a759-4f0e5f11a07f
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The MERGE statement conflicted with the FOREIGN KEY constraint "FK_Courses_Categories_CategoryId". The conflict occurred in database "E_LearningDB", table "dbo.Categories", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:9f85de30-425c-4206-a759-4f0e5f11a07f
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-05-16 11:37:34.286 +03:00 [ERR] Database migration failed
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The MERGE statement conflicted with the FOREIGN KEY constraint "FK_Courses_Categories_CategoryId". The conflict occurred in database "E_LearningDB", table "dbo.Categories", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:9f85de30-425c-4206-a759-4f0e5f11a07f
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at SeedData.Initialize(IServiceProvider serviceProvider) in C:\Users\ta\OneDrive\Desktop\e_learning\Program.cs:line 363
+   at Program.<Main>$(String[] args) in C:\Users\ta\OneDrive\Desktop\e_learning\Program.cs:line 224
+2025-05-16 11:37:35.189 +03:00 [INF] Starting application...
+2025-05-16 11:37:35.235 +03:00 [INF] User profile is available. Using 'C:\Users\ta\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-05-16 11:37:35.823 +03:00 [INF] Now listening on: https://localhost:7056
+2025-05-16 11:37:35.848 +03:00 [INF] Now listening on: http://localhost:5000
+2025-05-16 11:37:35.856 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-16 11:37:35.863 +03:00 [INF] Hosting environment: Development
+2025-05-16 11:37:35.864 +03:00 [INF] Content root path: C:\Users\ta\OneDrive\Desktop\e_learning
+2025-05-16 11:37:44.971 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger/v1/swagger.json - null null
+2025-05-16 11:37:45.631 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 665.9638ms
+2025-05-16 11:53:16.473 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/auth/register - null null
+2025-05-16 11:53:16.543 +03:00 [INF] CORS policy execution successful.
+2025-05-16 11:53:16.553 +03:00 [INF] HTTP OPTIONS /api/auth/register responded 204 in 61.4180 ms
+2025-05-16 11:53:16.557 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/auth/register - 204 null null 83.4966ms
+2025-05-16 11:53:16.568 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/auth/register - application/json 89
+2025-05-16 11:53:16.580 +03:00 [INF] CORS policy execution successful.
+2025-05-16 11:53:16.592 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 11:53:16.723 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-16 11:53:16.756 +03:00 [INF] Route matched with {action = "Register", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Register(e_learning.DTOs.UserRegisterDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-16 11:53:16.952 +03:00 [INF] Executed DbCommand (21ms) [Parameters=[@__dto_Email_0='ahhm9570@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[Email] = @__dto_Email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-16 11:53:17.320 +03:00 [INF] Executed DbCommand (16ms) [Parameters=[@p0='2025-05-16T08:53:17.2868940Z', @p1='ahhm9570@gmail.com' (Size = 450), @p2='Ahmed' (Size = 4000), @p3='False', @p4='$2a$11$zVhZEVrRKnEJuYEYpPdeQuRe1ZWIHLp1u4cCpL8cihcrNyUDSeVs6' (Size = 4000), @p5='Student' (Nullable = false) (Size = 4000), @p6=NULL (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Users] ([CreatedAt], [Email], [FullName], [IsEmailConfirmed], [PasswordHash], [Role], [UpdatedAt])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-16 11:53:17.414 +03:00 [INF] Executed DbCommand (8ms) [Parameters=[@p0='190297' (Nullable = false) (Size = 6), @p1='2025-05-16T08:53:17.3764007Z', @p2='ahhm9570@gmail.com' (Nullable = false) (Size = 450), @p3='2025-05-16T09:03:17.3765063Z'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [EmailConfirmationCodes] ([Code], [CreatedAt], [Email], [ExpiryDate])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3);
+2025-05-16 11:53:20.139 +03:00 [INF] تم إرسال البريد إلى ahhm9570@gmail.com بنجاح
+2025-05-16 11:53:20.141 +03:00 [INF] تم تسجيل مستخدم جديد - ID: 10
+2025-05-16 11:53:20.150 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RegisterResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-16 11:53:20.201 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Register (e_learning) in 3437.3652ms
+2025-05-16 11:53:20.204 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-16 11:53:20.207 +03:00 [INF] HTTP POST /api/auth/register responded 200 in 3633.5904 ms
+2025-05-16 11:53:20.226 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/auth/register - 200 null application/json; charset=utf-8 3657.9379ms
+2025-05-16 11:53:40.384 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/auth/register - application/json 89
+2025-05-16 11:53:40.389 +03:00 [INF] CORS policy execution successful.
+2025-05-16 11:53:40.391 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 11:53:40.395 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-16 11:53:40.401 +03:00 [INF] Route matched with {action = "Register", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Register(e_learning.DTOs.UserRegisterDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-16 11:53:40.422 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@__dto_Email_0='ahhm9570@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[Email] = @__dto_Email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-16 11:53:40.433 +03:00 [WRN] محاولة تسجيل بريد موجود: ahhm9570@gmail.com
+2025-05-16 11:53:40.437 +03:00 [INF] Executing ConflictObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-16 11:53:40.444 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Register (e_learning) in 37.7607ms
+2025-05-16 11:53:40.451 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-16 11:53:40.455 +03:00 [INF] HTTP POST /api/auth/register responded 409 in 66.5597 ms
+2025-05-16 11:53:40.459 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/auth/register - 409 null application/json; charset=utf-8 74.8238ms
+2025-05-16 12:01:05.897 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/api/auth/confirm-email - null null
+2025-05-16 12:01:05.904 +03:00 [INF] CORS policy execution successful.
+2025-05-16 12:01:05.906 +03:00 [INF] HTTP OPTIONS /api/api/auth/confirm-email responded 204 in 2.8760 ms
+2025-05-16 12:01:05.916 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/api/auth/confirm-email - 204 null null 19.339ms
+2025-05-16 12:01:05.919 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/api/auth/confirm-email - application/json 46
+2025-05-16 12:01:05.944 +03:00 [INF] CORS policy execution successful.
+2025-05-16 12:01:05.945 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 12:01:05.950 +03:00 [INF] HTTP POST /api/api/auth/confirm-email responded 404 in 5.7355 ms
+2025-05-16 12:01:05.954 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/api/auth/confirm-email - 404 0 null 34.83ms
+2025-05-16 12:01:06.050 +03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST https://localhost:7056/api/api/auth/confirm-email, Response status code: 404
+2025-05-16 12:05:38.717 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger/v1/swagger.json - null null
+2025-05-16 12:05:38.958 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 241.4867ms
+2025-05-16 12:08:07.294 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/api/Auth/confirm-email - null null
+2025-05-16 12:08:07.298 +03:00 [INF] CORS policy execution successful.
+2025-05-16 12:08:07.299 +03:00 [INF] HTTP OPTIONS /api/api/Auth/confirm-email responded 204 in 1.1168 ms
+2025-05-16 12:08:07.301 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/api/Auth/confirm-email - 204 null null 7.4036ms
+2025-05-16 12:08:07.308 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/api/Auth/confirm-email - application/json 46
+2025-05-16 12:08:07.314 +03:00 [INF] CORS policy execution successful.
+2025-05-16 12:08:07.315 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 12:08:07.316 +03:00 [INF] HTTP POST /api/api/Auth/confirm-email responded 404 in 2.0459 ms
+2025-05-16 12:08:07.318 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/api/Auth/confirm-email - 404 0 null 10.565ms
+2025-05-16 12:08:07.329 +03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST https://localhost:7056/api/api/Auth/confirm-email, Response status code: 404
+2025-05-16 12:12:38.170 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/auth/login - null null
+2025-05-16 12:12:38.190 +03:00 [INF] CORS policy execution successful.
+2025-05-16 12:12:38.191 +03:00 [INF] HTTP OPTIONS /api/auth/login responded 204 in 1.1505 ms
+2025-05-16 12:12:38.195 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/auth/login - 204 null null 24.807ms
+2025-05-16 12:12:38.211 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/auth/login - application/json 77
+2025-05-16 12:12:38.218 +03:00 [INF] CORS policy execution successful.
+2025-05-16 12:12:38.220 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 12:12:38.221 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-16 12:12:38.236 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-16 12:12:38.355 +03:00 [INF] Executed DbCommand (38ms) [Parameters=[@__dto_Email_0='student@elearning.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-16 12:12:38.710 +03:00 [INF] Executed DbCommand (17ms) [Parameters=[@p0='2025-05-16T09:12:38.6572295Z', @p1='0', @p2='2025-05-23T09:12:38.6571185Z', @p3='rMqU8vgdXYEYkzhvIHQIq9m5r68fB1d3AN/BZHhNM4Ovbu1dKX2sCiUozUcitWUWy7kwHbYRmBeVae162w58rQ==' (Nullable = false) (Size = 450), @p4='3'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+2025-05-16 12:12:38.723 +03:00 [INF] تم تسجيل دخول ناجح لـ: student@elearning.com
+2025-05-16 12:12:38.726 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-16 12:12:38.745 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 506.2648ms
+2025-05-16 12:12:38.747 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-16 12:12:38.749 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 530.6527 ms
+2025-05-16 12:12:38.753 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/auth/login - 200 null application/json; charset=utf-8 542.3264ms
+2025-05-16 12:13:31.123 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/auth/login - application/json 77
+2025-05-16 12:13:32.400 +03:00 [INF] CORS policy execution successful.
+2025-05-16 12:13:32.419 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 12:13:32.432 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-16 12:13:32.440 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-16 12:13:32.483 +03:00 [INF] Executed DbCommand (16ms) [Parameters=[@__dto_Email_0='student@elearning.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-16 12:13:33.000 +03:00 [INF] Executed DbCommand (12ms) [Parameters=[@p0='2025-05-16T09:13:32.9792056Z', @p1='0', @p2='2025-05-23T09:13:32.9791517Z', @p3='9XJJuoKTo0VhTTaLj6kSSz0F34HOqzYhPuOEY85et3z1Ka4kFZwTN58QSRlhNQV7GqGq30EtN8ZW1YwUh3VoZQ==' (Nullable = false) (Size = 450), @p4='3'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+2025-05-16 12:13:33.033 +03:00 [INF] تم تسجيل دخول ناجح لـ: student@elearning.com
+2025-05-16 12:13:33.039 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-16 12:13:33.050 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 600.8958ms
+2025-05-16 12:13:33.083 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-16 12:13:33.085 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 685.8014 ms
+2025-05-16 12:13:33.110 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/auth/login - 200 null application/json; charset=utf-8 1987.0445ms
+2025-05-16 12:24:22.299 +03:00 [INF] Application is shutting down...
+2025-05-16 13:42:46.505 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-16 13:42:46.639 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 13:42:47.723 +03:00 [INF] Executed DbCommand (54ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-16 13:42:47.865 +03:00 [INF] Executed DbCommand (61ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-16 13:42:47.884 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-16 13:42:47.899 +03:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-16 13:42:48.004 +03:00 [INF] Executed DbCommand (48ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-05-16 13:42:48.051 +03:00 [INF] No migrations were applied. The database is already up to date.
+2025-05-16 13:42:48.642 +03:00 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-16 13:42:48.816 +03:00 [INF] Executed DbCommand (50ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Courses] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-16 13:42:49.168 +03:00 [INF] Executed DbCommand (153ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[Role] = N'Instructor') THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-16 13:42:49.405 +03:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Role] = N'Instructor'
+2025-05-16 13:42:50.277 +03:00 [INF] Executed DbCommand (87ms) [Parameters=[@p0='0', @p1='2025-05-16T10:42:49.6683143Z', @p2='0', @p3='تعلم أساسيات البرمجة للمبتدئين' (Size = 1000), @p4=NULL (Size = 4000), @p5='2', @p6='True', @p7='دورة البرمجة الأساسية' (Nullable = false) (Size = 100), @p8='0' (Precision = 18) (Scale = 2), @p9='دورة البرمجة الأساسية' (Size = 150), @p10=NULL (DbType = DateTime2), @p11='0', @p12='2025-05-16T10:42:49.6683755Z', @p13='0', @p14='دورة متقدمة لتعلم تطوير الويب باستخدام ASP.NET Core' (Size = 1000), @p15=NULL (Size = 4000), @p16='2', @p17='True', @p18=' ASP.NET Core' (Nullable = false) (Size = 100), @p19='100' (Precision = 18) (Scale = 2), @p20='تعلم ASP.NET Core' (Size = 150), @p21=NULL (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [Courses] USING (
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, 0),
+(@p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, 1)) AS i ([CategoryId], [CreatedAt], [CreatedBy], [Description], [ImageUrl], [InstructorId], [IsActive], [Name], [Price], [Title], [UpdatedAt], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([CategoryId], [CreatedAt], [CreatedBy], [Description], [ImageUrl], [InstructorId], [IsActive], [Name], [Price], [Title], [UpdatedAt])
+VALUES (i.[CategoryId], i.[CreatedAt], i.[CreatedBy], i.[Description], i.[ImageUrl], i.[InstructorId], i.[IsActive], i.[Name], i.[Price], i.[Title], i.[UpdatedAt])
+OUTPUT INSERTED.[Id], i._Position;
+2025-05-16 13:42:50.358 +03:00 [ERR] An exception occurred in the database while saving changes for context type 'e_learning.Data.AppDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The MERGE statement conflicted with the FOREIGN KEY constraint "FK_Courses_Categories_CategoryId". The conflict occurred in database "E_LearningDB", table "dbo.Categories", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:df1ba5a3-1f6a-40a9-8a29-62cbdd87951a
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The MERGE statement conflicted with the FOREIGN KEY constraint "FK_Courses_Categories_CategoryId". The conflict occurred in database "E_LearningDB", table "dbo.Categories", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:df1ba5a3-1f6a-40a9-8a29-62cbdd87951a
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-05-16 13:42:50.431 +03:00 [ERR] Database migration failed
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The MERGE statement conflicted with the FOREIGN KEY constraint "FK_Courses_Categories_CategoryId". The conflict occurred in database "E_LearningDB", table "dbo.Categories", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:df1ba5a3-1f6a-40a9-8a29-62cbdd87951a
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at SeedData.Initialize(IServiceProvider serviceProvider) in C:\Users\ta\OneDrive\Desktop\e_learning\Program.cs:line 363
+   at Program.<Main>$(String[] args) in C:\Users\ta\OneDrive\Desktop\e_learning\Program.cs:line 224
+2025-05-16 13:42:50.779 +03:00 [INF] Starting application...
+2025-05-16 13:42:50.825 +03:00 [INF] User profile is available. Using 'C:\Users\ta\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-05-16 13:42:51.044 +03:00 [INF] Now listening on: https://localhost:7056
+2025-05-16 13:42:51.045 +03:00 [INF] Now listening on: http://localhost:5000
+2025-05-16 13:42:51.051 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-16 13:42:51.054 +03:00 [INF] Hosting environment: Development
+2025-05-16 13:42:51.056 +03:00 [INF] Content root path: C:\Users\ta\OneDrive\Desktop\e_learning
+2025-05-16 13:43:06.335 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger/index.html - null null
+2025-05-16 13:43:06.547 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger/index.html - 200 null text/html;charset=utf-8 213.95ms
+2025-05-16 13:43:06.604 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger-ui/custom.css - null null
+2025-05-16 13:43:06.765 +03:00 [INF] HTTP GET /swagger-ui/custom.css responded 404 in 146.6276 ms
+2025-05-16 13:43:06.770 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger-ui/custom.css - 404 0 null 165.5949ms
+2025-05-16 13:43:06.804 +03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7056/swagger-ui/custom.css, Response status code: 404
+2025-05-16 13:43:06.904 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger/v1/swagger.json - null null
+2025-05-16 13:43:07.587 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 683.27ms
+2025-05-16 13:45:16.264 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - null null
+2025-05-16 13:45:16.279 +03:00 [INF] CORS policy execution successful.
+2025-05-16 13:45:16.284 +03:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 12.9530 ms
+2025-05-16 13:45:16.287 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - 204 null null 26.7223ms
+2025-05-16 13:45:16.301 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 73
+2025-05-16 13:45:16.363 +03:00 [INF] CORS policy execution successful.
+2025-05-16 13:45:16.379 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 13:45:16.393 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-16 13:45:16.485 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-16 13:45:16.904 +03:00 [INF] Executed DbCommand (35ms) [Parameters=[@__dto_Email_0='shahdn672@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-16 13:45:17.393 +03:00 [WRN] محاولة دخول ببريد غير مؤكد: shahdn672@gmail.com
+2025-05-16 13:45:17.420 +03:00 [INF] Executing UnauthorizedObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-16 13:45:17.477 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 977.7037ms
+2025-05-16 13:45:17.508 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-16 13:45:17.516 +03:00 [INF] HTTP POST /api/Auth/login responded 401 in 1163.3686 ms
+2025-05-16 13:45:17.731 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 401 null application/json; charset=utf-8 1430.1632ms
+2025-05-16 13:46:01.384 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/register - null null
+2025-05-16 13:46:01.454 +03:00 [INF] CORS policy execution successful.
+2025-05-16 13:46:01.463 +03:00 [INF] HTTP OPTIONS /api/Auth/register responded 204 in 9.8251 ms
+2025-05-16 13:46:01.465 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/register - 204 null null 81.4421ms
+2025-05-16 13:46:01.482 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/register - application/json 89
+2025-05-16 13:46:01.499 +03:00 [INF] CORS policy execution successful.
+2025-05-16 13:46:01.503 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 13:46:01.512 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-16 13:46:01.527 +03:00 [INF] Route matched with {action = "Register", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Register(e_learning.DTOs.UserRegisterDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-16 13:46:01.601 +03:00 [INF] Executed DbCommand (20ms) [Parameters=[@__dto_Email_0='ahhm9570@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[Email] = @__dto_Email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-16 13:46:01.616 +03:00 [WRN] محاولة تسجيل بريد موجود: ahhm9570@gmail.com
+2025-05-16 13:46:01.620 +03:00 [INF] Executing ConflictObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-16 13:46:01.626 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Register (e_learning) in 90.5904ms
+2025-05-16 13:46:01.634 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-16 13:46:01.639 +03:00 [INF] HTTP POST /api/Auth/register responded 409 in 139.9394 ms
+2025-05-16 13:46:01.864 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/register - 409 null application/json; charset=utf-8 382.1836ms
+2025-05-16 13:46:08.931 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/register - application/json 89
+2025-05-16 13:46:08.937 +03:00 [INF] CORS policy execution successful.
+2025-05-16 13:46:08.958 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 13:46:08.961 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-16 13:46:08.964 +03:00 [INF] Route matched with {action = "Register", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Register(e_learning.DTOs.UserRegisterDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-16 13:46:09.071 +03:00 [INF] Executed DbCommand (6ms) [Parameters=[@__dto_Email_0='ahhm9570@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[Email] = @__dto_Email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-16 13:46:09.096 +03:00 [WRN] محاولة تسجيل بريد موجود: ahhm9570@gmail.com
+2025-05-16 13:46:09.097 +03:00 [INF] Executing ConflictObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-16 13:46:09.099 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Register (e_learning) in 65.1956ms
+2025-05-16 13:46:09.102 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-16 13:46:09.104 +03:00 [INF] HTTP POST /api/Auth/register responded 409 in 166.9379 ms
+2025-05-16 13:46:09.229 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/register - 409 null application/json; charset=utf-8 297.5861ms
+2025-05-16 13:47:13.803 +03:00 [INF] Application is shutting down...
+2025-05-16 14:03:55.303 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-16 14:03:55.434 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 14:03:56.711 +03:00 [INF] Executed DbCommand (57ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-16 14:03:56.830 +03:00 [INF] Executed DbCommand (54ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-16 14:03:56.843 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-16 14:03:56.864 +03:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-16 14:03:56.943 +03:00 [INF] Executed DbCommand (40ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-05-16 14:03:57.017 +03:00 [INF] No migrations were applied. The database is already up to date.
+2025-05-16 14:03:57.546 +03:00 [INF] Executed DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-16 14:03:57.691 +03:00 [INF] Executed DbCommand (52ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Courses] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-16 14:03:59.590 +03:00 [INF] Executed DbCommand (888ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[Role] = N'Instructor') THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-16 14:03:59.811 +03:00 [ERR] Failed executing DbCommand (45ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Role] = N'Instructor'
+2025-05-16 14:03:59.878 +03:00 [ERR] An exception occurred while iterating over the results of a query for context type 'e_learning.Data.AppDbContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'IsActive'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__209_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:3d63ccf7-d932-4f01-96f8-c0bfdd50988b
+Error Number:207,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'IsActive'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__209_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:3d63ccf7-d932-4f01-96f8-c0bfdd50988b
+Error Number:207,State:1,Class:16
+2025-05-16 14:03:59.952 +03:00 [ERR] Database migration failed
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'IsActive'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__209_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at SeedData.Initialize(IServiceProvider serviceProvider) in C:\Users\ta\OneDrive\Desktop\e_learning\Program.cs:line 338
+   at Program.<Main>$(String[] args) in C:\Users\ta\OneDrive\Desktop\e_learning\Program.cs:line 224
+ClientConnectionId:3d63ccf7-d932-4f01-96f8-c0bfdd50988b
+Error Number:207,State:1,Class:16
+2025-05-16 14:04:00.687 +03:00 [INF] Starting application...
+2025-05-16 14:04:00.739 +03:00 [INF] User profile is available. Using 'C:\Users\ta\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-05-16 14:04:01.071 +03:00 [INF] Now listening on: https://localhost:7056
+2025-05-16 14:04:01.084 +03:00 [INF] Now listening on: http://localhost:5000
+2025-05-16 14:04:01.104 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-16 14:04:01.113 +03:00 [INF] Hosting environment: Development
+2025-05-16 14:04:01.119 +03:00 [INF] Content root path: C:\Users\ta\OneDrive\Desktop\e_learning
+2025-05-16 14:04:02.871 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger/index.html - null null
+2025-05-16 14:04:03.104 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger/index.html - 200 null text/html;charset=utf-8 235.7946ms
+2025-05-16 14:04:03.195 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger-ui/custom.css - null null
+2025-05-16 14:04:03.649 +03:00 [INF] HTTP GET /swagger-ui/custom.css responded 404 in 172.6430 ms
+2025-05-16 14:04:03.739 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger-ui/custom.css - 404 0 null 543.9486ms
+2025-05-16 14:04:03.958 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger/v1/swagger.json - null null
+2025-05-16 14:04:04.074 +03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7056/swagger-ui/custom.css, Response status code: 404
+2025-05-16 14:04:04.792 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 833.9822ms
+2025-05-16 15:31:05.462 +03:00 [INF] Application is shutting down...
+2025-05-16 15:32:10.332 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-16 15:32:10.440 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 15:32:11.424 +03:00 [INF] Executed DbCommand (57ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-16 15:32:11.546 +03:00 [INF] Executed DbCommand (49ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-16 15:32:11.597 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-16 15:32:11.681 +03:00 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-16 15:32:11.840 +03:00 [INF] Executed DbCommand (57ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-05-16 15:32:11.882 +03:00 [INF] No migrations were applied. The database is already up to date.
+2025-05-16 15:32:12.394 +03:00 [INF] Executed DbCommand (29ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-16 15:32:12.521 +03:00 [INF] Executed DbCommand (20ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Courses] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-16 15:32:12.680 +03:00 [INF] Executed DbCommand (16ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[Role] = N'Instructor') THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-16 15:32:12.818 +03:00 [ERR] Failed executing DbCommand (20ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Role] = N'Instructor'
+2025-05-16 15:32:12.941 +03:00 [ERR] An exception occurred while iterating over the results of a query for context type 'e_learning.Data.AppDbContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'IsActive'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__209_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:4bbb4b8e-2640-4629-a484-ec8646910b89
+Error Number:207,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'IsActive'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__209_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:4bbb4b8e-2640-4629-a484-ec8646910b89
+Error Number:207,State:1,Class:16
+2025-05-16 15:32:12.970 +03:00 [ERR] Database migration failed
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'IsActive'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__209_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at SeedData.Initialize(IServiceProvider serviceProvider) in C:\Users\ta\OneDrive\Desktop\e_learning\Program.cs:line 342
+   at Program.<Main>$(String[] args) in C:\Users\ta\OneDrive\Desktop\e_learning\Program.cs:line 228
+ClientConnectionId:4bbb4b8e-2640-4629-a484-ec8646910b89
+Error Number:207,State:1,Class:16
+2025-05-16 15:32:13.350 +03:00 [INF] Starting application...
+2025-05-16 15:32:13.418 +03:00 [INF] User profile is available. Using 'C:\Users\ta\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-05-16 15:32:13.765 +03:00 [INF] Now listening on: https://localhost:7056
+2025-05-16 15:32:13.768 +03:00 [INF] Now listening on: http://localhost:5000
+2025-05-16 15:32:13.774 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-16 15:32:13.778 +03:00 [INF] Hosting environment: Development
+2025-05-16 15:32:13.783 +03:00 [INF] Content root path: C:\Users\ta\OneDrive\Desktop\e_learning
+2025-05-16 15:36:42.553 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger/v1/swagger.json - null null
+2025-05-16 15:36:43.042 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 494.1529ms
+2025-05-16 15:37:03.323 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/resend-confirmation-code - application/json 23
+2025-05-16 15:37:03.500 +03:00 [INF] CORS policy execution failed.
+2025-05-16 15:37:03.503 +03:00 [INF] Request origin https://localhost:7056 does not have permission to access the resource.
+2025-05-16 15:37:03.525 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 15:37:03.584 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.ResendConfirmationCode (e_learning)'
+2025-05-16 15:37:03.634 +03:00 [INF] Route matched with {action = "ResendConfirmationCode", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ResendConfirmationCode(e_learning.DTOs.EmailDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-16 15:37:04.159 +03:00 [ERR] Failed executing DbCommand (168ms) [Parameters=[@__ToLower_0='string' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__ToLower_0
+2025-05-16 15:37:04.207 +03:00 [ERR] An exception occurred while iterating over the results of a query for context type 'e_learning.Data.AppDbContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'IsActive'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__209_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:4bbb4b8e-2640-4629-a484-ec8646910b89
+Error Number:207,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'IsActive'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__209_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:4bbb4b8e-2640-4629-a484-ec8646910b89
+Error Number:207,State:1,Class:16
+2025-05-16 15:37:04.238 +03:00 [ERR] Error resending confirmation code to string
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'IsActive'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__209_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at e_learning.Controllers.AuthController.ResendConfirmationCode(EmailDto dto) in C:\Users\ta\OneDrive\Desktop\e_learning\Controllers\AuthController .cs:line 187
+ClientConnectionId:4bbb4b8e-2640-4629-a484-ec8646910b89
+Error Number:207,State:1,Class:16
+2025-05-16 15:37:04.261 +03:00 [INF] Executing ObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-16 15:37:04.354 +03:00 [INF] Executed action e_learning.Controllers.AuthController.ResendConfirmationCode (e_learning) in 706.1436ms
+2025-05-16 15:37:04.358 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.ResendConfirmationCode (e_learning)'
+2025-05-16 15:37:04.373 +03:00 [ERR] HTTP POST /api/Auth/resend-confirmation-code responded 500 in 923.4607 ms
+2025-05-16 15:37:04.582 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/resend-confirmation-code - 500 null application/json; charset=utf-8 1259.5681ms
+2025-05-16 15:37:50.052 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/resend-confirmation-code - application/json 36
+2025-05-16 15:37:50.074 +03:00 [INF] CORS policy execution failed.
+2025-05-16 15:37:50.078 +03:00 [INF] Request origin https://localhost:7056 does not have permission to access the resource.
+2025-05-16 15:37:50.080 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 15:37:50.083 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.ResendConfirmationCode (e_learning)'
+2025-05-16 15:37:50.084 +03:00 [INF] Route matched with {action = "ResendConfirmationCode", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ResendConfirmationCode(e_learning.DTOs.EmailDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-16 15:37:50.105 +03:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2025-05-16 15:37:50.158 +03:00 [INF] Executed action e_learning.Controllers.AuthController.ResendConfirmationCode (e_learning) in 71.0844ms
+2025-05-16 15:37:50.162 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.ResendConfirmationCode (e_learning)'
+2025-05-16 15:37:50.164 +03:00 [INF] HTTP POST /api/Auth/resend-confirmation-code responded 400 in 98.4520 ms
+2025-05-16 15:37:50.168 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/resend-confirmation-code - 400 null application/problem+json; charset=utf-8 115.6319ms
+2025-05-16 15:38:45.127 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/resend-confirmation-code - application/json 36
+2025-05-16 15:38:45.130 +03:00 [INF] CORS policy execution failed.
+2025-05-16 15:38:45.131 +03:00 [INF] Request origin https://localhost:7056 does not have permission to access the resource.
+2025-05-16 15:38:45.133 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 15:38:45.180 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.ResendConfirmationCode (e_learning)'
+2025-05-16 15:38:45.268 +03:00 [INF] Route matched with {action = "ResendConfirmationCode", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ResendConfirmationCode(e_learning.DTOs.EmailDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-16 15:38:45.338 +03:00 [ERR] Failed executing DbCommand (9ms) [Parameters=[@__ToLower_0='ahhm9570@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__ToLower_0
+2025-05-16 15:38:45.352 +03:00 [ERR] An exception occurred while iterating over the results of a query for context type 'e_learning.Data.AppDbContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'IsActive'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__209_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:4bbb4b8e-2640-4629-a484-ec8646910b89
+Error Number:207,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'IsActive'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__209_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:4bbb4b8e-2640-4629-a484-ec8646910b89
+Error Number:207,State:1,Class:16
+2025-05-16 15:38:45.380 +03:00 [ERR] Error resending confirmation code to ahhm9570@gmail.com
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'IsActive'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__209_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at e_learning.Controllers.AuthController.ResendConfirmationCode(EmailDto dto) in C:\Users\ta\OneDrive\Desktop\e_learning\Controllers\AuthController .cs:line 187
+ClientConnectionId:4bbb4b8e-2640-4629-a484-ec8646910b89
+Error Number:207,State:1,Class:16
+2025-05-16 15:38:45.398 +03:00 [INF] Executing ObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-16 15:38:45.400 +03:00 [INF] Executed action e_learning.Controllers.AuthController.ResendConfirmationCode (e_learning) in 117.1487ms
+2025-05-16 15:38:45.403 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.ResendConfirmationCode (e_learning)'
+2025-05-16 15:38:45.407 +03:00 [ERR] HTTP POST /api/Auth/resend-confirmation-code responded 500 in 276.4822 ms
+2025-05-16 15:38:45.414 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/resend-confirmation-code - 500 null application/json; charset=utf-8 286.9829ms
+2025-05-16 15:41:04.113 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/register - application/json 105
+2025-05-16 15:41:04.121 +03:00 [INF] CORS policy execution failed.
+2025-05-16 15:41:04.122 +03:00 [INF] Request origin https://localhost:7056 does not have permission to access the resource.
+2025-05-16 15:41:04.129 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 15:41:04.131 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-16 15:41:04.152 +03:00 [INF] Route matched with {action = "Register", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Register(e_learning.DTOs.UserRegisterDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-16 15:41:04.221 +03:00 [INF] Executed DbCommand (24ms) [Parameters=[@__dto_Email_0='ahhm9570@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[Email] = @__dto_Email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-16 15:41:04.269 +03:00 [WRN] Attempt to register existing email: ahhm9570@gmail.com
+2025-05-16 15:41:04.277 +03:00 [INF] Executing ConflictObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-16 15:41:04.278 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Register (e_learning) in 123.8401ms
+2025-05-16 15:41:04.287 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-16 15:41:04.290 +03:00 [INF] HTTP POST /api/Auth/register responded 409 in 169.8478 ms
+2025-05-16 15:41:04.316 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/register - 409 null application/json; charset=utf-8 203.6764ms
+2025-05-16 15:41:50.678 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/resend-confirmation-code - application/json 34
+2025-05-16 15:41:50.681 +03:00 [INF] CORS policy execution failed.
+2025-05-16 15:41:50.689 +03:00 [INF] Request origin https://localhost:7056 does not have permission to access the resource.
+2025-05-16 15:41:50.727 +03:00 [INF] No CORS policy found for the specified request.
+2025-05-16 15:41:50.741 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.ResendConfirmationCode (e_learning)'
+2025-05-16 15:41:50.742 +03:00 [INF] Route matched with {action = "ResendConfirmationCode", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ResendConfirmationCode(e_learning.DTOs.EmailDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-16 15:41:50.760 +03:00 [ERR] Failed executing DbCommand (3ms) [Parameters=[@__ToLower_0='ahhm9570@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__ToLower_0
+2025-05-16 15:41:50.772 +03:00 [ERR] An exception occurred while iterating over the results of a query for context type 'e_learning.Data.AppDbContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'IsActive'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__209_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:4bbb4b8e-2640-4629-a484-ec8646910b89
+Error Number:207,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'IsActive'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__209_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:4bbb4b8e-2640-4629-a484-ec8646910b89
+Error Number:207,State:1,Class:16
+2025-05-16 15:41:50.793 +03:00 [ERR] Error resending confirmation code to ahhm9570@gmail.com
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'IsActive'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__209_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at e_learning.Controllers.AuthController.ResendConfirmationCode(EmailDto dto) in C:\Users\ta\OneDrive\Desktop\e_learning\Controllers\AuthController .cs:line 187
+ClientConnectionId:4bbb4b8e-2640-4629-a484-ec8646910b89
+Error Number:207,State:1,Class:16
+2025-05-16 15:41:50.809 +03:00 [INF] Executing ObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-16 15:41:50.811 +03:00 [INF] Executed action e_learning.Controllers.AuthController.ResendConfirmationCode (e_learning) in 65.6125ms
+2025-05-16 15:41:50.813 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.ResendConfirmationCode (e_learning)'
+2025-05-16 15:41:50.814 +03:00 [ERR] HTTP POST /api/Auth/resend-confirmation-code responded 500 in 132.9808 ms
+2025-05-16 15:41:50.819 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/resend-confirmation-code - 500 null application/json; charset=utf-8 140.1721ms
+2025-05-16 15:50:46.922 +03:00 [INF] Application is shutting down...
+2025-05-16 15:52:42.384 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-16 15:52:42.489 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 15:52:42.970 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 15:53:22.736 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-16 15:53:22.915 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 15:53:24.047 +03:00 [INF] Executed DbCommand (51ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-16 15:53:24.293 +03:00 [INF] Executed DbCommand (179ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-16 15:53:24.311 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-16 15:53:24.384 +03:00 [INF] Executed DbCommand (50ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-16 15:53:24.532 +03:00 [INF] Executed DbCommand (90ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-05-16 15:53:24.567 +03:00 [INF] Applying migration '20250516125243_AddEmailToUsers'.
+2025-05-16 15:53:25.054 +03:00 [INF] Executed DbCommand (183ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Courses] DROP CONSTRAINT [FK_Courses_Categories_CategoryId];
+2025-05-16 15:53:25.074 +03:00 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Courses] DROP CONSTRAINT [FK_Courses_Users_InstructorId];
+2025-05-16 15:53:25.123 +03:00 [INF] Executed DbCommand (38ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Users] ADD [IsActive] bit NOT NULL DEFAULT CAST(0 AS bit);
+2025-05-16 15:53:25.161 +03:00 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [UserRefreshTokens] ADD [IsRevoked] bit NOT NULL DEFAULT CAST(0 AS bit);
+2025-05-16 15:53:25.217 +03:00 [INF] Executed DbCommand (40ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [UserRefreshTokens] ADD [IsUsed] bit NOT NULL DEFAULT CAST(0 AS bit);
+2025-05-16 15:53:25.302 +03:00 [ERR] Failed executing DbCommand (45ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Courses] ADD CONSTRAINT [FK_Courses_Categories_CategoryId] FOREIGN KEY ([CategoryId]) REFERENCES [Categories] ([Id]) ON DELETE SET NULL;
+2025-05-16 15:55:31.044 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-16 15:55:31.137 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 15:55:32.190 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 15:56:06.361 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-16 15:56:06.521 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 15:56:07.721 +03:00 [INF] Executed DbCommand (41ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-16 15:56:07.813 +03:00 [INF] Executed DbCommand (29ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-16 15:56:07.858 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-16 15:56:07.881 +03:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-16 15:56:07.946 +03:00 [INF] Executed DbCommand (29ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-05-16 15:56:08.010 +03:00 [INF] Applying migration '20250516125243_AddEmailToUsers'.
+2025-05-16 15:56:08.270 +03:00 [INF] Executed DbCommand (20ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Courses] DROP CONSTRAINT [FK_Courses_Categories_CategoryId];
+2025-05-16 15:56:08.282 +03:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Courses] DROP CONSTRAINT [FK_Courses_Users_InstructorId];
+2025-05-16 15:56:08.298 +03:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Users] ADD [IsActive] bit NOT NULL DEFAULT CAST(0 AS bit);
+2025-05-16 15:56:08.307 +03:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [UserRefreshTokens] ADD [IsRevoked] bit NOT NULL DEFAULT CAST(0 AS bit);
+2025-05-16 15:56:08.345 +03:00 [INF] Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [UserRefreshTokens] ADD [IsUsed] bit NOT NULL DEFAULT CAST(0 AS bit);
+2025-05-16 15:56:08.375 +03:00 [ERR] Failed executing DbCommand (23ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Courses] ADD CONSTRAINT [FK_Courses_Categories_CategoryId] FOREIGN KEY ([CategoryId]) REFERENCES [Categories] ([Id]) ON DELETE SET NULL;
+2025-05-16 16:01:45.054 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-16 16:01:45.127 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 16:01:45.673 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 16:02:14.724 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-16 16:02:14.930 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 16:02:16.196 +03:00 [INF] Executed DbCommand (43ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-16 16:02:16.443 +03:00 [INF] Executed DbCommand (187ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-16 16:02:16.472 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-16 16:02:16.485 +03:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-16 16:02:16.657 +03:00 [INF] Executed DbCommand (120ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-05-16 16:02:16.696 +03:00 [INF] Applying migration '20250516125243_AddEmailToUsers'.
+2025-05-16 16:02:16.977 +03:00 [INF] Executed DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Courses] DROP CONSTRAINT [FK_Courses_Categories_CategoryId];
+2025-05-16 16:02:16.996 +03:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Courses] DROP CONSTRAINT [FK_Courses_Users_InstructorId];
+2025-05-16 16:02:17.012 +03:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Users] ADD [IsActive] bit NOT NULL DEFAULT CAST(0 AS bit);
+2025-05-16 16:02:17.021 +03:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [UserRefreshTokens] ADD [IsRevoked] bit NOT NULL DEFAULT CAST(0 AS bit);
+2025-05-16 16:02:17.057 +03:00 [INF] Executed DbCommand (27ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [UserRefreshTokens] ADD [IsUsed] bit NOT NULL DEFAULT CAST(0 AS bit);
+2025-05-16 16:02:17.121 +03:00 [ERR] Failed executing DbCommand (55ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Courses] ADD CONSTRAINT [FK_Courses_Categories_CategoryId] FOREIGN KEY ([CategoryId]) REFERENCES [Categories] ([Id]) ON DELETE SET NULL;
+2025-05-16 16:05:28.902 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-16 16:05:28.996 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 16:05:29.649 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 16:05:47.044 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-16 16:05:47.210 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 16:05:48.172 +03:00 [INF] Executed DbCommand (39ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-16 16:05:48.401 +03:00 [INF] Executed DbCommand (83ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-16 16:05:48.412 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-16 16:05:48.422 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-16 16:05:48.567 +03:00 [INF] Executed DbCommand (110ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-05-16 16:05:48.660 +03:00 [INF] Applying migration '20250516125243_AddEmailToUsers'.
+2025-05-16 16:05:48.880 +03:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Courses] DROP CONSTRAINT [FK_Courses_Categories_CategoryId];
+2025-05-16 16:05:48.889 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Courses] DROP CONSTRAINT [FK_Courses_Users_InstructorId];
+2025-05-16 16:05:48.903 +03:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Users] ADD [IsActive] bit NOT NULL DEFAULT CAST(0 AS bit);
+2025-05-16 16:05:48.912 +03:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [UserRefreshTokens] ADD [IsRevoked] bit NOT NULL DEFAULT CAST(0 AS bit);
+2025-05-16 16:05:48.919 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [UserRefreshTokens] ADD [IsUsed] bit NOT NULL DEFAULT CAST(0 AS bit);
+2025-05-16 16:05:48.936 +03:00 [ERR] Failed executing DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Courses] ADD CONSTRAINT [FK_Courses_Categories_CategoryId] FOREIGN KEY ([CategoryId]) REFERENCES [Categories] ([Id]) ON DELETE SET NULL;
+2025-05-16 16:06:22.086 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-16 16:06:22.319 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 16:06:23.184 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 16:06:49.498 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-16 16:06:49.607 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 16:06:50.430 +03:00 [INF] Executed DbCommand (49ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-16 16:06:50.500 +03:00 [INF] Executed DbCommand (21ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-16 16:06:50.511 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-16 16:06:50.518 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-16 16:06:50.556 +03:00 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-05-16 16:06:50.586 +03:00 [INF] Applying migration '20250516130624_MakeCategoryIdNullable'.
+2025-05-16 16:06:50.926 +03:00 [ERR] Failed executing DbCommand (29ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Categories] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    CONSTRAINT [PK_Categories] PRIMARY KEY ([Id])
+);
+2025-05-16 16:13:36.327 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-16 16:13:36.854 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.

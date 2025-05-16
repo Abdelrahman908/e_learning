@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace e_learning.Services
+namespace e_learning.Service.Interfaces
 {
     public interface IEmailService
     {

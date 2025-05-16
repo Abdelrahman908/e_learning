@@ -27,16 +27,26 @@ namespace e_learning.Controllers
             _courseRepository = courseRepository;
         }
 
-        // POST: api/Course
+        // ✅ بعد التعديل: لدعم int? بدل int
+        private async Task<bool> ValidateCategoryId(int? categoryId)
+        {
+            if (categoryId == null)
+                return false;
+
+            return await _context.Categories.AnyAsync(c => c.Id == categoryId.Value);
+        }
+
         [HttpPost]
         [Authorize(Roles = "Instructor")]
-        public async Task<IActionResult> AddCourse([FromBody] CourseCreateDto dto)
+        public async Task<IActionResult> AddCourse([FromForm] CourseCreateDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var userIdClaim = User.FindFirst("sub")?.Value ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (!await ValidateCategoryId(dto.CategoryId))
+                return BadRequest($"Category with ID {dto.CategoryId} does not exist.");
 
+            var userIdClaim = User.FindFirst("sub")?.Value ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out var userId))
                 return Unauthorized("User ID not found or invalid in token.");
 
@@ -51,13 +61,31 @@ namespace e_learning.Controllers
                 CreatedBy = userId
             };
 
+            if (dto.Image != null && dto.Image.Length > 0)
+            {
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
+                var extension = Path.GetExtension(dto.Image.FileName).ToLower();
+                if (!allowedExtensions.Contains(extension))
+                {
+                    return BadRequest("Invalid image format. Only .jpg, .jpeg, .png are allowed.");
+                }
+
+                var fileName = Guid.NewGuid() + extension;
+                var filePath = Path.Combine("wwwroot/images/courses", fileName);
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
+
+                using var stream = new FileStream(filePath, FileMode.Create);
+                await dto.Image.CopyToAsync(stream);
+
+                course.ImageUrl = $"/images/courses/{fileName}";
+            }
+
             _context.Courses.Add(course);
             await _context.SaveChangesAsync();
 
             return Ok(new { message = "Course added successfully", course });
         }
 
-        // GET: api/Course/{id}
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCourseById(int id)
         {
@@ -93,7 +121,6 @@ namespace e_learning.Controllers
             return Ok(courseDto);
         }
 
-        // GET: api/Course
         [HttpGet]
         public async Task<IActionResult> GetCourses()
         {
@@ -108,34 +135,16 @@ namespace e_learning.Controllers
             }
         }
 
-        // PUT: api/Course/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCourse(int id, [FromBody] CourseResponseDto courseRequest)
+        public async Task<IActionResult> UpdateCourse(int id, [FromBody] CourseUpdateDto model)
         {
             var course = await _context.Courses.FindAsync(id);
             if (course == null)
                 return NotFound("Course not found.");
 
-            course.Name = courseRequest.Name;
-            course.Title = courseRequest.Title;
-            course.Description = courseRequest.Description;
-            course.Price = courseRequest.Price;
-            course.IsActive = courseRequest.IsActive.HasValue ? courseRequest.IsActive.Value : course.IsActive;  // Handling nullable bool
-            course.CategoryId = courseRequest.CategoryId;
-            course.InstructorId = courseRequest.InstructorId;
-
-            await _context.SaveChangesAsync();
-
-            return Ok(new { message = "Course updated successfully." });
-        }
-
-        // PUT: api/Course/update-with-image
-        [HttpPut("update-with-image/{id}")]
-        public async Task<IActionResult> UpdateCourseWithImage(int id, [FromForm] CourseUpdateDto model)
-        {
-            var course = await _context.Courses.FindAsync(id);
-            if (course == null)
-                return NotFound("Course not found.");
+            // تعديل: استبدال HasValue بالتحقق null
+            if (model.CategoryId != null && model.CategoryId != course.CategoryId && !await ValidateCategoryId(model.CategoryId))
+                return BadRequest($"Category with ID {model.CategoryId} does not exist.");
 
             if (!string.IsNullOrWhiteSpace(model.Name))
                 course.Name = model.Name;
@@ -152,8 +161,44 @@ namespace e_learning.Controllers
             if (model.IsActive.HasValue)
                 course.IsActive = model.IsActive.Value;
 
-            if (model.CategoryId > 0)
-                course.CategoryId = model.CategoryId;
+            if (model.CategoryId != null)
+                course.CategoryId = model.CategoryId.Value;
+
+            if (model.InstructorId > 0)
+                course.InstructorId = model.InstructorId;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Course updated successfully." });
+        }
+
+        [HttpPut("update-with-image/{id}")]
+        public async Task<IActionResult> UpdateCourseWithImage(int id, [FromForm] CourseUpdateDto model)
+        {
+            var course = await _context.Courses.FindAsync(id);
+            if (course == null)
+                return NotFound("Course not found.");
+
+            if (model.CategoryId != null && model.CategoryId != course.CategoryId && !await ValidateCategoryId(model.CategoryId))
+                return BadRequest($"Category with ID {model.CategoryId} does not exist.");
+
+            if (!string.IsNullOrWhiteSpace(model.Name))
+                course.Name = model.Name;
+
+            if (!string.IsNullOrWhiteSpace(model.Title))
+                course.Title = model.Title;
+
+            if (!string.IsNullOrWhiteSpace(model.Description))
+                course.Description = model.Description;
+
+            if (model.Price.HasValue)
+                course.Price = model.Price.Value;
+
+            if (model.IsActive.HasValue)
+                course.IsActive = model.IsActive.Value;
+
+            if (model.CategoryId != null)
+                course.CategoryId = model.CategoryId.Value;
 
             if (model.InstructorId > 0)
                 course.InstructorId = model.InstructorId;
@@ -167,7 +212,7 @@ namespace e_learning.Controllers
                     return BadRequest("Invalid image format. Only .jpg, .jpeg, .png are allowed.");
                 }
 
-                var fileName = Guid.NewGuid() + Path.GetExtension(model.ImageFile.FileName);
+                var fileName = Guid.NewGuid() + extension;
                 var filePath = Path.Combine("wwwroot/images/courses", fileName);
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
 
@@ -182,7 +227,6 @@ namespace e_learning.Controllers
             return Ok(new { message = "Course updated with image successfully." });
         }
 
-        // DELETE: api/Course/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCourse(int id)
         {
@@ -190,7 +234,6 @@ namespace e_learning.Controllers
             if (course == null)
                 return NotFound("Course not found.");
 
-            // Optionally remove related data like reviews
             var reviews = _context.Reviews.Where(r => r.CourseId == id);
             _context.Reviews.RemoveRange(reviews);
 

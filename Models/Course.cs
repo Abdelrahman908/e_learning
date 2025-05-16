@@ -1,14 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using e_learning.models;
+﻿using e_learning.models;
 using e_learning.Models;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 public class Course
 {
-    // Primary Key
     public int Id { get; set; }
 
-    // Main Info
     [Required]
     [MaxLength(100)]
     public string Name { get; set; } = "Unnamed Course";
@@ -27,9 +25,9 @@ public class Course
 
     public bool IsActive { get; set; } = true;
 
-    // Foreign Keys
+    // Foreign Keys - Note CategoryId is nullable
     [ForeignKey("Category")]
-    public int CategoryId { get; set; }
+    public int? CategoryId { get; set; }
 
     [ForeignKey("Instructor")]
     public int InstructorId { get; set; }
@@ -41,12 +39,12 @@ public class Course
     public DateTime? UpdatedAt { get; set; }
 
     // Navigation Properties
-    public Category Category { get; set; } = null!;
-    public User Instructor { get; set; } = null!;
+    public virtual Category? Category { get; set; }
+    public virtual User Instructor { get; set; } = null!;
 
-    public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
-    public ICollection<Payment> Payments { get; set; } = new List<Payment>();
-    public ICollection<Review> Reviews { get; set; } = new List<Review>();
-    public ICollection<Lesson> Lessons { get; set; } = new List<Lesson>();
-    public ICollection<Quiz> Quizzes { get; set; } = new List<Quiz>();
+    public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
+    public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
+    public virtual ICollection<Lesson> Lessons { get; set; } = new List<Lesson>();
+    public virtual ICollection<Quiz> Quizzes { get; set; } = new List<Quiz>();
 }

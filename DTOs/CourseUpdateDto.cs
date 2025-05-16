@@ -20,7 +20,7 @@ namespace e_learning.DTOs.Courses
         public bool? IsActive { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "CategoryId must be valid.")]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "InstructorId must be valid.")]
         public int InstructorId { get; set; }

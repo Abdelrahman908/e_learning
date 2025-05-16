@@ -12,8 +12,8 @@ using System.Text;
 using e_learning.Models;
 using e_learning.DTOs.Responses;
 using e_learning.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using RefreshTokenResponse = e_learning.DTOs.Responses.RefreshTokenResponse;
-
 
 namespace e_learning.Controllers
 {
@@ -55,8 +55,8 @@ namespace e_learning.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    _logger.LogWarning("بيانات تسجيل غير صالحة: {@Dto}", dto);
-                    return BadRequest(new ApiResponse(false, "البيانات غير مكتملة أو غير صالحة"));
+                    _logger.LogWarning("Invalid registration data: {@Dto}", dto);
+                    return BadRequest(new ApiResponse(false, "Incomplete or invalid data"));
                 }
 
                 if (!_passwordValidator.Validate(dto.Password, out var passwordError))
@@ -66,8 +66,8 @@ namespace e_learning.Controllers
 
                 if (await _context.Users.AnyAsync(u => u.Email == dto.Email))
                 {
-                    _logger.LogWarning("محاولة تسجيل بريد موجود: {Email}", dto.Email);
-                    return Conflict(new ApiResponse(false, "البريد الإلكتروني مسجل بالفعل"));
+                    _logger.LogWarning("Attempt to register existing email: {Email}", dto.Email);
+                    return Conflict(new ApiResponse(false, "Email already registered"));
                 }
 
                 var user = new User
@@ -77,7 +77,8 @@ namespace e_learning.Controllers
                     PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
                     Role = NormalizeRole(dto.Role),
                     IsEmailConfirmed = false,
-                    CreatedAt = DateTime.UtcNow
+                    CreatedAt = DateTime.UtcNow,
+                    IsActive = true
                 };
 
                 await _context.Users.AddAsync(user);
@@ -88,19 +89,19 @@ namespace e_learning.Controllers
 
                 await _emailService.SendEmailAsync(
                     dto.Email,
-                    "تأكيد البريد الإلكتروني",
-                    $"<h2>رمز التأكيد: {confirmationCode}</h2><p>صالح لمدة 10 دقائق</p>"
+                    "Email Confirmation",
+                    $"<h2>Confirmation Code: {confirmationCode}</h2><p>Valid for 10 minutes</p>"
                 );
 
-                _logger.LogInformation("تم تسجيل مستخدم جديد - ID: {UserId}", user.Id);
+                _logger.LogInformation("New user registered - ID: {UserId}", user.Id);
 
-                return Ok(new ApiResponse<RegisterResponse>(true, "تم التسجيل بنجاح، يرجى تأكيد بريدك الإلكتروني",
+                return Ok(new ApiResponse<RegisterResponse>(true, "Registration successful, please confirm your email",
                     new RegisterResponse { UserId = user.Id }));
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "خطأ أثناء التسجيل");
-                return StatusCode(500, new ApiResponse(false, "حدث خطأ أثناء معالجة طلبك"));
+                _logger.LogError(ex, "Error during registration");
+                return StatusCode(500, new ApiResponse(false, "An error occurred while processing your request"));
             }
         }
 
@@ -108,14 +109,15 @@ namespace e_learning.Controllers
         [ProducesResponseType(typeof(ApiResponse<LoginResponse>), 200)]
         [ProducesResponseType(typeof(ApiResponse), 400)]
         [ProducesResponseType(typeof(ApiResponse), 401)]
+        [ProducesResponseType(typeof(ApiResponse), 403)]
         public async Task<IActionResult> Login([FromBody] UserLoginDto dto)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    _logger.LogWarning("بيانات دخول غير صالحة: {@Dto}", dto);
-                    return BadRequest(new ApiResponse(false, "البيانات غير مكتملة أو غير صالحة"));
+                    _logger.LogWarning("Invalid login data: {@Dto}", dto);
+                    return BadRequest(new ApiResponse(false, "Incomplete or invalid data"));
                 }
 
                 var user = await _context.Users
@@ -124,23 +126,29 @@ namespace e_learning.Controllers
 
                 if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
                 {
-                    _logger.LogWarning("محاولة دخول فاشلة للبريد: {Email}", dto.Email);
-                    return Unauthorized(new ApiResponse(false, "بيانات الدخول غير صحيحة"));
+                    _logger.LogWarning("Failed login attempt for email: {Email}", dto.Email);
+                    return Unauthorized(new ApiResponse(false, "Invalid credentials"));
                 }
 
                 if (!user.IsEmailConfirmed)
                 {
-                    _logger.LogWarning("محاولة دخول ببريد غير مؤكد: {Email}", dto.Email);
-                    return Unauthorized(new ApiResponse(false, "يجب تأكيد البريد الإلكتروني أولاً"));
+                    _logger.LogWarning("Login attempt with unconfirmed email: {Email}", dto.Email);
+                    return Unauthorized(new ApiResponse(false, "Email confirmation required"));
                 }
 
-                var token = GenerateJwtToken(user);
-                var refreshToken = GenerateSecureRefreshToken();
+                if (!user.IsActive)
+                {
+                    _logger.LogWarning("Login attempt for deactivated account: {Email}", dto.Email);
+                    return StatusCode(403, new ApiResponse(false, "Account is deactivated"));
+                }
+
+                var token = _tokenService.GenerateJwtToken(user);
+                var refreshToken = _tokenService.GenerateRefreshToken();
 
                 await StoreRefreshToken(user.Id, refreshToken);
-                _logger.LogInformation("تم تسجيل دخول ناجح لـ: {Email}", dto.Email);
+                _logger.LogInformation("Successful login for: {Email}", dto.Email);
 
-                return Ok(new ApiResponse<LoginResponse>(true, "تم تسجيل الدخول بنجاح",
+                return Ok(new ApiResponse<LoginResponse>(true, "Login successful",
                     new LoginResponse
                     {
                         Token = token,
@@ -157,10 +165,66 @@ namespace e_learning.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "خطأ أثناء تسجيل الدخول");
-                return StatusCode(500, new ApiResponse(false, "حدث خطأ أثناء معالجة طلبك"));
+                _logger.LogError(ex, "Error during login");
+                return StatusCode(500, new ApiResponse(false, "An error occurred while processing your request"));
             }
         }
+        [HttpPost("resend-confirmation-code")]
+        [ProducesResponseType(typeof(ApiResponse), 200)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
+        [ProducesResponseType(typeof(ApiResponse), 404)]
+        [ProducesResponseType(typeof(ApiResponse), 500)]
+        public async Task<IActionResult> ResendConfirmationCode([FromBody] EmailDto dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    _logger.LogWarning("Invalid email format for resend confirmation: {Email}", dto.Email);
+                    return BadRequest(new ApiResponse(false, "Invalid email format"));
+                }
+
+                var user = await _context.Users
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(u => u.Email == dto.Email.ToLower());
+
+                if (user == null)
+                {
+                    _logger.LogWarning("Resend confirmation attempt for non-existent user: {Email}", dto.Email);
+                    return NotFound(new ApiResponse(false, "User not found"));
+                }
+
+                if (user.IsEmailConfirmed)
+                {
+                    _logger.LogWarning("Resend confirmation attempt for already confirmed email: {Email}", dto.Email);
+                    return BadRequest(new ApiResponse(false, "Email is already confirmed"));
+                }
+
+                // Generate new confirmation code
+                var confirmationCode = GenerateSixDigitCode();
+
+                // Remove any existing codes and store the new one
+                await RemoveConfirmationCode(dto.Email);
+                await StoreConfirmationCode(dto.Email, confirmationCode);
+
+                // Send confirmation email
+                var emailSent = await _emailService.SendConfirmationEmailAsync(dto.Email, confirmationCode);
+                if (!emailSent)
+                {
+                    _logger.LogError("Failed to send confirmation email to {Email}", dto.Email);
+                    return StatusCode(500, new ApiResponse(false, "Failed to send confirmation email"));
+                }
+
+                _logger.LogInformation("Confirmation code resent successfully to: {Email}", dto.Email);
+                return Ok(new ApiResponse(true, "Confirmation code resent successfully"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error resending confirmation code to {Email}", dto.Email);
+                return StatusCode(500, new ApiResponse(false, "An error occurred while resending confirmation code"));
+            }
+        }
+
 
         [HttpPost("confirm-email")]
         [ProducesResponseType(typeof(ApiResponse), 200)]
@@ -171,29 +235,29 @@ namespace e_learning.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(new ApiResponse(false, "البيانات غير مكتملة أو غير صالحة"));
+                    return BadRequest(new ApiResponse(false, "Incomplete or invalid data"));
 
                 var isValidCode = await ValidateConfirmationCode(dto.Email, dto.Code);
                 if (!isValidCode)
-                    return BadRequest(new ApiResponse(false, "كود التأكيد غير صحيح أو منتهي الصلاحية"));
+                    return BadRequest(new ApiResponse(false, "Invalid or expired confirmation code"));
 
                 var user = await _context.Users
                     .FirstOrDefaultAsync(u => u.Email == dto.Email);
 
                 if (user == null)
-                    return NotFound(new ApiResponse(false, "المستخدم غير موجود"));
+                    return NotFound(new ApiResponse(false, "User not found"));
 
                 user.IsEmailConfirmed = true;
                 await _context.SaveChangesAsync();
                 await RemoveConfirmationCode(dto.Email);
 
-                _logger.LogInformation("تم تأكيد البريد الإلكتروني لـ: {Email}", dto.Email);
-                return Ok(new ApiResponse(true, "تم تأكيد البريد الإلكتروني بنجاح"));
+                _logger.LogInformation("Email confirmed for: {Email}", dto.Email);
+                return Ok(new ApiResponse(true, "Email confirmed successfully"));
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "خطأ أثناء تأكيد البريد");
-                return StatusCode(500, new ApiResponse(false, "حدث خطأ أثناء معالجة طلبك"));
+                _logger.LogError(ex, "Error during email confirmation");
+                return StatusCode(500, new ApiResponse(false, "An error occurred while processing your request"));
             }
         }
 
@@ -206,31 +270,34 @@ namespace e_learning.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(new ApiResponse(false, "البيانات غير مكتملة أو غير صالحة"));
+                    return BadRequest(new ApiResponse(false, "Incomplete or invalid data"));
 
                 var user = await _context.Users
                     .AsNoTracking()
                     .FirstOrDefaultAsync(u => u.Email == dto.Email);
 
                 if (user == null)
-                    return NotFound(new ApiResponse(false, "البريد الإلكتروني غير مسجل"));
+                    return NotFound(new ApiResponse(false, "Email not registered"));
+
+                if (!user.IsEmailConfirmed)
+                    return BadRequest(new ApiResponse(false, "Email not confirmed"));
 
                 var resetCode = GenerateSixDigitCode();
                 await StorePasswordResetCode(dto.Email, resetCode);
 
                 await _emailService.SendEmailAsync(
                     dto.Email,
-                    "إعادة تعيين كلمة المرور",
-                    $"<h2>رمز إعادة التعيين: {resetCode}</h2><p>صالح لمدة 10 دقائق</p>"
+                    "Password Reset",
+                    $"<h2>Reset Code: {resetCode}</h2><p>Valid for 10 minutes</p>"
                 );
 
-                _logger.LogInformation("تم إرسال كود إعادة تعيين كلمة المرور لـ: {Email}", dto.Email);
-                return Ok(new ApiResponse(true, "تم إرسال رمز إعادة التعيين إلى بريدك"));
+                _logger.LogInformation("Password reset code sent to: {Email}", dto.Email);
+                return Ok(new ApiResponse(true, "Reset code sent to your email"));
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "خطأ أثناء طلب إعادة تعيين كلمة المرور");
-                return StatusCode(500, new ApiResponse(false, "حدث خطأ أثناء معالجة طلبك"));
+                _logger.LogError(ex, "Error during password reset request");
+                return StatusCode(500, new ApiResponse(false, "An error occurred while processing your request"));
             }
         }
 
@@ -243,7 +310,7 @@ namespace e_learning.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(new ApiResponse(false, "البيانات غير مكتملة أو غير صالحة"));
+                    return BadRequest(new ApiResponse(false, "Incomplete or invalid data"));
 
                 if (!_passwordValidator.Validate(dto.NewPassword, out var passwordError))
                 {
@@ -252,26 +319,26 @@ namespace e_learning.Controllers
 
                 var isValidCode = await ValidatePasswordResetCode(dto.Email, dto.Code);
                 if (!isValidCode)
-                    return BadRequest(new ApiResponse(false, "كود إعادة التعيين غير صحيح أو منتهي الصلاحية"));
+                    return BadRequest(new ApiResponse(false, "Invalid or expired reset code"));
 
                 var user = await _context.Users
                     .FirstOrDefaultAsync(u => u.Email == dto.Email);
 
                 if (user == null)
-                    return NotFound(new ApiResponse(false, "المستخدم غير موجود"));
+                    return NotFound(new ApiResponse(false, "User not found"));
 
                 user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
                 await InvalidateUserRefreshTokens(user.Id);
                 await _context.SaveChangesAsync();
                 await RemovePasswordResetCode(dto.Email);
 
-                _logger.LogInformation("تم إعادة تعيين كلمة المرور لـ: {Email}", dto.Email);
-                return Ok(new ApiResponse(true, "تم تغيير كلمة المرور بنجاح"));
+                _logger.LogInformation("Password reset for: {Email}", dto.Email);
+                return Ok(new ApiResponse(true, "Password changed successfully"));
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "خطأ أثناء إعادة تعيين كلمة المرور");
-                return StatusCode(500, new ApiResponse(false, "حدث خطأ أثناء معالجة طلبك"));
+                _logger.LogError(ex, "Error during password reset");
+                return StatusCode(500, new ApiResponse(false, "An error occurred while processing your request"));
             }
         }
 
@@ -279,7 +346,6 @@ namespace e_learning.Controllers
         [ProducesResponseType(typeof(ApiResponse<RefreshTokenResponse>), 200)]
         [ProducesResponseType(typeof(ApiResponse), 400)]
         [ProducesResponseType(typeof(ApiResponse), 401)]
-        [ProducesResponseType(typeof(ApiResponse), 500)]
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
         {
             try
@@ -300,32 +366,37 @@ namespace e_learning.Controllers
 
                 if (refreshToken.ExpiryDate < DateTime.UtcNow)
                 {
-                    return Unauthorized(new ApiResponse(false, "Refresh token has expired"));
+                    return Unauthorized(new ApiResponse(false, "Refresh token expired"));
                 }
 
-                if (refreshToken.User == null)
+                if (refreshToken.User == null || !refreshToken.User.IsActive)
                 {
-                    _logger.LogError("Refresh token {TokenId} has no associated user", refreshToken.Id);
-                    return Unauthorized(new ApiResponse(false, "User not found"));
+                    _logger.LogError("Refresh token {TokenId} has no associated user or user is inactive", refreshToken.Id);
+                    return Unauthorized(new ApiResponse(false, "User not found or inactive"));
                 }
 
                 var newJwtToken = _tokenService.GenerateJwtToken(refreshToken.User);
                 var newRefreshToken = _tokenService.GenerateRefreshToken();
 
-                refreshToken.RefreshToken = newRefreshToken;
-                refreshToken.ExpiryDate = DateTime.UtcNow.AddDays(7);
-                refreshToken.CreatedAt = DateTime.UtcNow;
-
+                // Invalidate old refresh token
+                refreshToken.IsUsed = true;
                 _context.UserRefreshTokens.Update(refreshToken);
+
+                // Store new refresh token
+                await StoreRefreshToken(refreshToken.User.Id, newRefreshToken);
                 await _context.SaveChangesAsync();
 
-                return Ok(new ApiResponse<e_learning.DTOs.RefreshTokenResponse>(true, "Token refreshed successfully",
-                     new e_learning.DTOs.RefreshTokenResponse
-            {
-                         Token = newJwtToken,
+                // Calculate expiration in seconds
+                var expiresIn = (int)(DateTime.UtcNow.AddHours(2) - DateTime.UtcNow).TotalSeconds;
+
+                return Ok(new ApiResponse<RefreshTokenResponse>(true, "Token refreshed successfully",
+                    new RefreshTokenResponse
+                    {
+                        Token = newJwtToken,
                         RefreshToken = newRefreshToken,
-                     ExpiresIn = (int)TimeSpan.FromMinutes(30).TotalSeconds
-                      }));
+                        ExpiresIn = (int)TimeSpan.FromHours(2).TotalSeconds
+
+                    }));
             }
             catch (Exception ex)
             {
@@ -334,39 +405,88 @@ namespace e_learning.Controllers
             }
         }
 
-        #region Helper Methods
-
-        private string GenerateJwtToken(User user)
+        [HttpPost("logout")]
+        [ProducesResponseType(typeof(ApiResponse), 200)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
+        public async Task<IActionResult> Logout([FromBody] LogoutRequest request)
         {
-            var claims = new[]
+            try
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
+                if (string.IsNullOrEmpty(request.RefreshToken))
+                    return BadRequest(new ApiResponse(false, "Refresh token is required"));
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                var refreshToken = await _context.UserRefreshTokens
+                    .Include(rt => rt.User)
+                    .FirstOrDefaultAsync(rt => rt.RefreshToken == request.RefreshToken);
 
-            var token = new JwtSecurityToken(
-                issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:Audience"],
-                claims: claims,
-                expires: DateTime.UtcNow.AddHours(_configuration.GetValue<int>("Jwt:ExpiryInHours")),
-                signingCredentials: creds
-            );
+                if (refreshToken == null)
+                    return Unauthorized(new ApiResponse(false, "Invalid refresh token"));
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+                if (refreshToken.User == null)
+                    return Unauthorized(new ApiResponse(false, "User not found"));
+
+                await InvalidateUserRefreshTokens(refreshToken.User.Id);
+
+                _logger.LogInformation("User {UserId} logged out successfully", refreshToken.User.Id);
+                return Ok(new ApiResponse(true, "Logged out successfully"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error during logout");
+                return StatusCode(500, new ApiResponse(false, "An error occurred while processing your request"));
+            }
         }
 
-        private static string GenerateSecureRefreshToken()
+
+        [Authorize]
+        [HttpPost("change-password")]
+        [ProducesResponseType(typeof(ApiResponse), 200)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
+        [ProducesResponseType(typeof(ApiResponse), 401)]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto)
         {
-            var randomNumber = new byte[64];
-            using var rng = RandomNumberGenerator.Create();
-            rng.GetBytes(randomNumber);
-            return Convert.ToBase64String(randomNumber);
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(new ApiResponse(false, "Incomplete or invalid data"));
+
+                var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out var userId))
+                {
+                    return Unauthorized(new ApiResponse(false, "Invalid token"));
+                }
+
+                var user = await _context.Users.FindAsync(userId);
+                if (user == null)
+                {
+                    return Unauthorized(new ApiResponse(false, "User not found"));
+                }
+
+                if (!BCrypt.Net.BCrypt.Verify(dto.CurrentPassword, user.PasswordHash))
+                {
+                    return BadRequest(new ApiResponse(false, "Current password is incorrect"));
+                }
+
+                if (!_passwordValidator.Validate(dto.NewPassword, out var passwordError))
+                {
+                    return BadRequest(new ApiResponse(false, passwordError));
+                }
+
+                user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
+                await InvalidateUserRefreshTokens(user.Id);
+                await _context.SaveChangesAsync();
+
+                _logger.LogInformation("Password changed for user {UserId}", userId);
+                return Ok(new ApiResponse(true, "Password changed successfully"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error changing password");
+                return StatusCode(500, new ApiResponse(false, "An error occurred while processing your request"));
+            }
         }
+
+        #region Helper Methods
 
         private static string GenerateSixDigitCode()
         {
@@ -385,11 +505,15 @@ namespace e_learning.Controllers
 
         private async Task StoreConfirmationCode(string email, string code)
         {
+            // Remove any existing codes for this email first
+            await RemoveConfirmationCode(email);
+
             await _context.EmailConfirmationCodes.AddAsync(new EmailConfirmationCode
             {
                 Email = email.ToLower(),
                 Code = code,
-                ExpiryDate = DateTime.UtcNow.AddMinutes(10)
+                ExpiryDate = DateTime.UtcNow.AddMinutes(10),
+                CreatedAt = DateTime.UtcNow
             });
             await _context.SaveChangesAsync();
         }
@@ -419,11 +543,15 @@ namespace e_learning.Controllers
 
         private async Task StorePasswordResetCode(string email, string code)
         {
+            // Remove any existing codes for this email first
+            await RemovePasswordResetCode(email);
+
             await _context.PasswordResetCodes.AddAsync(new PasswordResetCode
             {
                 Email = email.ToLower(),
                 Code = code,
-                ExpiryDate = DateTime.UtcNow.AddMinutes(10)
+                ExpiryDate = DateTime.UtcNow.AddMinutes(10),
+                CreatedAt = DateTime.UtcNow
             });
             await _context.SaveChangesAsync();
         }
@@ -458,7 +586,8 @@ namespace e_learning.Controllers
                 UserId = userId,
                 RefreshToken = refreshToken,
                 ExpiryDate = DateTime.UtcNow.AddDays(_configuration.GetValue<int>("Jwt:RefreshTokenExpiryInDays")),
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow,
+                IsUsed = false
             });
             await _context.SaveChangesAsync();
         }
@@ -466,10 +595,14 @@ namespace e_learning.Controllers
         private async Task InvalidateUserRefreshTokens(int userId)
         {
             var tokens = await _context.UserRefreshTokens
-                .Where(rt => rt.UserId == userId)
+                .Where(rt => rt.UserId == userId && !rt.IsUsed)
                 .ToListAsync();
 
-            _context.UserRefreshTokens.RemoveRange(tokens);
+            foreach (var token in tokens)
+            {
+                token.IsUsed = true;
+            }
+
             await _context.SaveChangesAsync();
         }
 

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace e_learning.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class FixCategoryForeignKey : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -68,7 +68,8 @@ namespace e_learning.Migrations
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsEmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -87,11 +88,12 @@ namespace e_learning.Migrations
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: true),
                     InstructorId = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -101,13 +103,18 @@ namespace e_learning.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Courses_Users_InstructorId",
                         column: x => x.InstructorId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Courses_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -123,7 +130,8 @@ namespace e_learning.Migrations
                     IsRead = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    NotificationType = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    NotificationType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -140,6 +148,11 @@ namespace e_learning.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Notifications_Users_UserId1",
+                        column: x => x.UserId1,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -177,6 +190,8 @@ namespace e_learning.Migrations
                     RefreshToken = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    IsUsed = table.Column<bool>(type: "bit", nullable: false),
+                    IsRevoked = table.Column<bool>(type: "bit", nullable: false),
                     ExpiresIn = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -405,6 +420,7 @@ namespace e_learning.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CourseId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PassingScore = table.Column<int>(type: "int", nullable: false, defaultValue: 70),
@@ -414,9 +430,7 @@ namespace e_learning.Migrations
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
                     CreatedBy = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    LessonId = table.Column<int>(type: "int", nullable: false),
-                    CourseId = table.Column<int>(type: "int", nullable: true),
-                    LessonId1 = table.Column<int>(type: "int", nullable: true)
+                    LessonId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -425,18 +439,14 @@ namespace e_learning.Migrations
                         name: "FK_Quizzes_Courses_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Courses",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Quizzes_Lessons_LessonId",
                         column: x => x.LessonId,
                         principalTable: "Lessons",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Quizzes_Lessons_LessonId1",
-                        column: x => x.LessonId1,
-                        principalTable: "Lessons",
-                        principalColumn: "Id");
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -596,9 +606,19 @@ namespace e_learning.Migrations
                 column: "InstructorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Courses_IsActive",
+                table: "Courses",
+                column: "IsActive");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Courses_Title",
                 table: "Courses",
                 column: "Title");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Courses_UserId",
+                table: "Courses",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmailConfirmationCodes_Email",
@@ -662,6 +682,11 @@ namespace e_learning.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Notifications_UserId1",
+                table: "Notifications",
+                column: "UserId1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PasswordResetCodes_Email",
                 table: "PasswordResetCodes",
                 column: "Email");
@@ -705,14 +730,8 @@ namespace e_learning.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Quizzes_LessonId",
                 table: "Quizzes",
-                column: "LessonId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Quizzes_LessonId1",
-                table: "Quizzes",
-                column: "LessonId1",
-                unique: true,
-                filter: "[LessonId1] IS NOT NULL");
+                column: "LessonId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_CourseId",
@@ -761,6 +780,11 @@ namespace e_learning.Migrations
                 column: "Email",
                 unique: true,
                 filter: "[Email] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_IsActive",
+                table: "Users",
+                column: "IsActive");
         }
 
         /// <inheritdoc />

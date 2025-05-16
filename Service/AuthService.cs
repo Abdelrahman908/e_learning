@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Logging;
+using e_learning.Service.Interfaces;
 
 namespace e_learning.Services
 {
@@ -55,7 +56,8 @@ namespace e_learning.Services
                     PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
                     Role = NormalizeRole(dto.Role),
                     IsEmailConfirmed = false,
-                    CreatedAt = DateTime.UtcNow
+                    CreatedAt = DateTime.UtcNow,
+                    IsActive = true
                 };
 
                 await _context.Users.AddAsync(user);
@@ -111,6 +113,12 @@ namespace e_learning.Services
                     return new AuthResult { Message = "يجب تأكيد البريد الإلكتروني أولاً", Success = false };
                 }
 
+                if (!user.IsActive)
+                {
+                    _logger.LogWarning("Login attempt for deactivated account: {Email}", dto.Email);
+                    return new AuthResult { Message = "الحساب معطل", Success = false };
+                }
+
                 var token = GenerateJwtToken(user);
                 var refreshToken = GenerateSecureRefreshToken();
 
@@ -148,24 +156,34 @@ namespace e_learning.Services
                     .Include(rt => rt.User)
                     .FirstOrDefaultAsync(rt => rt.RefreshToken == dto.RefreshToken);
 
-                if (refreshToken == null || refreshToken.ExpiryDate < DateTime.UtcNow)
+                if (refreshToken == null)
                 {
                     _logger.LogWarning("Invalid refresh token attempt");
-                    return new AuthResult { Message = "توكن التحديث غير صالح أو منتهي الصلاحية", Success = false };
+                    return new AuthResult { Message = "توكن التحديث غير صالح", Success = false };
+                }
+
+                if (refreshToken.ExpiryDate < DateTime.UtcNow)
+                {
+                    _logger.LogWarning("Expired refresh token attempt");
+                    return new AuthResult { Message = "توكن التحديث منتهي الصلاحية", Success = false };
                 }
 
                 var user = refreshToken.User;
-                if (user == null)
+                if (user == null || !user.IsActive)
                 {
-                    _logger.LogError("Refresh token with no associated user - Token: {TokenId}", refreshToken.Id);
-                    return new AuthResult { Message = "المستخدم غير موجود", Success = false };
+                    _logger.LogError("Refresh token with no associated user or inactive user - Token: {TokenId}", refreshToken.Id);
+                    return new AuthResult { Message = "المستخدم غير موجود أو الحساب معطل", Success = false };
                 }
 
                 var newJwtToken = GenerateJwtToken(user);
                 var newRefreshToken = GenerateSecureRefreshToken();
 
+                // Invalidate old token
                 _context.UserRefreshTokens.Remove(refreshToken);
+
+                // Store new token
                 await StoreRefreshToken(user.Id, newRefreshToken);
+                await _context.SaveChangesAsync();
 
                 _logger.LogInformation("Token refreshed for user: {UserId}", user.Id);
 
@@ -242,6 +260,11 @@ namespace e_learning.Services
                     return new AuthResult { Message = "البريد الإلكتروني غير مسجل", Success = false };
                 }
 
+                if (!user.IsEmailConfirmed)
+                {
+                    return new AuthResult { Message = "يجب تأكيد البريد الإلكتروني أولاً", Success = false };
+                }
+
                 var resetCode = GenerateSixDigitCode();
                 await StorePasswordResetCode(dto.Email, resetCode);
 
@@ -263,6 +286,43 @@ namespace e_learning.Services
             {
                 _logger.LogError(ex, "Error during password reset request");
                 return new AuthResult { Message = "حدث خطأ أثناء طلب إعادة تعيين كلمة المرور", Success = false };
+            }
+        }
+
+        public async Task<AuthResult> ResendConfirmationCodeAsync(string email)
+        {
+            try
+            {
+                var user = await _context.Users
+                    .FirstOrDefaultAsync(u => u.Email == email.ToLower());
+
+                if (user == null)
+                {
+                    return new AuthResult { Success = false, Message = "المستخدم غير موجود" };
+                }
+
+                if (user.IsEmailConfirmed)
+                {
+                    return new AuthResult { Success = false, Message = "البريد الإلكتروني مؤكد بالفعل" };
+                }
+
+                var code = GenerateSixDigitCode();
+                await StoreConfirmationCode(email, code);
+
+                var emailSent = await _emailService.SendConfirmationEmailAsync(email, code);
+                if (!emailSent)
+                {
+                    _logger.LogError("Failed to resend confirmation email to {Email}", email);
+                    return new AuthResult { Success = false, Message = "حدث خطأ أثناء إرسال البريد الإلكتروني" };
+                }
+
+                _logger.LogInformation("Confirmation code resent to: {Email}", email);
+                return new AuthResult { Success = true, Message = "تم إرسال كود التأكيد مرة أخرى" };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error resending confirmation code");
+                return new AuthResult { Success = false, Message = "حدث خطأ أثناء إعادة إرسال كود التأكيد" };
             }
         }
 
@@ -363,11 +423,15 @@ namespace e_learning.Services
 
         private async Task StoreConfirmationCode(string email, string code)
         {
+            // Remove any existing codes first
+            await RemoveConfirmationCode(email);
+
             await _context.EmailConfirmationCodes.AddAsync(new EmailConfirmationCode
             {
                 Email = email.ToLower(),
                 Code = code,
-                ExpiryDate = DateTime.UtcNow.AddMinutes(10)
+                ExpiryDate = DateTime.UtcNow.AddMinutes(10),
+                CreatedAt = DateTime.UtcNow
             });
             await _context.SaveChangesAsync();
         }
@@ -397,11 +461,15 @@ namespace e_learning.Services
 
         private async Task StorePasswordResetCode(string email, string code)
         {
+            // Remove any existing codes first
+            await RemovePasswordResetCode(email);
+
             await _context.PasswordResetCodes.AddAsync(new PasswordResetCode
             {
                 Email = email.ToLower(),
                 Code = code,
-                ExpiryDate = DateTime.UtcNow.AddMinutes(10)
+                ExpiryDate = DateTime.UtcNow.AddMinutes(10),
+                CreatedAt = DateTime.UtcNow
             });
             await _context.SaveChangesAsync();
         }
@@ -435,8 +503,9 @@ namespace e_learning.Services
             {
                 UserId = userId,
                 RefreshToken = refreshToken,
-                ExpiryDate = DateTime.UtcNow.AddDays(_configuration.GetValue<int>("Jwt:RefreshTokenExpiryInDays")),
-                CreatedAt = DateTime.UtcNow
+                ExpiryDate = DateTime.UtcNow.AddDays(_configuration.GetValue<int>("Jwt:RefreshTokenExpiryInDays", 7)),
+                CreatedAt = DateTime.UtcNow,
+                IsUsed = false
             });
             await _context.SaveChangesAsync();
         }
@@ -444,10 +513,14 @@ namespace e_learning.Services
         private async Task InvalidateUserRefreshTokens(int userId)
         {
             var tokens = await _context.UserRefreshTokens
-                .Where(rt => rt.UserId == userId)
+                .Where(rt => rt.UserId == userId && !rt.IsUsed)
                 .ToListAsync();
 
-            _context.UserRefreshTokens.RemoveRange(tokens);
+            foreach (var token in tokens)
+            {
+                token.IsUsed = true;
+            }
+
             await _context.SaveChangesAsync();
         }
 

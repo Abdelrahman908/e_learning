@@ -18,6 +18,7 @@ namespace e_learning.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
+        public bool IsActive { get; set; } = true;
 
         public ICollection<LessonProgress> LessonProgresses { get; set; } = new List<LessonProgress>();
         public ICollection<Payment> Payments { get; set; } = new List<Payment>();
@@ -25,6 +26,10 @@ namespace e_learning.Models
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
         public ICollection<Course> Courses { get; set; } = new List<Course>();  // الدورات التي يدرسها المدرب
         public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+        public ICollection<Notification> ReceivedNotifications { get; set; }
+        public ICollection<Notification> SentNotifications { get; set; }
+
         public ICollection<QuizResult> QuizResults { get; set; } = new List<QuizResult>();
+
     }
 }

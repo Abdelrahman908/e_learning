@@ -1,0 +1,78 @@
+2025-05-17 00:18:23.686 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/forgot-password - null null
+2025-05-17 00:18:23.953 +03:00 [INF] CORS policy execution successful.
+2025-05-17 00:18:23.969 +03:00 [INF] HTTP OPTIONS /api/Auth/forgot-password responded 204 in 27.5472 ms
+2025-05-17 00:18:23.973 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/forgot-password - 204 null null 295.0832ms
+2025-05-17 00:18:23.998 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/forgot-password - application/json 34
+2025-05-17 00:18:24.003 +03:00 [INF] CORS policy execution successful.
+2025-05-17 00:18:24.032 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.ForgotPassword (e_learning)'
+2025-05-17 00:18:24.056 +03:00 [INF] Route matched with {action = "ForgotPassword", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ForgotPassword(e_learning.DTOs.ForgotPasswordDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-17 00:18:24.451 +03:00 [INF] Executed DbCommand (60ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-17 00:18:24.499 +03:00 [INF] Executed DbCommand (11ms) [Parameters=[@__ToLower_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [p].[Id], [p].[Code], [p].[CreatedAt], [p].[Email], [p].[ExpiryDate]
+FROM [PasswordResetCodes] AS [p]
+WHERE [p].[Email] = @__ToLower_0
+2025-05-17 00:18:24.604 +03:00 [INF] Executed DbCommand (50ms) [Parameters=[@p0='12'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+DELETE FROM [PasswordResetCodes]
+OUTPUT 1
+WHERE [Id] = @p0;
+2025-05-17 00:18:24.649 +03:00 [INF] Executed DbCommand (12ms) [Parameters=[@p0='397111' (Nullable = false) (Size = 6), @p1='2025-05-16T21:18:24.6231883Z', @p2='abdomoka2018@gmail.com' (Nullable = false) (Size = 450), @p3='2025-05-16T21:28:24.6231857Z'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [PasswordResetCodes] ([Code], [CreatedAt], [Email], [ExpiryDate])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3);
+2025-05-17 00:18:27.241 +03:00 [INF] Email sent to abdomoka2018@gmail.com
+2025-05-17 00:18:27.265 +03:00 [INF] Password reset code sent to: abdomoka2018@gmail.com
+2025-05-17 00:18:27.283 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-17 00:18:27.430 +03:00 [INF] Executed action e_learning.Controllers.AuthController.ForgotPassword (e_learning) in 3368.0265ms
+2025-05-17 00:18:27.450 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.ForgotPassword (e_learning)'
+2025-05-17 00:18:27.454 +03:00 [INF] HTTP POST /api/Auth/forgot-password responded 200 in 3452.9450 ms
+2025-05-17 00:18:27.461 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/forgot-password - 200 null application/json; charset=utf-8 3464.0824ms
+2025-05-17 00:18:59.303 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/reset-password - application/json 80
+2025-05-17 00:18:59.311 +03:00 [INF] CORS policy execution failed.
+2025-05-17 00:18:59.313 +03:00 [INF] Request origin https://localhost:7056 does not have permission to access the resource.
+2025-05-17 00:18:59.318 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.ResetPassword (e_learning)'
+2025-05-17 00:18:59.419 +03:00 [INF] Route matched with {action = "ResetPassword", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ResetPassword(e_learning.DTOs.ResetPasswordDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-17 00:18:59.552 +03:00 [WRN] كلمة مرور ضعيفة: الطول أقل من 8
+2025-05-17 00:18:59.555 +03:00 [INF] Executing BadRequestObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-17 00:18:59.570 +03:00 [INF] Executed action e_learning.Controllers.AuthController.ResetPassword (e_learning) in 143.2912ms
+2025-05-17 00:18:59.577 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.ResetPassword (e_learning)'
+2025-05-17 00:18:59.579 +03:00 [INF] HTTP POST /api/Auth/reset-password responded 400 in 270.7744 ms
+2025-05-17 00:18:59.582 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/reset-password - 400 null application/json; charset=utf-8 279.0548ms
+2025-05-17 00:21:02.330 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/forgot-password - application/json 34
+2025-05-17 00:21:02.358 +03:00 [INF] CORS policy execution successful.
+2025-05-17 00:21:02.360 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.ForgotPassword (e_learning)'
+2025-05-17 00:21:02.386 +03:00 [INF] Route matched with {action = "ForgotPassword", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ForgotPassword(e_learning.DTOs.ForgotPasswordDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-17 00:21:02.418 +03:00 [INF] Executed DbCommand (19ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-17 00:21:02.440 +03:00 [INF] Executed DbCommand (14ms) [Parameters=[@__ToLower_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [p].[Id], [p].[Code], [p].[CreatedAt], [p].[Email], [p].[ExpiryDate]
+FROM [PasswordResetCodes] AS [p]
+WHERE [p].[Email] = @__ToLower_0
+2025-05-17 00:21:02.486 +03:00 [INF] Executed DbCommand (16ms) [Parameters=[@p0='13'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+DELETE FROM [PasswordResetCodes]
+OUTPUT 1
+WHERE [Id] = @p0;
+2025-05-17 00:21:02.521 +03:00 [INF] Executed DbCommand (12ms) [Parameters=[@p0='468170' (Nullable = false) (Size = 6), @p1='2025-05-16T21:21:02.5060962Z', @p2='abdomoka2018@gmail.com' (Nullable = false) (Size = 450), @p3='2025-05-16T21:31:02.5060940Z'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [PasswordResetCodes] ([Code], [CreatedAt], [Email], [ExpiryDate])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3);
+2025-05-17 00:21:07.374 +03:00 [INF] Email sent to abdomoka2018@gmail.com
+2025-05-17 00:21:07.375 +03:00 [INF] Password reset code sent to: abdomoka2018@gmail.com
+2025-05-17 00:21:07.376 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-17 00:21:07.379 +03:00 [INF] Executed action e_learning.Controllers.AuthController.ForgotPassword (e_learning) in 4989.7243ms
+2025-05-17 00:21:07.381 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.ForgotPassword (e_learning)'
+2025-05-17 00:21:07.382 +03:00 [INF] HTTP POST /api/Auth/forgot-password responded 200 in 5024.7725 ms
+2025-05-17 00:21:07.387 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/forgot-password - 200 null application/json; charset=utf-8 5057.1105ms
+2025-05-17 01:16:03.148 +03:00 [INF] Application is shutting down...

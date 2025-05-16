@@ -1,0 +1,261 @@
+2025-05-16 17:41:57.466 +03:00 [INF] Executed DbCommand (67ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-16 17:41:57.722 +03:00 [INF] Executed DbCommand (181ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [E_LearningDB] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+END;
+2025-05-16 17:41:59.116 +03:00 [INF] Executed DbCommand (1,390ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+DROP DATABASE [E_LearningDB];
+2025-05-16 17:42:23.980 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-16 17:42:24.063 +03:00 [WRN] The foreign key property 'Notification.UserId1' was created in shadow state because a conflicting property with the simple name 'UserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 17:42:24.071 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 17:42:24.677 +03:00 [WRN] The foreign key property 'Notification.UserId1' was created in shadow state because a conflicting property with the simple name 'UserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 17:42:24.711 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 17:43:00.553 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-16 17:43:00.922 +03:00 [WRN] The foreign key property 'Notification.UserId1' was created in shadow state because a conflicting property with the simple name 'UserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 17:43:00.931 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 17:43:02.245 +03:00 [WRN] The foreign key property 'Notification.UserId1' was created in shadow state because a conflicting property with the simple name 'UserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 17:43:02.402 +03:00 [WRN] The foreign key property 'Quiz.LessonId1' was created in shadow state because a conflicting property with the simple name 'LessonId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-16 17:43:03.175 +03:00 [INF] Executed DbCommand (585ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [E_LearningDB];
+2025-05-16 17:43:04.702 +03:00 [INF] Executed DbCommand (1,512ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [E_LearningDB] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2025-05-16 17:43:04.746 +03:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-16 17:43:04.962 +03:00 [INF] Executed DbCommand (37ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+);
+2025-05-16 17:43:04.980 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-16 17:43:05.016 +03:00 [INF] Executed DbCommand (26ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-16 17:43:05.060 +03:00 [INF] Executed DbCommand (36ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-05-16 17:43:05.122 +03:00 [INF] Applying migration '20250516144225_FixCategoryForeignKey'.
+2025-05-16 17:43:05.533 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Categories] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    CONSTRAINT [PK_Categories] PRIMARY KEY ([Id])
+);
+2025-05-16 17:43:05.545 +03:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [EmailConfirmationCodes] (
+    [Id] int NOT NULL IDENTITY,
+    [Email] nvarchar(450) NOT NULL,
+    [Code] nvarchar(6) NOT NULL,
+    [ExpiryDate] datetime2 NOT NULL,
+    [CreatedAt] datetime2 NOT NULL DEFAULT (GETDATE()),
+    CONSTRAINT [PK_EmailConfirmationCodes] PRIMARY KEY ([Id])
+);
+2025-05-16 17:43:05.554 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [PasswordResetCodes] (
+    [Id] int NOT NULL IDENTITY,
+    [Email] nvarchar(450) NOT NULL,
+    [Code] nvarchar(6) NOT NULL,
+    [ExpiryDate] datetime2 NOT NULL,
+    [CreatedAt] datetime2 NOT NULL DEFAULT (GETDATE()),
+    CONSTRAINT [PK_PasswordResetCodes] PRIMARY KEY ([Id])
+);
+2025-05-16 17:43:05.568 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Users] (
+    [Id] int NOT NULL IDENTITY,
+    [FullName] nvarchar(max) NULL,
+    [Email] nvarchar(450) NULL,
+    [PasswordHash] nvarchar(max) NULL,
+    [Role] nvarchar(max) NOT NULL,
+    [IsEmailConfirmed] bit NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsActive] bit NOT NULL,
+    CONSTRAINT [PK_Users] PRIMARY KEY ([Id])
+);
+2025-05-16 17:43:05.667 +03:00 [INF] Executed DbCommand (92ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Courses] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(100) NOT NULL,
+    [Title] nvarchar(150) NULL,
+    [Description] nvarchar(1000) NULL,
+    [Price] decimal(18,2) NOT NULL,
+    [ImageUrl] nvarchar(max) NULL,
+    [IsActive] bit NOT NULL,
+    [CategoryId] int NULL,
+    [InstructorId] int NOT NULL,
+    [CreatedBy] int NOT NULL,
+    [CreatedAt] datetime2 NOT NULL DEFAULT (GETDATE()),
+    [UpdatedAt] datetime2 NULL,
+    [UserId] int NULL,
+    CONSTRAINT [PK_Courses] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Courses_Categories_CategoryId] FOREIGN KEY ([CategoryId]) REFERENCES [Categories] ([Id]) ON DELETE SET NULL,
+    CONSTRAINT [FK_Courses_Users_InstructorId] FOREIGN KEY ([InstructorId]) REFERENCES [Users] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Courses_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id])
+);
+2025-05-16 17:43:05.773 +03:00 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Notifications] (
+    [Id] int NOT NULL IDENTITY,
+    [Title] nvarchar(100) NOT NULL,
+    [Message] nvarchar(max) NOT NULL,
+    [UserId] int NOT NULL,
+    [SenderId] int NULL,
+    [IsRead] bit NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [NotificationType] nvarchar(max) NOT NULL,
+    [UserId1] int NULL,
+    CONSTRAINT [PK_Notifications] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Notifications_Users_SenderId] FOREIGN KEY ([SenderId]) REFERENCES [Users] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Notifications_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Notifications_Users_UserId1] FOREIGN KEY ([UserId1]) REFERENCES [Users] ([Id])
+);
+2025-05-16 17:43:05.799 +03:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Profiles] (
+    [Id] int NOT NULL IDENTITY,
+    [Bio] nvarchar(max) NULL,
+    [ProfilePicture] nvarchar(max) NULL,
+    [Address] nvarchar(max) NULL,
+    [Phone] nvarchar(max) NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NOT NULL,
+    [UserId] int NOT NULL,
+    CONSTRAINT [PK_Profiles] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Profiles_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);
+2025-05-16 17:43:05.817 +03:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [UserRefreshTokens] (
+    [Id] int NOT NULL IDENTITY,
+    [UserId] int NOT NULL,
+    [RefreshToken] nvarchar(450) NOT NULL,
+    [ExpiryDate] datetime2 NOT NULL,
+    [CreatedAt] datetime2 NOT NULL DEFAULT (GETDATE()),
+    [IsUsed] bit NOT NULL,
+    [IsRevoked] bit NOT NULL,
+    [ExpiresIn] int NOT NULL,
+    CONSTRAINT [PK_UserRefreshTokens] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_UserRefreshTokens_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);
+2025-05-16 17:43:05.848 +03:00 [INF] Executed DbCommand (23ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Enrollments] (
+    [Id] int NOT NULL IDENTITY,
+    [UserId] int NOT NULL,
+    [CourseId] int NOT NULL,
+    CONSTRAINT [PK_Enrollments] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Enrollments_Courses_CourseId] FOREIGN KEY ([CourseId]) REFERENCES [Courses] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Enrollments_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE NO ACTION
+);
+2025-05-16 17:43:05.862 +03:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Lessons] (
+    [Id] int NOT NULL IDENTITY,
+    [Title] nvarchar(200) NOT NULL,
+    [Description] nvarchar(1000) NOT NULL,
+    [Type] nvarchar(20) NOT NULL,
+    [Content] nvarchar(max) NOT NULL,
+    [VideoUrl] nvarchar(max) NOT NULL,
+    [PdfUrl] nvarchar(max) NOT NULL,
+    [Duration] int NOT NULL,
+    [IsFree] bit NOT NULL,
+    [IsSequential] bit NOT NULL,
+    [Order] int NOT NULL,
+    [CreatedAt] datetime2 NOT NULL DEFAULT (GETDATE()),
+    [UpdatedAt] datetime2 NULL,
+    [CreatedBy] int NOT NULL,
+    [CourseId] int NOT NULL,
+    CONSTRAINT [PK_Lessons] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Lessons_Courses_CourseId] FOREIGN KEY ([CourseId]) REFERENCES [Courses] ([Id]) ON DELETE CASCADE
+);
+2025-05-16 17:43:05.881 +03:00 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Messages] (
+    [Id] int NOT NULL IDENTITY,
+    [SenderId] int NOT NULL,
+    [CourseId] int NOT NULL,
+    [Text] nvarchar(max) NULL,
+    [AttachmentUrl] nvarchar(max) NULL,
+    [SentAt] datetime2 NOT NULL,
+    [ReplyToMessageId] int NULL,
+    [IsSeen] bit NOT NULL,
+    CONSTRAINT [PK_Messages] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Messages_Courses_CourseId] FOREIGN KEY ([CourseId]) REFERENCES [Courses] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Messages_Messages_ReplyToMessageId] FOREIGN KEY ([ReplyToMessageId]) REFERENCES [Messages] ([Id]),
+    CONSTRAINT [FK_Messages_Users_SenderId] FOREIGN KEY ([SenderId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);
+2025-05-16 17:43:05.904 +03:00 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Payments] (
+    [Id] int NOT NULL IDENTITY,
+    [UserId] int NOT NULL,
+    [CourseId] int NOT NULL,
+    [Amount] decimal(18,2) NOT NULL,
+    [PaymentMethod] nvarchar(max) NULL,
+    [IsSuccessful] bit NOT NULL,
+    [PaidAt] datetime2 NOT NULL,
+    [TransactionId] nvarchar(max) NULL,
+    CONSTRAINT [PK_Payments] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Payments_Courses_CourseId] FOREIGN KEY ([CourseId]) REFERENCES [Courses] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Payments_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);
+2025-05-16 17:43:05.919 +03:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Reviews] (
+    [Id] int NOT NULL IDENTITY,
+    [CourseId] int NOT NULL,
+    [UserId] int NOT NULL,
+    [Rating] int NOT NULL,
+    [Comment] nvarchar(max) NULL,
+    CONSTRAINT [PK_Reviews] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Reviews_Courses_CourseId] FOREIGN KEY ([CourseId]) REFERENCES [Courses] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Reviews_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);
+2025-05-16 17:43:05.981 +03:00 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [LessonMaterials] (
+    [Id] int NOT NULL IDENTITY,
+    [FileName] nvarchar(max) NOT NULL,
+    [FileUrl] nvarchar(max) NOT NULL,
+    [Description] nvarchar(max) NOT NULL,
+    [FileSize] bigint NOT NULL,
+    [UploadedAt] datetime2 NOT NULL,
+    [UploadedById] nvarchar(max) NOT NULL,
+    [LessonId] int NOT NULL,
+    CONSTRAINT [PK_LessonMaterials] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_LessonMaterials_Lessons_LessonId] FOREIGN KEY ([LessonId]) REFERENCES [Lessons] ([Id]) ON DELETE CASCADE
+);
+2025-05-16 17:43:05.998 +03:00 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [LessonProgresses] (
+    [Id] int NOT NULL IDENTITY,
+    [UserId] int NOT NULL,
+    [IsCompleted] bit NOT NULL DEFAULT CAST(0 AS bit),
+    [ProgressPercentage] int NOT NULL DEFAULT 0,
+    [StartedAt] datetime2 NULL,
+    [CompletedAt] datetime2 NULL,
+    [TimeSpent] time NOT NULL,
+    [LessonId] int NOT NULL,
+    CONSTRAINT [PK_LessonProgresses] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_LessonProgresses_Lessons_LessonId] FOREIGN KEY ([LessonId]) REFERENCES [Lessons] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_LessonProgresses_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);
+2025-05-16 17:43:06.057 +03:00 [ERR] Failed executing DbCommand (51ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Quizzes] (
+    [Id] int NOT NULL IDENTITY,
+    [CourseId] int NOT NULL,
+    [Title] nvarchar(max) NOT NULL,
+    [Description] nvarchar(max) NOT NULL,
+    [PassingScore] int NOT NULL DEFAULT 70,
+    [IsMandatory] bit NOT NULL,
+    [MaxAttempts] int NOT NULL,
+    [TimeLimitMinutes] int NOT NULL,
+    [CreatedAt] datetime2 NOT NULL DEFAULT (GETDATE()),
+    [CreatedBy] int NOT NULL,
+    [Status] int NOT NULL,
+    [LessonId] int NOT NULL,
+    [LessonId1] int NULL,
+    CONSTRAINT [PK_Quizzes] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Quizzes_Courses_CourseId] FOREIGN KEY ([CourseId]) REFERENCES [Courses] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Quizzes_Lessons_LessonId] FOREIGN KEY ([LessonId]) REFERENCES [Lessons] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Quizzes_Lessons_LessonId1] FOREIGN KEY ([LessonId1]) REFERENCES [Lessons] ([Id])
+);
+2025-05-16 17:45:51.495 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-16 17:45:51.650 +03:00 [WRN] The foreign key property 'Notification.UserId1' was created in shadow state because a conflicting property with the simple name 'UserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.

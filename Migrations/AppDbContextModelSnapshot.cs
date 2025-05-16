@@ -55,7 +55,7 @@ namespace e_learning.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -94,13 +94,20 @@ namespace e_learning.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("InstructorId");
 
+                    b.HasIndex("IsActive");
+
                     b.HasIndex("Title");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Courses");
                 });
@@ -193,6 +200,12 @@ namespace e_learning.Migrations
 
                     b.Property<DateTime>("ExpiryDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRevoked")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("bit");
 
                     b.Property<string>("RefreshToken")
                         .IsRequired()
@@ -455,11 +468,16 @@ namespace e_learning.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UserId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("SenderId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Notifications");
                 });
@@ -579,7 +597,7 @@ namespace e_learning.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CourseId")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -598,9 +616,6 @@ namespace e_learning.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("LessonId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("LessonId1")
                         .HasColumnType("int");
 
                     b.Property<int>("MaxAttempts")
@@ -625,11 +640,8 @@ namespace e_learning.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.HasIndex("LessonId");
-
-                    b.HasIndex("LessonId1")
-                        .IsUnique()
-                        .HasFilter("[LessonId1] IS NOT NULL");
+                    b.HasIndex("LessonId")
+                        .IsUnique();
 
                     b.ToTable("Quizzes");
                 });
@@ -689,6 +701,9 @@ namespace e_learning.Migrations
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsEmailConfirmed")
                         .HasColumnType("bit");
 
@@ -707,6 +722,8 @@ namespace e_learning.Migrations
                     b.HasIndex("Email")
                         .IsUnique()
                         .HasFilter("[Email] IS NOT NULL");
+
+                    b.HasIndex("IsActive");
 
                     b.ToTable("Users");
                 });
@@ -836,14 +853,17 @@ namespace e_learning.Migrations
                     b.HasOne("e_learning.Models.Category", "Category")
                         .WithMany("Courses")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("e_learning.Models.User", "Instructor")
-                        .WithMany("Courses")
+                        .WithMany()
                         .HasForeignKey("InstructorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("e_learning.Models.User", null)
+                        .WithMany("Courses")
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Category");
 
@@ -960,15 +980,19 @@ namespace e_learning.Migrations
             modelBuilder.Entity("e_learning.Models.Notification", b =>
                 {
                     b.HasOne("e_learning.Models.User", "Sender")
-                        .WithMany()
+                        .WithMany("SentNotifications")
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("e_learning.Models.User", "User")
-                        .WithMany("Notifications")
+                        .WithMany("ReceivedNotifications")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("e_learning.Models.User", null)
+                        .WithMany("Notifications")
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("Sender");
 
@@ -1007,19 +1031,19 @@ namespace e_learning.Migrations
 
             modelBuilder.Entity("e_learning.Models.Quiz", b =>
                 {
-                    b.HasOne("Course", null)
+                    b.HasOne("Course", "Course")
                         .WithMany("Quizzes")
-                        .HasForeignKey("CourseId");
-
-                    b.HasOne("e_learning.Models.Lesson", "Lesson")
-                        .WithMany("Quizzes")
-                        .HasForeignKey("LessonId")
+                        .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("e_learning.Models.Lesson", null)
+                    b.HasOne("e_learning.Models.Lesson", "Lesson")
                         .WithOne("Quiz")
-                        .HasForeignKey("e_learning.Models.Quiz", "LessonId1");
+                        .HasForeignKey("e_learning.Models.Quiz", "LessonId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Course");
 
                     b.Navigation("Lesson");
                 });
@@ -1139,8 +1163,6 @@ namespace e_learning.Migrations
 
                     b.Navigation("Quiz")
                         .IsRequired();
-
-                    b.Navigation("Quizzes");
                 });
 
             modelBuilder.Entity("e_learning.Models.Quiz", b =>
@@ -1171,7 +1193,11 @@ namespace e_learning.Migrations
 
                     b.Navigation("QuizResults");
 
+                    b.Navigation("ReceivedNotifications");
+
                     b.Navigation("Reviews");
+
+                    b.Navigation("SentNotifications");
                 });
 #pragma warning restore 612, 618
         }

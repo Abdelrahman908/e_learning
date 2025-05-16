@@ -43,7 +43,7 @@ namespace e_learning.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // 1. إعدادات الدقة للأرقام
+            // 1. Decimal Precision Settings
             modelBuilder.Entity<Course>()
                 .Property(c => c.Price)
                 .HasColumnType("decimal(18,2)");
@@ -52,7 +52,7 @@ namespace e_learning.Data
                 .Property(p => p.Amount)
                 .HasColumnType("decimal(18,2)");
 
-            // 2. إعدادات العلاقات الأساسية
+            // 2. Core Relationships Configuration
             modelBuilder.Entity<Profile>()
                 .HasOne(p => p.User)
                 .WithOne(u => u.Profile)
@@ -71,23 +71,32 @@ namespace e_learning.Data
                 .HasForeignKey(e => e.CourseId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Course>()
-                .HasOne(c => c.Instructor)
-                .WithMany(u => u.Courses)
-                .HasForeignKey(c => c.InstructorId)
-                .OnDelete(DeleteBehavior.Restrict);
-
+            // Fixed Course-Category relationship with proper nullability
             modelBuilder.Entity<Course>()
                 .HasOne(c => c.Category)
                 .WithMany(cat => cat.Courses)
-                .HasForeignKey(c => c.CategoryId);
+                .HasForeignKey(c => c.CategoryId)
+                .IsRequired(false)  // Explicitly mark as optional
+                .OnDelete(DeleteBehavior.SetNull);
 
-            // 3. إعدادات الدروس والمواد التعليمية
+            modelBuilder.Entity<Course>()
+                .HasOne(c => c.Instructor)
+                .WithMany()
+                .HasForeignKey(c => c.InstructorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // 3. Lessons and Learning Materials Configuration
             modelBuilder.Entity<Lesson>()
                 .HasOne(l => l.Course)
                 .WithMany(c => c.Lessons)
                 .HasForeignKey(l => l.CourseId)
                 .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Lesson>()
+                .HasOne(l => l.Quiz)
+                .WithOne(q => q.Lesson)
+                .HasForeignKey<Quiz>(q => q.LessonId)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
             modelBuilder.Entity<Lesson>()
                 .Property(l => l.Type)
@@ -104,12 +113,12 @@ namespace e_learning.Data
                 .Property(m => m.FileSize)
                 .HasColumnType("bigint");
 
-            // 4. إعدادات الاختبارات والأسئلة (تم التحديث)
+            // 4. Quizzes and Questions Configuration (Updated)
             modelBuilder.Entity<Quiz>()
-                .HasOne(q => q.Lesson)
-                .WithMany(l => l.Quizzes)
-                .HasForeignKey(q => q.LessonId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasOne(q => q.Course)
+                .WithMany(c => c.Quizzes)
+                .HasForeignKey(q => q.CourseId);
+
 
             modelBuilder.Entity<Quiz>()
                 .Property(q => q.PassingScore)
@@ -140,7 +149,7 @@ namespace e_learning.Data
             modelBuilder.Entity<QuizResult>()
                 .HasOne(qr => qr.User)
                 .WithMany(u => u.QuizResults)
-                .HasForeignKey(qr => qr.UserId) 
+                .HasForeignKey(qr => qr.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<QuizResult>()
@@ -165,22 +174,21 @@ namespace e_learning.Data
                 .HasForeignKey(ua => ua.AnswerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // 5. Notifications Configuration
             modelBuilder.Entity<Notification>()
                 .HasOne(n => n.User)
-                .WithMany(u => u.Notifications)
+                .WithMany(u => u.ReceivedNotifications)  // خاصية جديدة في User
                 .HasForeignKey(n => n.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Notification>()
                 .HasOne(n => n.Sender)
-                .WithMany()
+                .WithMany(u => u.SentNotifications)  // خاصية جديدة في User
                 .HasForeignKey(n => n.SenderId)
                 .OnDelete(DeleteBehavior.Restrict);
 
 
-
-
-            // 5. إعدادات تقدم المستخدم (تم التحديث)
+            // 6. User Progress Tracking (Updated)
             modelBuilder.Entity<LessonProgress>()
                 .HasOne(lp => lp.Lesson)
                 .WithMany(l => l.Progresses)
@@ -190,7 +198,7 @@ namespace e_learning.Data
             modelBuilder.Entity<LessonProgress>()
                 .HasOne(lp => lp.User)
                 .WithMany(u => u.LessonProgresses)
-                .HasForeignKey(lp => lp.UserId) 
+                .HasForeignKey(lp => lp.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<LessonProgress>()
@@ -201,7 +209,7 @@ namespace e_learning.Data
                 .Property(lp => lp.ProgressPercentage)
                 .HasDefaultValue(0);
 
-            // 6. إعدادات الجداول المساعدة
+            // 7. Helper Tables Configuration
             modelBuilder.Entity<EmailConfirmationCode>(entity =>
             {
                 entity.HasIndex(e => e.Email).IsUnique(false);
@@ -218,7 +226,7 @@ namespace e_learning.Data
                 entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETDATE()");
             });
 
-            // إعدادات UserRefreshToken
+            // UserRefreshToken Configuration
             modelBuilder.Entity<UserRefreshToken>()
                 .HasIndex(e => e.RefreshToken)
                 .IsUnique();
@@ -234,10 +242,10 @@ namespace e_learning.Data
             modelBuilder.Entity<UserRefreshToken>()
                 .HasOne(urt => urt.User)
                 .WithMany()
-                .HasForeignKey(urt => urt.UserId) 
+                .HasForeignKey(urt => urt.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // 7. إعدادات الفهرس والأداء
+            // 8. Indexes and Performance Optimization
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
@@ -254,7 +262,7 @@ namespace e_learning.Data
                 .HasIndex(qr => new { qr.QuizId, qr.UserId, qr.CompletedAt })
                 .IsUnique(false);
 
-            // 8. القيم الافتراضية والتواريخ
+            // 9. Default Values and Timestamps
             modelBuilder.Entity<Course>()
                 .Property(c => c.CreatedAt)
                 .HasDefaultValueSql("GETDATE()");
@@ -266,6 +274,16 @@ namespace e_learning.Data
             modelBuilder.Entity<Quiz>()
                 .Property(q => q.CreatedAt)
                 .HasDefaultValueSql("GETDATE()");
+
+            // Additional optimization for frequently queried fields
+            modelBuilder.Entity<Course>()
+                .HasIndex(c => c.IsActive);
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.IsActive);
+
+            //modelBuilder.Entity<Lesson>()
+            //    .HasIndex(l => l.IsActive);
         }
     }
 }
