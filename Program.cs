@@ -259,7 +259,6 @@ app.UseStaticFiles(new StaticFileOptions
 app.UseRouting();
 app.UseCors("AllowAll");
 app.UseRateLimiter();
-//app.UseCors("AllowFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -276,6 +275,10 @@ app.Map("/error", (HttpContext context) =>
     Log.Error(exception, "Unexpected Error Occurred");
     return Results.Json(new ApiResponse(false, "حدث خطأ غير متوقع"), statusCode: StatusCodes.Status500InternalServerError);
 });
+
+// ✅ Basic Endpoints for health check and root
+app.MapGet("/", () => "E-Learning API is Running!").WithTags("Health Check");
+app.MapGet("/api/health", () => new { Status = "OK", Time = DateTime.UtcNow });
 
 // Run App
 try
@@ -345,7 +348,7 @@ public static class SeedData
             {
                 new Course
                 {
-                    Name = "دورة البرمجة الأساسية",  // إضافة اسم الدورة هنا
+                    Name = "دورة البرمجة الأساسية",
                     Title = "دورة البرمجة الأساسية",
                     Description = "تعلم أساسيات البرمجة للمبتدئين",
                     InstructorId = instructor.Id,

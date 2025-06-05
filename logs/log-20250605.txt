@@ -5109,3 +5109,54 @@ END
 2025-06-05 12:33:36.597 +03:00 [INF] HTTP GET /api/Public/about responded 200 in 1101.1867 ms
 2025-06-05 12:33:36.710 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/api/Public/about - 200 null application/json; charset=utf-8 1344.7512ms
 2025-06-05 12:36:00.631 +03:00 [INF] Application is shutting down...
+2025-06-05 15:03:56.952 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-06-05 15:03:57.075 +03:00 [WRN] The foreign key property 'Notification.UserId1' was created in shadow state because a conflicting property with the simple name 'UserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-06-05 15:03:58.819 +03:00 [INF] Executed DbCommand (56ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-06-05 15:03:59.081 +03:00 [INF] Executed DbCommand (185ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-06-05 15:03:59.094 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-06-05 15:03:59.104 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-06-05 15:03:59.222 +03:00 [INF] Executed DbCommand (88ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-06-05 15:03:59.288 +03:00 [INF] No migrations were applied. The database is already up to date.
+2025-06-05 15:03:59.885 +03:00 [INF] Executed DbCommand (99ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-06-05 15:03:59.948 +03:00 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Courses] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-06-05 15:03:59.966 +03:00 [INF] Database updated successfully
+2025-06-05 15:04:00.569 +03:00 [INF] Starting application...
+2025-06-05 15:04:00.595 +03:00 [INF] User profile is available. Using 'C:\Users\ta\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-06-05 15:04:01.058 +03:00 [INF] Now listening on: https://localhost:7056
+2025-06-05 15:04:01.081 +03:00 [INF] Now listening on: http://localhost:5000
+2025-06-05 15:04:01.091 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-06-05 15:04:01.094 +03:00 [INF] Hosting environment: Development
+2025-06-05 15:04:01.095 +03:00 [INF] Content root path: C:\Users\ta\OneDrive\Desktop\e_learning
+2025-06-05 15:06:12.947 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger/index.html - null null
+2025-06-05 15:06:13.139 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger/index.html - 200 null text/html;charset=utf-8 195.1357ms
+2025-06-05 15:06:13.223 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger-ui/custom.css - null null
+2025-06-05 15:06:13.522 +03:00 [INF] HTTP GET /swagger-ui/custom.css responded 404 in 285.3468 ms
+2025-06-05 15:06:13.528 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger-ui/custom.css - 404 0 null 304.9141ms
+2025-06-05 15:06:13.539 +03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7056/swagger-ui/custom.css, Response status code: 404
+2025-06-05 15:06:13.911 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger/v1/swagger.json - null null
+2025-06-05 15:06:14.479 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 568.2338ms
+2025-06-05 15:06:24.025 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/ - null null
+2025-06-05 15:06:24.057 +03:00 [INF] Executing endpoint 'HTTP: GET /'
+2025-06-05 15:06:24.060 +03:00 [INF] Executed endpoint 'HTTP: GET /'
+2025-06-05 15:06:24.061 +03:00 [INF] HTTP GET / responded 200 in 12.8014 ms
+2025-06-05 15:06:24.064 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/ - 200 null text/plain; charset=utf-8 38.7984ms
+2025-06-05 15:06:37.733 +03:00 [INF] Application is shutting down...
