@@ -192,3 +192,10 @@ C:\Users\ta\OneDrive\Desktop\e_learning\obj\Debug\net8.0\refint\e_learning.dll
 C:\Users\ta\OneDrive\Desktop\e_learning\obj\Debug\net8.0\e_learning.pdb
 C:\Users\ta\OneDrive\Desktop\e_learning\obj\Debug\net8.0\e_learning.genruntimeconfig.cache
 C:\Users\ta\OneDrive\Desktop\e_learning\obj\Debug\net8.0\ref\e_learning.dll
+C:\Users\ta\OneDrive\Desktop\e_learning\bin\Debug\net8.0\publish\web.config
+C:\Users\ta\OneDrive\Desktop\e_learning\bin\Debug\net8.0\publish\appsettings.Development.json
+C:\Users\ta\OneDrive\Desktop\e_learning\bin\Debug\net8.0\publish\appsettings.json
+C:\Users\ta\OneDrive\Desktop\e_learning\bin\Debug\net8.0\publish\App_Data\credentials.json
+C:\Users\ta\OneDrive\Desktop\e_learning\bin\Debug\net8.0\publish\e_learning.deps.json
+C:\Users\ta\OneDrive\Desktop\e_learning\bin\Debug\net8.0\publish\e_learning.runtimeconfig.json
+C:\Users\ta\OneDrive\Desktop\e_learning\bin\Debug\net8.0\publish\e_learning.staticwebassets.endpoints.json
