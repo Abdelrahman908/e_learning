@@ -194,7 +194,7 @@ builder.Services.AddScoped<IQuizService, QuizService>();
 builder.Services.AddScoped<IProgressService, ProgressService>();
 builder.Services.AddScoped<ILessonFileService, LessonFileService>();
 // تسجيل خدمات الملفات
-builder.Services.AddScoped<IFileService, LessonFileService>();
+builder.Services.AddSingleton<IGoogleDriveService, GoogleDriveService>();
 builder.Services.AddScoped<ILessonFileService, LessonFileService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IEmailConfirmationService, EmailConfirmationService>();

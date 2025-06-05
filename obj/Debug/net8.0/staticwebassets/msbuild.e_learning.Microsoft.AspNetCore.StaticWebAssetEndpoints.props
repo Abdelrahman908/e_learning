@@ -1,5 +1,17 @@
 ﻿<Project>
   <ItemGroup>
+    <StaticWebAssetEndpoint Include="_content/e_learning/images/courses/80744c4e-fb85-4143-94e7-ff6e5ad531f0.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\courses\80744c4e-fb85-4143-94e7-ff6e5ad531f0.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Bv1m4ZBN/BAwa5JtKz2JYf8K/b2zrxv0C7s6W5WzOMc="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"16860"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022Bv1m4ZBN/BAwa5JtKz2JYf8K/b2zrxv0C7s6W5WzOMc=\u0022"},{"Name":"Last-Modified","Value":"Wed, 04 Jun 2025 12:25:34 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/e_learning/images/courses/80744c4e-fb85-4143-94e7-ff6e5ad531f0.y5ra589erg.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\courses\80744c4e-fb85-4143-94e7-ff6e5ad531f0.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"y5ra589erg"},{"Name":"integrity","Value":"sha256-Bv1m4ZBN/BAwa5JtKz2JYf8K/b2zrxv0C7s6W5WzOMc="},{"Name":"label","Value":"_content/e_learning/images/courses/80744c4e-fb85-4143-94e7-ff6e5ad531f0.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"16860"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022Bv1m4ZBN/BAwa5JtKz2JYf8K/b2zrxv0C7s6W5WzOMc=\u0022"},{"Name":"Last-Modified","Value":"Wed, 04 Jun 2025 12:25:34 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/e_learning/images/profiles/722fab0f-016a-4c95-b6b2-04f4ff376c2e.jpg">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\profiles\722fab0f-016a-4c95-b6b2-04f4ff376c2e.jpg'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>

@@ -1,0 +1,1179 @@
+2025-05-23 19:16:45.491 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-23 19:16:45.595 +03:00 [WRN] The foreign key property 'Notification.UserId1' was created in shadow state because a conflicting property with the simple name 'UserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-23 19:16:46.923 +03:00 [INF] Executed DbCommand (122ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-23 19:16:47.061 +03:00 [INF] Executed DbCommand (85ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-23 19:16:47.080 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-23 19:16:47.101 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-23 19:16:47.272 +03:00 [INF] Executed DbCommand (123ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-05-23 19:16:47.461 +03:00 [INF] No migrations were applied. The database is already up to date.
+2025-05-23 19:16:48.490 +03:00 [INF] Executed DbCommand (262ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-23 19:16:48.628 +03:00 [INF] Executed DbCommand (69ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Courses] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-23 19:16:48.664 +03:00 [INF] Database updated successfully
+2025-05-23 19:16:49.133 +03:00 [INF] Starting application...
+2025-05-23 19:16:49.180 +03:00 [INF] User profile is available. Using 'C:\Users\ta\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-05-23 19:16:49.821 +03:00 [INF] Now listening on: https://localhost:7056
+2025-05-23 19:16:50.510 +03:00 [INF] Now listening on: http://localhost:5000
+2025-05-23 19:16:50.635 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-23 19:16:50.955 +03:00 [INF] Hosting environment: Development
+2025-05-23 19:16:50.963 +03:00 [INF] Content root path: C:\Users\ta\OneDrive\Desktop\e_learning
+2025-05-23 19:25:55.563 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - null null
+2025-05-23 19:25:55.681 +03:00 [INF] CORS policy execution successful.
+2025-05-23 19:25:55.693 +03:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 68.5516 ms
+2025-05-23 19:25:55.703 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - 204 null null 144.0357ms
+2025-05-23 19:25:55.727 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 19:25:55.743 +03:00 [INF] CORS policy execution successful.
+2025-05-23 19:25:55.877 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 19:25:55.903 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 19:25:56.471 +03:00 [INF] Executed DbCommand (110ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 19:25:56.492 +03:00 [WRN] Failed login attempt for email: abdomoka2018@gmail.com
+2025-05-23 19:25:56.506 +03:00 [INF] Executing UnauthorizedObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-23 19:25:56.572 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 661.0886ms
+2025-05-23 19:25:56.575 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 19:25:56.578 +03:00 [INF] HTTP POST /api/Auth/login responded 401 in 845.9557 ms
+2025-05-23 19:25:56.602 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 401 null application/json; charset=utf-8 874.7504ms
+2025-05-23 19:26:01.349 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 19:26:01.356 +03:00 [INF] CORS policy execution successful.
+2025-05-23 19:26:01.360 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 19:26:01.361 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 19:26:01.387 +03:00 [INF] Executed DbCommand (6ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 19:26:01.402 +03:00 [WRN] Failed login attempt for email: abdomoka2018@gmail.com
+2025-05-23 19:26:01.407 +03:00 [INF] Executing UnauthorizedObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-23 19:26:01.412 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 48.569ms
+2025-05-23 19:26:01.414 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 19:26:01.416 +03:00 [INF] HTTP POST /api/Auth/login responded 401 in 61.8981 ms
+2025-05-23 19:26:01.431 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 401 null application/json; charset=utf-8 81.4725ms
+2025-05-23 19:26:05.717 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 19:26:05.720 +03:00 [INF] CORS policy execution successful.
+2025-05-23 19:26:05.727 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 19:26:05.728 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 19:26:05.749 +03:00 [INF] Executed DbCommand (5ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 19:26:05.758 +03:00 [WRN] Failed login attempt for email: abdomoka2018@gmail.com
+2025-05-23 19:26:05.760 +03:00 [INF] Executing UnauthorizedObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-23 19:26:05.761 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 30.6404ms
+2025-05-23 19:26:05.763 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 19:26:05.764 +03:00 [INF] HTTP POST /api/Auth/login responded 401 in 44.5724 ms
+2025-05-23 19:26:05.769 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 401 null application/json; charset=utf-8 51.6861ms
+2025-05-23 19:26:13.696 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 19:26:13.716 +03:00 [INF] CORS policy execution successful.
+2025-05-23 19:26:13.717 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 19:26:13.724 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 19:26:13.816 +03:00 [INF] Executed DbCommand (32ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 19:26:13.873 +03:00 [WRN] Failed login attempt for email: abdomoka2018@gmail.com
+2025-05-23 19:26:13.879 +03:00 [INF] Executing UnauthorizedObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-23 19:26:13.899 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 172.0748ms
+2025-05-23 19:26:13.901 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 19:26:13.902 +03:00 [INF] HTTP POST /api/Auth/login responded 401 in 186.2763 ms
+2025-05-23 19:26:14.167 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 401 null application/json; charset=utf-8 470.3516ms
+2025-05-23 19:26:24.858 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/forgot-password - null null
+2025-05-23 19:26:24.865 +03:00 [INF] CORS policy execution successful.
+2025-05-23 19:26:24.868 +03:00 [INF] HTTP OPTIONS /api/Auth/forgot-password responded 204 in 3.9178 ms
+2025-05-23 19:26:24.876 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/forgot-password - 204 null null 18.1994ms
+2025-05-23 19:26:24.878 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/forgot-password - application/json 34
+2025-05-23 19:26:24.882 +03:00 [INF] CORS policy execution successful.
+2025-05-23 19:26:24.884 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.ForgotPassword (e_learning)'
+2025-05-23 19:26:24.895 +03:00 [INF] Route matched with {action = "ForgotPassword", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ForgotPassword(e_learning.DTOs.ForgotPasswordDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 19:26:24.922 +03:00 [INF] Executed DbCommand (9ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 19:26:24.928 +03:00 [INF] Executing NotFoundObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-23 19:26:24.930 +03:00 [INF] Executed action e_learning.Controllers.AuthController.ForgotPassword (e_learning) in 32.4056ms
+2025-05-23 19:26:24.934 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.ForgotPassword (e_learning)'
+2025-05-23 19:26:24.935 +03:00 [INF] HTTP POST /api/Auth/forgot-password responded 404 in 53.0235 ms
+2025-05-23 19:26:24.943 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/forgot-password - 404 null application/json; charset=utf-8 64.1434ms
+2025-05-23 19:27:16.692 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/register - null null
+2025-05-23 19:27:17.140 +03:00 [INF] CORS policy execution successful.
+2025-05-23 19:27:17.185 +03:00 [INF] HTTP OPTIONS /api/Auth/register responded 204 in 44.1477 ms
+2025-05-23 19:27:17.190 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/register - 204 null null 498.0905ms
+2025-05-23 19:27:17.196 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/register - application/json 108
+2025-05-23 19:27:17.205 +03:00 [INF] CORS policy execution successful.
+2025-05-23 19:27:17.206 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-23 19:27:17.216 +03:00 [INF] Route matched with {action = "Register", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Register(e_learning.DTOs.UserRegisterDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 19:27:17.338 +03:00 [INF] Executed DbCommand (41ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[Email] = @__dto_Email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-23 19:27:19.154 +03:00 [INF] Executed DbCommand (532ms) [Parameters=[@p0='2025-05-23T16:27:18.0069225Z', @p1='abdomoka2018@gmail.com' (Size = 450), @p2='عبدرالرحمن' (Size = 4000), @p3='True', @p4='False', @p5='$2a$11$gt6LUOQ0pvWzxlIjTlxYleEx45dJSodx5ixico8hIJ3rrpbk5xEVG' (Size = 4000), @p6='Student' (Nullable = false) (Size = 4000), @p7=NULL (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Users] ([CreatedAt], [Email], [FullName], [IsActive], [IsEmailConfirmed], [PasswordHash], [Role], [UpdatedAt])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2025-05-23 19:27:19.857 +03:00 [INF] Executed DbCommand (335ms) [Parameters=[@__ToLower_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[Code], [e].[CreatedAt], [e].[Email], [e].[ExpiryDate]
+FROM [EmailConfirmationCodes] AS [e]
+WHERE [e].[Email] = @__ToLower_0
+2025-05-23 19:27:20.384 +03:00 [INF] Executed DbCommand (257ms) [Parameters=[@p0='373702' (Nullable = false) (Size = 6), @p1='2025-05-23T16:27:19.8951777Z', @p2='abdomoka2018@gmail.com' (Nullable = false) (Size = 450), @p3='2025-05-23T16:37:19.8951132Z'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [EmailConfirmationCodes] ([Code], [CreatedAt], [Email], [ExpiryDate])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3);
+2025-05-23 19:27:24.962 +03:00 [INF] Email sent to abdomoka2018@gmail.com
+2025-05-23 19:27:25.059 +03:00 [INF] New user registered - ID: 25
+2025-05-23 19:27:25.071 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RegisterResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 19:27:25.116 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Register (e_learning) in 7893.3453ms
+2025-05-23 19:27:25.128 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-23 19:27:25.151 +03:00 [INF] HTTP POST /api/Auth/register responded 200 in 7945.7603 ms
+2025-05-23 19:27:25.269 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/register - 200 null application/json; charset=utf-8 8073.3704ms
+2025-05-23 19:28:25.090 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/confirm-email - null null
+2025-05-23 19:28:25.113 +03:00 [INF] CORS policy execution successful.
+2025-05-23 19:28:25.123 +03:00 [INF] HTTP OPTIONS /api/Auth/confirm-email responded 204 in 9.8560 ms
+2025-05-23 19:28:25.130 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/confirm-email - 204 null null 39.8099ms
+2025-05-23 19:28:25.134 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/confirm-email - application/json 50
+2025-05-23 19:28:25.154 +03:00 [INF] CORS policy execution successful.
+2025-05-23 19:28:25.155 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.ConfirmEmail (e_learning)'
+2025-05-23 19:28:25.168 +03:00 [INF] Route matched with {action = "ConfirmEmail", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ConfirmEmail(e_learning.DTOs.ConfirmEmailDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 19:28:25.269 +03:00 [INF] Executed DbCommand (29ms) [Parameters=[@__ToLower_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Code], [e].[CreatedAt], [e].[Email], [e].[ExpiryDate]
+FROM [EmailConfirmationCodes] AS [e]
+WHERE [e].[Email] = @__ToLower_0 AND [e].[ExpiryDate] > GETUTCDATE()
+ORDER BY [e].[ExpiryDate] DESC
+2025-05-23 19:28:25.423 +03:00 [INF] Executed DbCommand (55ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 19:28:25.486 +03:00 [INF] Executed DbCommand (21ms) [Parameters=[@p1='25', @p0='True'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Users] SET [IsEmailConfirmed] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+2025-05-23 19:28:25.517 +03:00 [INF] Executed DbCommand (12ms) [Parameters=[@__ToLower_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[Code], [e].[CreatedAt], [e].[Email], [e].[ExpiryDate]
+FROM [EmailConfirmationCodes] AS [e]
+WHERE [e].[Email] = @__ToLower_0
+2025-05-23 19:28:25.620 +03:00 [INF] Executed DbCommand (17ms) [Parameters=[@p0='28'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+DELETE FROM [EmailConfirmationCodes]
+OUTPUT 1
+WHERE [Id] = @p0;
+2025-05-23 19:28:25.678 +03:00 [INF] Email confirmed for: abdomoka2018@gmail.com
+2025-05-23 19:28:25.681 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-23 19:28:25.683 +03:00 [INF] Executed action e_learning.Controllers.AuthController.ConfirmEmail (e_learning) in 508.5812ms
+2025-05-23 19:28:25.686 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.ConfirmEmail (e_learning)'
+2025-05-23 19:28:25.687 +03:00 [INF] HTTP POST /api/Auth/confirm-email responded 200 in 533.9188 ms
+2025-05-23 19:28:25.695 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/confirm-email - 200 null application/json; charset=utf-8 561.3927ms
+2025-05-23 19:28:30.132 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 19:28:30.140 +03:00 [INF] CORS policy execution successful.
+2025-05-23 19:28:30.149 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 19:28:30.164 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 19:28:30.253 +03:00 [INF] Executed DbCommand (18ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 19:28:30.868 +03:00 [INF] Executed DbCommand (81ms) [Parameters=[@p0='2025-05-23T16:28:30.6264953Z', @p1='0', @p2='2025-05-30T16:28:30.6260941Z', @p3='False', @p4='False', @p5='FlGaDaOGQgQGB4u4EhEtQ7a0arV3f4cVW3Hfm5JKTnk=' (Nullable = false) (Size = 450), @p6='25'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-23 19:28:30.898 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-23 19:28:30.901 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 19:28:30.932 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 751.9551ms
+2025-05-23 19:28:30.934 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 19:28:30.936 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 796.5761 ms
+2025-05-23 19:28:30.952 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 819.9481ms
+2025-05-23 19:28:39.840 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - null null
+2025-05-23 19:28:39.846 +03:00 [INF] CORS policy execution successful.
+2025-05-23 19:28:39.847 +03:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 1.6304 ms
+2025-05-23 19:28:39.850 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - 204 null null 9.2856ms
+2025-05-23 19:28:39.862 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 19:28:39.864 +03:00 [INF] CORS policy execution successful.
+2025-05-23 19:28:39.913 +03:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '5/23/2025 4:28:30 PM', Current time (UTC): '5/23/2025 4:28:39 PM'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2025-05-23 19:28:39.952 +03:00 [ERR] JWT Authentication Failed
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '5/23/2025 4:28:30 PM', Current time (UTC): '5/23/2025 4:28:39 PM'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2025-05-23 19:28:39.960 +03:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '5/23/2025 4:28:30 PM', Current time (UTC): '5/23/2025 4:28:39 PM'.
+2025-05-23 19:28:39.964 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 19:28:39.966 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 19:28:39.989 +03:00 [INF] Executed DbCommand (8ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 19:28:40.348 +03:00 [INF] Executed DbCommand (15ms) [Parameters=[@p0='2025-05-23T16:28:40.3258301Z', @p1='0', @p2='2025-05-30T16:28:40.3257578Z', @p3='False', @p4='False', @p5='BetfI2b0NSXLejtYsqxTMHqtBHI9ORVG5nQL4YQIdWw=' (Nullable = false) (Size = 450), @p6='25'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-23 19:28:40.403 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-23 19:28:40.406 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 19:28:40.410 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 442.2258ms
+2025-05-23 19:28:40.415 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 19:28:40.417 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 552.7854 ms
+2025-05-23 19:28:40.481 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 619.6501ms
+2025-05-23 19:30:19.696 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/refresh-token - null null
+2025-05-23 19:30:19.703 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/refresh-token - null null
+2025-05-23 19:30:19.818 +03:00 [INF] CORS policy execution successful.
+2025-05-23 19:30:19.820 +03:00 [INF] CORS policy execution successful.
+2025-05-23 19:30:19.821 +03:00 [INF] HTTP OPTIONS /api/Auth/refresh-token responded 204 in 2.9873 ms
+2025-05-23 19:30:19.822 +03:00 [INF] HTTP OPTIONS /api/Auth/refresh-token responded 204 in 2.3230 ms
+2025-05-23 19:30:19.829 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/refresh-token - 204 null null 125.9514ms
+2025-05-23 19:30:19.824 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/refresh-token - 204 null null 127.9854ms
+2025-05-23 19:30:19.846 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - application/json 63
+2025-05-23 19:30:19.852 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - application/json 63
+2025-05-23 19:30:19.852 +03:00 [INF] CORS policy execution successful.
+2025-05-23 19:30:19.862 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 19:30:19.863 +03:00 [INF] CORS policy execution successful.
+2025-05-23 19:30:19.870 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 19:30:19.873 +03:00 [INF] Route matched with {action = "RefreshToken", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RefreshToken(e_learning.Models.RefreshTokenRequest) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 19:30:19.874 +03:00 [INF] Route matched with {action = "RefreshToken", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RefreshToken(e_learning.Models.RefreshTokenRequest) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 19:30:20.155 +03:00 [INF] Executed DbCommand (28ms) [Parameters=[@__request_RefreshToken_0='BetfI2b0NSXLejtYsqxTMHqtBHI9ORVG5nQL4YQIdWw=' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[ExpiresIn], [u].[ExpiryDate], [u].[IsRevoked], [u].[IsUsed], [u].[RefreshToken], [u].[UserId], [u0].[Id], [u0].[CreatedAt], [u0].[Email], [u0].[FullName], [u0].[IsActive], [u0].[IsEmailConfirmed], [u0].[PasswordHash], [u0].[Role], [u0].[UpdatedAt]
+FROM [UserRefreshTokens] AS [u]
+INNER JOIN [Users] AS [u0] ON [u].[UserId] = [u0].[Id]
+WHERE [u].[RefreshToken] = @__request_RefreshToken_0
+2025-05-23 19:30:20.156 +03:00 [INF] Executed DbCommand (5ms) [Parameters=[@__request_RefreshToken_0='BetfI2b0NSXLejtYsqxTMHqtBHI9ORVG5nQL4YQIdWw=' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[ExpiresIn], [u].[ExpiryDate], [u].[IsRevoked], [u].[IsUsed], [u].[RefreshToken], [u].[UserId], [u0].[Id], [u0].[CreatedAt], [u0].[Email], [u0].[FullName], [u0].[IsActive], [u0].[IsEmailConfirmed], [u0].[PasswordHash], [u0].[Role], [u0].[UpdatedAt]
+FROM [UserRefreshTokens] AS [u]
+INNER JOIN [Users] AS [u0] ON [u].[UserId] = [u0].[Id]
+WHERE [u].[RefreshToken] = @__request_RefreshToken_0
+2025-05-23 19:30:20.310 +03:00 [INF] Executed DbCommand (25ms) [Parameters=[@p7='102', @p0='2025-05-23T16:28:40.3258301', @p1='0', @p2='2025-05-30T16:28:40.3257578', @p3='False', @p4='True', @p5='BetfI2b0NSXLejtYsqxTMHqtBHI9ORVG5nQL4YQIdWw=' (Nullable = false) (Size = 450), @p6='25', @p8='2025-05-23T16:30:20.2243414Z', @p9='0', @p10='2025-05-30T16:30:20.2242971Z', @p11='False', @p12='False', @p13='TaUls360hvVOi2YJHtzVxr0DENFdOhaFTbcF+cPz2wI=' (Nullable = false) (Size = 450), @p14='25'], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [UserRefreshTokens] SET [CreatedAt] = @p0, [ExpiresIn] = @p1, [ExpiryDate] = @p2, [IsRevoked] = @p3, [IsUsed] = @p4, [RefreshToken] = @p5, [UserId] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-05-23 19:30:20.337 +03:00 [INF] Executed DbCommand (52ms) [Parameters=[@p7='102', @p0='2025-05-23T16:28:40.3258301', @p1='0', @p2='2025-05-30T16:28:40.3257578', @p3='False', @p4='True', @p5='BetfI2b0NSXLejtYsqxTMHqtBHI9ORVG5nQL4YQIdWw=' (Nullable = false) (Size = 450), @p6='25', @p8='2025-05-23T16:30:20.2079849Z', @p9='0', @p10='2025-05-30T16:30:20.2079316Z', @p11='False', @p12='False', @p13='ZgAI34KmqvTXYoYleDi9IVVXGm0xF9Z2RVMf8vXdGyk=' (Nullable = false) (Size = 450), @p14='25'], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [UserRefreshTokens] SET [CreatedAt] = @p0, [ExpiresIn] = @p1, [ExpiryDate] = @p2, [IsRevoked] = @p3, [IsUsed] = @p4, [RefreshToken] = @p5, [UserId] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-05-23 19:30:20.348 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RefreshTokenResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 19:30:20.356 +03:00 [INF] Executed action e_learning.Controllers.AuthController.RefreshToken (e_learning) in 478.202ms
+2025-05-23 19:30:20.360 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 19:30:20.361 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RefreshTokenResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 19:30:20.363 +03:00 [INF] HTTP POST /api/Auth/refresh-token responded 200 in 500.0111 ms
+2025-05-23 19:30:20.365 +03:00 [INF] Executed action e_learning.Controllers.AuthController.RefreshToken (e_learning) in 488.7776ms
+2025-05-23 19:30:20.381 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - 200 null application/json; charset=utf-8 529.4634ms
+2025-05-23 19:30:20.397 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 19:30:20.455 +03:00 [INF] HTTP POST /api/Auth/refresh-token responded 200 in 605.0440 ms
+2025-05-23 19:30:20.536 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - 200 null application/json; charset=utf-8 689.2326ms
+2025-05-23 19:36:04.576 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger/index.html - null null
+2025-05-23 19:36:04.732 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger/index.html - 200 null text/html;charset=utf-8 155.8053ms
+2025-05-23 19:36:04.752 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger/swagger-ui.css - null null
+2025-05-23 19:36:04.752 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger-ui/custom.css - null null
+2025-05-23 19:36:04.752 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger/swagger-ui-bundle.js - null null
+2025-05-23 19:36:04.752 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger/swagger-ui-standalone-preset.js - null null
+2025-05-23 19:36:04.788 +03:00 [INF] HTTP GET /swagger-ui/custom.css responded 404 in 19.4209 ms
+2025-05-23 19:36:04.792 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger-ui/custom.css - 404 0 null 40.212ms
+2025-05-23 19:36:04.797 +03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7056/swagger-ui/custom.css, Response status code: 404
+2025-05-23 19:36:04.814 +03:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2025-05-23 19:36:04.820 +03:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2025-05-23 19:36:04.825 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger/swagger-ui-standalone-preset.js - 200 230280 text/javascript 72.1026ms
+2025-05-23 19:36:04.821 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger/swagger-ui.css - 200 152034 text/css 68.912ms
+2025-05-23 19:36:04.874 +03:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2025-05-23 19:36:04.875 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger/swagger-ui-bundle.js - 200 1456926 text/javascript 122.8716ms
+2025-05-23 19:36:05.172 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger/v1/swagger.json - null null
+2025-05-23 19:36:05.214 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7056/swagger/favicon-32x32.png - null null
+2025-05-23 19:36:05.297 +03:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2025-05-23 19:36:05.309 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger/favicon-32x32.png - 200 628 image/png 95.0202ms
+2025-05-23 19:36:05.610 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7056/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 437.9445ms
+2025-05-23 19:36:28.234 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 66
+2025-05-23 19:36:28.309 +03:00 [INF] CORS policy execution failed.
+2025-05-23 19:36:28.314 +03:00 [INF] Request origin https://localhost:7056 does not have permission to access the resource.
+2025-05-23 19:36:28.326 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 19:36:28.328 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 19:36:28.414 +03:00 [INF] Executed DbCommand (23ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 19:36:28.846 +03:00 [INF] Executed DbCommand (102ms) [Parameters=[@p0='2025-05-23T16:36:28.6816608Z', @p1='0', @p2='2025-05-30T16:36:28.6816249Z', @p3='False', @p4='False', @p5='NdAI4g+nNiFQ7iTXetI3hOES2Nry7kYvUgLKjmB3txM=' (Nullable = false) (Size = 450), @p6='25'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-23 19:36:28.952 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-23 19:36:28.964 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 19:36:29.065 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 714.8908ms
+2025-05-23 19:36:29.076 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 19:36:29.080 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 771.2854 ms
+2025-05-23 19:36:29.127 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 892.8939ms
+2025-05-23 19:39:45.221 +03:00 [INF] Application is shutting down...
+2025-05-23 19:43:43.586 +03:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-05-23 19:43:43.741 +03:00 [WRN] The foreign key property 'Notification.UserId1' was created in shadow state because a conflicting property with the simple name 'UserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-05-23 19:43:44.968 +03:00 [INF] Executed DbCommand (41ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-23 19:43:45.181 +03:00 [INF] Executed DbCommand (52ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-23 19:43:45.196 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-05-23 19:43:45.209 +03:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-05-23 19:43:45.307 +03:00 [INF] Executed DbCommand (31ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-05-23 19:43:45.392 +03:00 [INF] No migrations were applied. The database is already up to date.
+2025-05-23 19:43:45.917 +03:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-23 19:43:45.972 +03:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Courses] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-23 19:43:45.992 +03:00 [INF] Database updated successfully
+2025-05-23 19:43:46.311 +03:00 [INF] Starting application...
+2025-05-23 19:43:46.345 +03:00 [INF] User profile is available. Using 'C:\Users\ta\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-05-23 19:43:46.625 +03:00 [INF] Now listening on: https://localhost:7056
+2025-05-23 19:43:46.634 +03:00 [INF] Now listening on: http://localhost:5000
+2025-05-23 19:43:46.645 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-05-23 19:43:46.650 +03:00 [INF] Hosting environment: Development
+2025-05-23 19:43:46.662 +03:00 [INF] Content root path: C:\Users\ta\OneDrive\Desktop\e_learning
+2025-05-23 19:44:04.039 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 66
+2025-05-23 19:44:04.147 +03:00 [INF] CORS policy execution failed.
+2025-05-23 19:44:04.164 +03:00 [INF] Request origin https://localhost:7056 does not have permission to access the resource.
+2025-05-23 19:44:04.235 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 19:44:04.277 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 19:44:04.763 +03:00 [INF] Executed DbCommand (45ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 19:44:05.555 +03:00 [INF] Executed DbCommand (33ms) [Parameters=[@p0='2025-05-23T16:44:05.2456345Z', @p1='0', @p2='2025-05-30T16:44:05.2446090Z', @p3='False', @p4='False', @p5='xOinJNiy5PK5m2V1vBSv6RPPvNT5hI7bOl349Tp6yDo=' (Nullable = false) (Size = 450), @p6='25'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-23 19:44:05.685 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-23 19:44:05.717 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 19:44:05.860 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 1568.8958ms
+2025-05-23 19:44:05.899 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 19:44:05.905 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 1825.6048 ms
+2025-05-23 19:44:06.023 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 1986.0249ms
+2025-05-23 19:53:41.221 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - null null
+2025-05-23 19:53:41.247 +03:00 [INF] CORS policy execution successful.
+2025-05-23 19:53:41.256 +03:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 20.3675 ms
+2025-05-23 19:53:41.261 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - 204 null null 42.2707ms
+2025-05-23 19:53:41.273 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 19:53:41.282 +03:00 [INF] CORS policy execution successful.
+2025-05-23 19:53:41.287 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 19:53:41.294 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 19:53:41.394 +03:00 [INF] Executed DbCommand (13ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 19:53:41.698 +03:00 [INF] Executed DbCommand (16ms) [Parameters=[@p0='2025-05-23T16:53:41.6602047Z', @p1='0', @p2='2025-05-30T16:53:41.6595697Z', @p3='False', @p4='False', @p5='OS89ZsnAMbENjKMNH84S1zoTYc1DLmhr1Z//616mL2c=' (Nullable = false) (Size = 450), @p6='25'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-23 19:53:41.730 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-23 19:53:41.735 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 19:53:41.745 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 448.2769ms
+2025-05-23 19:53:41.747 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 19:53:41.749 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 468.2262 ms
+2025-05-23 19:53:41.753 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 480.3179ms
+2025-05-23 20:03:38.564 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - null null
+2025-05-23 20:03:38.568 +03:00 [INF] CORS policy execution successful.
+2025-05-23 20:03:38.569 +03:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 1.5515 ms
+2025-05-23 20:03:38.574 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - 204 null null 9.3248ms
+2025-05-23 20:03:38.582 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 20:03:38.585 +03:00 [INF] CORS policy execution successful.
+2025-05-23 20:03:38.674 +03:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '5/23/2025 4:53:41 PM', Current time (UTC): '5/23/2025 5:03:38 PM'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2025-05-23 20:03:38.727 +03:00 [ERR] JWT Authentication Failed
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '5/23/2025 4:53:41 PM', Current time (UTC): '5/23/2025 5:03:38 PM'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2025-05-23 20:03:38.731 +03:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '5/23/2025 4:53:41 PM', Current time (UTC): '5/23/2025 5:03:38 PM'.
+2025-05-23 20:03:38.732 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 20:03:38.734 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 20:03:38.813 +03:00 [INF] Executed DbCommand (32ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 20:03:39.130 +03:00 [INF] Executed DbCommand (13ms) [Parameters=[@p0='2025-05-23T17:03:39.1076710Z', @p1='0', @p2='2025-05-30T17:03:39.1076211Z', @p3='False', @p4='False', @p5='zTnjE9AnmjtwksU7l2GT8MciPo/dMbKeY12EU3K/MNg=' (Nullable = false) (Size = 450), @p6='25'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-23 20:03:39.151 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-23 20:03:39.153 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 20:03:39.158 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 422.574ms
+2025-05-23 20:03:39.164 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 20:03:39.164 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 579.4229 ms
+2025-05-23 20:03:39.169 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 586.3071ms
+2025-05-23 20:12:25.767 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/refresh-token - null null
+2025-05-23 20:12:25.778 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/refresh-token - null null
+2025-05-23 20:12:25.887 +03:00 [INF] CORS policy execution successful.
+2025-05-23 20:12:25.891 +03:00 [INF] CORS policy execution successful.
+2025-05-23 20:12:25.894 +03:00 [INF] HTTP OPTIONS /api/Auth/refresh-token responded 204 in 7.4316 ms
+2025-05-23 20:12:25.895 +03:00 [INF] HTTP OPTIONS /api/Auth/refresh-token responded 204 in 4.8341 ms
+2025-05-23 20:12:25.897 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/refresh-token - 204 null null 130.1185ms
+2025-05-23 20:12:25.909 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - application/json 63
+2025-05-23 20:12:25.911 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/refresh-token - 204 null null 133.66ms
+2025-05-23 20:12:25.914 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - application/json 63
+2025-05-23 20:12:25.930 +03:00 [INF] CORS policy execution successful.
+2025-05-23 20:12:25.935 +03:00 [INF] CORS policy execution successful.
+2025-05-23 20:12:25.937 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 20:12:25.939 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 20:12:25.985 +03:00 [INF] Route matched with {action = "RefreshToken", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RefreshToken(e_learning.Models.RefreshTokenRequest) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 20:12:25.985 +03:00 [INF] Route matched with {action = "RefreshToken", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RefreshToken(e_learning.Models.RefreshTokenRequest) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 20:12:26.362 +03:00 [INF] Executed DbCommand (20ms) [Parameters=[@__request_RefreshToken_0='zTnjE9AnmjtwksU7l2GT8MciPo/dMbKeY12EU3K/MNg=' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[ExpiresIn], [u].[ExpiryDate], [u].[IsRevoked], [u].[IsUsed], [u].[RefreshToken], [u].[UserId], [u0].[Id], [u0].[CreatedAt], [u0].[Email], [u0].[FullName], [u0].[IsActive], [u0].[IsEmailConfirmed], [u0].[PasswordHash], [u0].[Role], [u0].[UpdatedAt]
+FROM [UserRefreshTokens] AS [u]
+INNER JOIN [Users] AS [u0] ON [u].[UserId] = [u0].[Id]
+WHERE [u].[RefreshToken] = @__request_RefreshToken_0
+2025-05-23 20:12:26.367 +03:00 [INF] Executed DbCommand (12ms) [Parameters=[@__request_RefreshToken_0='zTnjE9AnmjtwksU7l2GT8MciPo/dMbKeY12EU3K/MNg=' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[ExpiresIn], [u].[ExpiryDate], [u].[IsRevoked], [u].[IsUsed], [u].[RefreshToken], [u].[UserId], [u0].[Id], [u0].[CreatedAt], [u0].[Email], [u0].[FullName], [u0].[IsActive], [u0].[IsEmailConfirmed], [u0].[PasswordHash], [u0].[Role], [u0].[UpdatedAt]
+FROM [UserRefreshTokens] AS [u]
+INNER JOIN [Users] AS [u0] ON [u].[UserId] = [u0].[Id]
+WHERE [u].[RefreshToken] = @__request_RefreshToken_0
+2025-05-23 20:12:26.601 +03:00 [INF] Executed DbCommand (44ms) [Parameters=[@p7='108', @p0='2025-05-23T17:03:39.1076710', @p1='0', @p2='2025-05-30T17:03:39.1076211', @p3='False', @p4='True', @p5='zTnjE9AnmjtwksU7l2GT8MciPo/dMbKeY12EU3K/MNg=' (Nullable = false) (Size = 450), @p6='25', @p8='2025-05-23T17:12:26.4555268Z', @p9='0', @p10='2025-05-30T17:12:26.4554907Z', @p11='False', @p12='False', @p13='6w1xRJY5KfnkaNWr9xTE5ckBVjra/P4w5Cisgk/E/d8=' (Nullable = false) (Size = 450), @p14='25'], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [UserRefreshTokens] SET [CreatedAt] = @p0, [ExpiresIn] = @p1, [ExpiryDate] = @p2, [IsRevoked] = @p3, [IsUsed] = @p4, [RefreshToken] = @p5, [UserId] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-05-23 20:12:26.639 +03:00 [INF] Executed DbCommand (81ms) [Parameters=[@p7='108', @p0='2025-05-23T17:03:39.1076710', @p1='0', @p2='2025-05-30T17:03:39.1076211', @p3='False', @p4='True', @p5='zTnjE9AnmjtwksU7l2GT8MciPo/dMbKeY12EU3K/MNg=' (Nullable = false) (Size = 450), @p6='25', @p8='2025-05-23T17:12:26.4552411Z', @p9='0', @p10='2025-05-30T17:12:26.4552049Z', @p11='False', @p12='False', @p13='xCpe9+yItCZUWaNiPhMOov0SzfUQDrzvhQiULUY/sRM=' (Nullable = false) (Size = 450), @p14='25'], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [UserRefreshTokens] SET [CreatedAt] = @p0, [ExpiresIn] = @p1, [ExpiryDate] = @p2, [IsRevoked] = @p3, [IsUsed] = @p4, [RefreshToken] = @p5, [UserId] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-05-23 20:12:26.652 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RefreshTokenResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 20:12:26.656 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RefreshTokenResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 20:12:26.666 +03:00 [INF] Executed action e_learning.Controllers.AuthController.RefreshToken (e_learning) in 677.0178ms
+2025-05-23 20:12:26.666 +03:00 [INF] Executed action e_learning.Controllers.AuthController.RefreshToken (e_learning) in 674.8895ms
+2025-05-23 20:12:26.668 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 20:12:26.670 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 20:12:26.671 +03:00 [INF] HTTP POST /api/Auth/refresh-token responded 200 in 736.1711 ms
+2025-05-23 20:12:26.672 +03:00 [INF] HTTP POST /api/Auth/refresh-token responded 200 in 744.3721 ms
+2025-05-23 20:12:26.700 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - 200 null application/json; charset=utf-8 786.0281ms
+2025-05-23 20:12:26.722 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - 200 null application/json; charset=utf-8 813.2449ms
+2025-05-23 20:12:30.466 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 20:12:30.470 +03:00 [INF] CORS policy execution successful.
+2025-05-23 20:12:30.472 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 20:12:30.478 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 20:12:30.519 +03:00 [INF] Executed DbCommand (23ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 20:12:30.946 +03:00 [INF] Executed DbCommand (15ms) [Parameters=[@p0='2025-05-23T17:12:30.8778826Z', @p1='0', @p2='2025-05-30T17:12:30.8778551Z', @p3='False', @p4='False', @p5='KCaPhqZgFQesrFT72ktWHP55/jn0j1ny1UlYTkJLkms=' (Nullable = false) (Size = 450), @p6='25'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-23 20:12:30.971 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-23 20:12:30.978 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 20:12:30.980 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 498.039ms
+2025-05-23 20:12:30.983 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 20:12:30.986 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 516.0112 ms
+2025-05-23 20:12:31.011 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 544.2694ms
+2025-05-23 20:14:19.642 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - application/json 63
+2025-05-23 20:14:19.752 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - application/json 63
+2025-05-23 20:14:19.791 +03:00 [INF] CORS policy execution successful.
+2025-05-23 20:14:19.793 +03:00 [INF] CORS policy execution successful.
+2025-05-23 20:14:19.793 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 20:14:19.794 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 20:14:19.899 +03:00 [INF] Route matched with {action = "RefreshToken", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RefreshToken(e_learning.Models.RefreshTokenRequest) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 20:14:19.901 +03:00 [INF] Route matched with {action = "RefreshToken", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RefreshToken(e_learning.Models.RefreshTokenRequest) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 20:14:19.978 +03:00 [INF] Executed DbCommand (40ms) [Parameters=[@__request_RefreshToken_0='KCaPhqZgFQesrFT72ktWHP55/jn0j1ny1UlYTkJLkms=' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[ExpiresIn], [u].[ExpiryDate], [u].[IsRevoked], [u].[IsUsed], [u].[RefreshToken], [u].[UserId], [u0].[Id], [u0].[CreatedAt], [u0].[Email], [u0].[FullName], [u0].[IsActive], [u0].[IsEmailConfirmed], [u0].[PasswordHash], [u0].[Role], [u0].[UpdatedAt]
+FROM [UserRefreshTokens] AS [u]
+INNER JOIN [Users] AS [u0] ON [u].[UserId] = [u0].[Id]
+WHERE [u].[RefreshToken] = @__request_RefreshToken_0
+2025-05-23 20:14:19.983 +03:00 [INF] Executed DbCommand (27ms) [Parameters=[@__request_RefreshToken_0='KCaPhqZgFQesrFT72ktWHP55/jn0j1ny1UlYTkJLkms=' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[ExpiresIn], [u].[ExpiryDate], [u].[IsRevoked], [u].[IsUsed], [u].[RefreshToken], [u].[UserId], [u0].[Id], [u0].[CreatedAt], [u0].[Email], [u0].[FullName], [u0].[IsActive], [u0].[IsEmailConfirmed], [u0].[PasswordHash], [u0].[Role], [u0].[UpdatedAt]
+FROM [UserRefreshTokens] AS [u]
+INNER JOIN [Users] AS [u0] ON [u].[UserId] = [u0].[Id]
+WHERE [u].[RefreshToken] = @__request_RefreshToken_0
+2025-05-23 20:14:20.042 +03:00 [INF] Executed DbCommand (22ms) [Parameters=[@p7='111', @p0='2025-05-23T17:12:30.8778826', @p1='0', @p2='2025-05-30T17:12:30.8778551', @p3='False', @p4='True', @p5='KCaPhqZgFQesrFT72ktWHP55/jn0j1ny1UlYTkJLkms=' (Nullable = false) (Size = 450), @p6='25', @p8='2025-05-23T17:14:20.0009460Z', @p9='0', @p10='2025-05-30T17:14:20.0008977Z', @p11='False', @p12='False', @p13='TYhUkbPxBU4VDTIH2nDisCVCmsAvnPTYK8c9+vcj2gQ=' (Nullable = false) (Size = 450), @p14='25'], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [UserRefreshTokens] SET [CreatedAt] = @p0, [ExpiresIn] = @p1, [ExpiryDate] = @p2, [IsRevoked] = @p3, [IsUsed] = @p4, [RefreshToken] = @p5, [UserId] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-05-23 20:14:20.058 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RefreshTokenResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 20:14:20.060 +03:00 [INF] Executed action e_learning.Controllers.AuthController.RefreshToken (e_learning) in 134.2028ms
+2025-05-23 20:14:20.062 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 20:14:20.074 +03:00 [INF] HTTP POST /api/Auth/refresh-token responded 200 in 283.2810 ms
+2025-05-23 20:14:20.078 +03:00 [INF] Executed DbCommand (40ms) [Parameters=[@p7='111', @p0='2025-05-23T17:12:30.8778826', @p1='0', @p2='2025-05-30T17:12:30.8778551', @p3='False', @p4='True', @p5='KCaPhqZgFQesrFT72ktWHP55/jn0j1ny1UlYTkJLkms=' (Nullable = false) (Size = 450), @p6='25', @p8='2025-05-23T17:14:20.0106426Z', @p9='0', @p10='2025-05-30T17:14:20.0106022Z', @p11='False', @p12='False', @p13='7iumwyZJMljeSDnjQwedPkZJvFOWB8r5pUM1zSSwiPM=' (Nullable = false) (Size = 450), @p14='25'], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [UserRefreshTokens] SET [CreatedAt] = @p0, [ExpiresIn] = @p1, [ExpiryDate] = @p2, [IsRevoked] = @p3, [IsUsed] = @p4, [RefreshToken] = @p5, [UserId] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-05-23 20:14:20.093 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - 200 null application/json; charset=utf-8 450.7626ms
+2025-05-23 20:14:20.304 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RefreshTokenResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 20:14:20.305 +03:00 [INF] Executed action e_learning.Controllers.AuthController.RefreshToken (e_learning) in 364.9805ms
+2025-05-23 20:14:20.307 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 20:14:20.308 +03:00 [INF] HTTP POST /api/Auth/refresh-token responded 200 in 515.1394 ms
+2025-05-23 20:14:20.323 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - 200 null application/json; charset=utf-8 570.9145ms
+2025-05-23 20:14:26.741 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - null null
+2025-05-23 20:14:26.745 +03:00 [INF] CORS policy execution successful.
+2025-05-23 20:14:26.749 +03:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 3.6385 ms
+2025-05-23 20:14:26.752 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - 204 null null 11.1298ms
+2025-05-23 20:14:26.756 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 20:14:26.761 +03:00 [INF] CORS policy execution successful.
+2025-05-23 20:14:26.762 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 20:14:26.763 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 20:14:26.778 +03:00 [INF] Executed DbCommand (5ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 20:14:27.055 +03:00 [INF] Executed DbCommand (21ms) [Parameters=[@p0='2025-05-23T17:14:27.0212851Z', @p1='0', @p2='2025-05-30T17:14:27.0212503Z', @p3='False', @p4='False', @p5='gdUHsCW4JlRAaenifZoSwK7gyMSVlmNk1oWtmiOMvd4=' (Nullable = false) (Size = 450), @p6='25'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-23 20:14:27.119 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-23 20:14:27.127 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 20:14:27.137 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 369.3308ms
+2025-05-23 20:14:27.150 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 20:14:27.159 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 398.7185 ms
+2025-05-23 20:14:27.237 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 462.6337ms
+2025-05-23 20:16:04.451 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - application/json 63
+2025-05-23 20:16:04.453 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - application/json 63
+2025-05-23 20:16:04.462 +03:00 [INF] CORS policy execution successful.
+2025-05-23 20:16:04.485 +03:00 [INF] CORS policy execution successful.
+2025-05-23 20:16:04.490 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 20:16:04.498 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 20:16:04.501 +03:00 [INF] Route matched with {action = "RefreshToken", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RefreshToken(e_learning.Models.RefreshTokenRequest) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 20:16:04.502 +03:00 [INF] Route matched with {action = "RefreshToken", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RefreshToken(e_learning.Models.RefreshTokenRequest) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 20:16:04.559 +03:00 [INF] Executed DbCommand (41ms) [Parameters=[@__request_RefreshToken_0='gdUHsCW4JlRAaenifZoSwK7gyMSVlmNk1oWtmiOMvd4=' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[ExpiresIn], [u].[ExpiryDate], [u].[IsRevoked], [u].[IsUsed], [u].[RefreshToken], [u].[UserId], [u0].[Id], [u0].[CreatedAt], [u0].[Email], [u0].[FullName], [u0].[IsActive], [u0].[IsEmailConfirmed], [u0].[PasswordHash], [u0].[Role], [u0].[UpdatedAt]
+FROM [UserRefreshTokens] AS [u]
+INNER JOIN [Users] AS [u0] ON [u].[UserId] = [u0].[Id]
+WHERE [u].[RefreshToken] = @__request_RefreshToken_0
+2025-05-23 20:16:04.562 +03:00 [INF] Executed DbCommand (13ms) [Parameters=[@__request_RefreshToken_0='gdUHsCW4JlRAaenifZoSwK7gyMSVlmNk1oWtmiOMvd4=' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[ExpiresIn], [u].[ExpiryDate], [u].[IsRevoked], [u].[IsUsed], [u].[RefreshToken], [u].[UserId], [u0].[Id], [u0].[CreatedAt], [u0].[Email], [u0].[FullName], [u0].[IsActive], [u0].[IsEmailConfirmed], [u0].[PasswordHash], [u0].[Role], [u0].[UpdatedAt]
+FROM [UserRefreshTokens] AS [u]
+INNER JOIN [Users] AS [u0] ON [u].[UserId] = [u0].[Id]
+WHERE [u].[RefreshToken] = @__request_RefreshToken_0
+2025-05-23 20:16:04.617 +03:00 [INF] Executed DbCommand (23ms) [Parameters=[@p7='114', @p0='2025-05-23T17:14:27.0212851', @p1='0', @p2='2025-05-30T17:14:27.0212503', @p3='False', @p4='True', @p5='gdUHsCW4JlRAaenifZoSwK7gyMSVlmNk1oWtmiOMvd4=' (Nullable = false) (Size = 450), @p6='25', @p8='2025-05-23T17:16:04.5827693Z', @p9='0', @p10='2025-05-30T17:16:04.5827342Z', @p11='False', @p12='False', @p13='nDUj7gy/PATKdjbu4oVDF1jwY7IQr1gSBS+IQqclT/o=' (Nullable = false) (Size = 450), @p14='25'], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [UserRefreshTokens] SET [CreatedAt] = @p0, [ExpiresIn] = @p1, [ExpiryDate] = @p2, [IsRevoked] = @p3, [IsUsed] = @p4, [RefreshToken] = @p5, [UserId] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-05-23 20:16:04.628 +03:00 [INF] Executed DbCommand (30ms) [Parameters=[@p7='114', @p0='2025-05-23T17:14:27.0212851', @p1='0', @p2='2025-05-30T17:14:27.0212503', @p3='False', @p4='True', @p5='gdUHsCW4JlRAaenifZoSwK7gyMSVlmNk1oWtmiOMvd4=' (Nullable = false) (Size = 450), @p6='25', @p8='2025-05-23T17:16:04.5917984Z', @p9='0', @p10='2025-05-30T17:16:04.5917416Z', @p11='False', @p12='False', @p13='AgWtVS69I3/esX3s1rMCvf1ZsnWP2FeybAS1RqM/wd4=' (Nullable = false) (Size = 450), @p14='25'], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [UserRefreshTokens] SET [CreatedAt] = @p0, [ExpiresIn] = @p1, [ExpiryDate] = @p2, [IsRevoked] = @p3, [IsUsed] = @p4, [RefreshToken] = @p5, [UserId] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-05-23 20:16:04.628 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RefreshTokenResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 20:16:04.636 +03:00 [INF] Executed action e_learning.Controllers.AuthController.RefreshToken (e_learning) in 130.6189ms
+2025-05-23 20:16:04.641 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 20:16:04.644 +03:00 [INF] HTTP POST /api/Auth/refresh-token responded 200 in 181.4982 ms
+2025-05-23 20:16:04.644 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RefreshTokenResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 20:16:04.647 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - 200 null application/json; charset=utf-8 196.5184ms
+2025-05-23 20:16:04.648 +03:00 [INF] Executed action e_learning.Controllers.AuthController.RefreshToken (e_learning) in 131.0008ms
+2025-05-23 20:16:04.655 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 20:16:04.656 +03:00 [INF] HTTP POST /api/Auth/refresh-token responded 200 in 171.9717 ms
+2025-05-23 20:16:04.663 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - 200 null application/json; charset=utf-8 209.3864ms
+2025-05-23 20:16:10.691 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 20:16:10.696 +03:00 [INF] CORS policy execution successful.
+2025-05-23 20:16:10.698 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 20:16:10.699 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 20:16:10.723 +03:00 [INF] Executed DbCommand (10ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 20:16:11.034 +03:00 [INF] Executed DbCommand (19ms) [Parameters=[@p0='2025-05-23T17:16:10.9987582Z', @p1='0', @p2='2025-05-30T17:16:10.9987128Z', @p3='False', @p4='False', @p5='1xTWXNSrWlLzIDWet+yKKX8ASMG9hMavsR++oe0xdHU=' (Nullable = false) (Size = 450), @p6='25'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-23 20:16:11.065 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-23 20:16:11.071 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 20:16:11.080 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 374.5808ms
+2025-05-23 20:16:11.084 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 20:16:11.090 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 393.7837 ms
+2025-05-23 20:16:11.120 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 427.9163ms
+2025-05-23 20:17:40.754 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - application/json 63
+2025-05-23 20:17:40.767 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - application/json 63
+2025-05-23 20:17:40.784 +03:00 [INF] CORS policy execution successful.
+2025-05-23 20:17:40.806 +03:00 [INF] CORS policy execution successful.
+2025-05-23 20:17:40.814 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 20:17:40.819 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 20:17:40.827 +03:00 [INF] Route matched with {action = "RefreshToken", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RefreshToken(e_learning.Models.RefreshTokenRequest) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 20:17:40.832 +03:00 [INF] Route matched with {action = "RefreshToken", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RefreshToken(e_learning.Models.RefreshTokenRequest) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 20:17:40.871 +03:00 [INF] Executed DbCommand (11ms) [Parameters=[@__request_RefreshToken_0='1xTWXNSrWlLzIDWet+yKKX8ASMG9hMavsR++oe0xdHU=' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[ExpiresIn], [u].[ExpiryDate], [u].[IsRevoked], [u].[IsUsed], [u].[RefreshToken], [u].[UserId], [u0].[Id], [u0].[CreatedAt], [u0].[Email], [u0].[FullName], [u0].[IsActive], [u0].[IsEmailConfirmed], [u0].[PasswordHash], [u0].[Role], [u0].[UpdatedAt]
+FROM [UserRefreshTokens] AS [u]
+INNER JOIN [Users] AS [u0] ON [u].[UserId] = [u0].[Id]
+WHERE [u].[RefreshToken] = @__request_RefreshToken_0
+2025-05-23 20:17:40.871 +03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_RefreshToken_0='1xTWXNSrWlLzIDWet+yKKX8ASMG9hMavsR++oe0xdHU=' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[ExpiresIn], [u].[ExpiryDate], [u].[IsRevoked], [u].[IsUsed], [u].[RefreshToken], [u].[UserId], [u0].[Id], [u0].[CreatedAt], [u0].[Email], [u0].[FullName], [u0].[IsActive], [u0].[IsEmailConfirmed], [u0].[PasswordHash], [u0].[Role], [u0].[UpdatedAt]
+FROM [UserRefreshTokens] AS [u]
+INNER JOIN [Users] AS [u0] ON [u].[UserId] = [u0].[Id]
+WHERE [u].[RefreshToken] = @__request_RefreshToken_0
+2025-05-23 20:17:40.920 +03:00 [INF] Executed DbCommand (19ms) [Parameters=[@p7='117', @p0='2025-05-23T17:16:10.9987582', @p1='0', @p2='2025-05-30T17:16:10.9987128', @p3='False', @p4='True', @p5='1xTWXNSrWlLzIDWet+yKKX8ASMG9hMavsR++oe0xdHU=' (Nullable = false) (Size = 450), @p6='25', @p8='2025-05-23T17:17:40.8901700Z', @p9='0', @p10='2025-05-30T17:17:40.8901438Z', @p11='False', @p12='False', @p13='U1fKvYdlt/uffVDj+WTt8eC6g8hzosnV6LO1KJxH9Dc=' (Nullable = false) (Size = 450), @p14='25'], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [UserRefreshTokens] SET [CreatedAt] = @p0, [ExpiresIn] = @p1, [ExpiryDate] = @p2, [IsRevoked] = @p3, [IsUsed] = @p4, [RefreshToken] = @p5, [UserId] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-05-23 20:17:41.101 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RefreshTokenResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 20:17:41.106 +03:00 [INF] Executed DbCommand (212ms) [Parameters=[@p7='117', @p0='2025-05-23T17:16:10.9987582', @p1='0', @p2='2025-05-30T17:16:10.9987128', @p3='False', @p4='True', @p5='1xTWXNSrWlLzIDWet+yKKX8ASMG9hMavsR++oe0xdHU=' (Nullable = false) (Size = 450), @p6='25', @p8='2025-05-23T17:17:40.8845272Z', @p9='0', @p10='2025-05-30T17:17:40.8844835Z', @p11='False', @p12='False', @p13='E7LIOcxzti3HIOj1vuXc1M+Ku6VwZzD6agQE6yCtBHg=' (Nullable = false) (Size = 450), @p14='25'], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [UserRefreshTokens] SET [CreatedAt] = @p0, [ExpiresIn] = @p1, [ExpiryDate] = @p2, [IsRevoked] = @p3, [IsUsed] = @p4, [RefreshToken] = @p5, [UserId] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-05-23 20:17:41.108 +03:00 [INF] Executed action e_learning.Controllers.AuthController.RefreshToken (e_learning) in 259.7726ms
+2025-05-23 20:17:41.135 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 20:17:41.138 +03:00 [INF] HTTP POST /api/Auth/refresh-token responded 200 in 354.2214 ms
+2025-05-23 20:17:41.232 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - 200 null application/json; charset=utf-8 477.5488ms
+2025-05-23 20:17:41.269 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RefreshTokenResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 20:17:41.295 +03:00 [INF] Executed action e_learning.Controllers.AuthController.RefreshToken (e_learning) in 440.9811ms
+2025-05-23 20:17:41.306 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 20:17:41.308 +03:00 [INF] HTTP POST /api/Auth/refresh-token responded 200 in 501.6067 ms
+2025-05-23 20:17:41.323 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - 200 null application/json; charset=utf-8 556.2302ms
+2025-05-23 20:47:38.365 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/forgot-password - null null
+2025-05-23 20:47:38.387 +03:00 [INF] CORS policy execution successful.
+2025-05-23 20:47:38.391 +03:00 [INF] HTTP OPTIONS /api/Auth/forgot-password responded 204 in 10.2319 ms
+2025-05-23 20:47:38.396 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/forgot-password - 204 null null 33.0005ms
+2025-05-23 20:47:38.408 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/forgot-password - application/json 34
+2025-05-23 20:47:38.430 +03:00 [INF] CORS policy execution successful.
+2025-05-23 20:47:38.433 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.ForgotPassword (e_learning)'
+2025-05-23 20:47:38.490 +03:00 [INF] Route matched with {action = "ForgotPassword", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ForgotPassword(e_learning.DTOs.ForgotPasswordDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 20:47:38.706 +03:00 [INF] Executed DbCommand (56ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 20:47:38.848 +03:00 [INF] Executed DbCommand (24ms) [Parameters=[@__ToLower_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [p].[Id], [p].[Code], [p].[CreatedAt], [p].[Email], [p].[ExpiryDate]
+FROM [PasswordResetCodes] AS [p]
+WHERE [p].[Email] = @__ToLower_0
+2025-05-23 20:47:39.033 +03:00 [INF] Executed DbCommand (69ms) [Parameters=[@p0='373112' (Nullable = false) (Size = 6), @p1='2025-05-23T17:47:38.8633058Z', @p2='abdomoka2018@gmail.com' (Nullable = false) (Size = 450), @p3='2025-05-23T17:57:38.8632237Z'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [PasswordResetCodes] ([Code], [CreatedAt], [Email], [ExpiryDate])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3);
+2025-05-23 20:47:42.239 +03:00 [INF] Email sent to abdomoka2018@gmail.com
+2025-05-23 20:47:42.241 +03:00 [INF] Password reset code sent to: abdomoka2018@gmail.com
+2025-05-23 20:47:42.242 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-23 20:47:42.258 +03:00 [INF] Executed action e_learning.Controllers.AuthController.ForgotPassword (e_learning) in 3763.6926ms
+2025-05-23 20:47:42.261 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.ForgotPassword (e_learning)'
+2025-05-23 20:47:42.262 +03:00 [INF] HTTP POST /api/Auth/forgot-password responded 200 in 3833.6738 ms
+2025-05-23 20:47:42.277 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/forgot-password - 200 null application/json; charset=utf-8 3869.4387ms
+2025-05-23 22:33:18.280 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - null null
+2025-05-23 22:33:18.339 +03:00 [INF] CORS policy execution successful.
+2025-05-23 22:33:18.355 +03:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 30.5322 ms
+2025-05-23 22:33:18.360 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - 204 null null 85.7709ms
+2025-05-23 22:33:18.376 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 22:33:18.383 +03:00 [INF] CORS policy execution successful.
+2025-05-23 22:33:18.406 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 22:33:18.423 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 22:33:18.754 +03:00 [INF] Executed DbCommand (61ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 22:33:19.189 +03:00 [INF] Executed DbCommand (20ms) [Parameters=[@p0='2025-05-23T19:33:19.1355349Z', @p1='0', @p2='2025-05-30T19:33:19.1325486Z', @p3='False', @p4='False', @p5='qUk82xOLjHuLq0DirMiAeSgiCh6z0tkLcujyOWCevt8=' (Nullable = false) (Size = 450), @p6='25'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-23 22:33:19.206 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-23 22:33:19.210 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 22:33:19.217 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 790.1921ms
+2025-05-23 22:33:19.219 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 22:33:19.223 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 841.5043 ms
+2025-05-23 22:33:19.250 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 874.3563ms
+2025-05-23 22:39:37.151 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/refresh-token - null null
+2025-05-23 22:39:37.158 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/refresh-token - null null
+2025-05-23 22:39:37.240 +03:00 [INF] CORS policy execution successful.
+2025-05-23 22:39:37.249 +03:00 [INF] CORS policy execution successful.
+2025-05-23 22:39:37.256 +03:00 [INF] HTTP OPTIONS /api/Auth/refresh-token responded 204 in 16.2186 ms
+2025-05-23 22:39:37.258 +03:00 [INF] HTTP OPTIONS /api/Auth/refresh-token responded 204 in 8.7324 ms
+2025-05-23 22:39:37.270 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/refresh-token - 204 null null 119.2341ms
+2025-05-23 22:39:37.271 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/refresh-token - 204 null null 113.7793ms
+2025-05-23 22:39:37.302 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - application/json 63
+2025-05-23 22:39:37.302 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - application/json 63
+2025-05-23 22:39:37.320 +03:00 [INF] CORS policy execution successful.
+2025-05-23 22:39:37.325 +03:00 [INF] CORS policy execution successful.
+2025-05-23 22:39:37.327 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 22:39:37.332 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 22:39:37.334 +03:00 [INF] Route matched with {action = "RefreshToken", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RefreshToken(e_learning.Models.RefreshTokenRequest) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 22:39:37.336 +03:00 [INF] Route matched with {action = "RefreshToken", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RefreshToken(e_learning.Models.RefreshTokenRequest) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 22:39:37.476 +03:00 [INF] Executed DbCommand (42ms) [Parameters=[@__request_RefreshToken_0='qUk82xOLjHuLq0DirMiAeSgiCh6z0tkLcujyOWCevt8=' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[ExpiresIn], [u].[ExpiryDate], [u].[IsRevoked], [u].[IsUsed], [u].[RefreshToken], [u].[UserId], [u0].[Id], [u0].[CreatedAt], [u0].[Email], [u0].[FullName], [u0].[IsActive], [u0].[IsEmailConfirmed], [u0].[PasswordHash], [u0].[Role], [u0].[UpdatedAt]
+FROM [UserRefreshTokens] AS [u]
+INNER JOIN [Users] AS [u0] ON [u].[UserId] = [u0].[Id]
+WHERE [u].[RefreshToken] = @__request_RefreshToken_0
+2025-05-23 22:39:37.476 +03:00 [INF] Executed DbCommand (28ms) [Parameters=[@__request_RefreshToken_0='qUk82xOLjHuLq0DirMiAeSgiCh6z0tkLcujyOWCevt8=' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[ExpiresIn], [u].[ExpiryDate], [u].[IsRevoked], [u].[IsUsed], [u].[RefreshToken], [u].[UserId], [u0].[Id], [u0].[CreatedAt], [u0].[Email], [u0].[FullName], [u0].[IsActive], [u0].[IsEmailConfirmed], [u0].[PasswordHash], [u0].[Role], [u0].[UpdatedAt]
+FROM [UserRefreshTokens] AS [u]
+INNER JOIN [Users] AS [u0] ON [u].[UserId] = [u0].[Id]
+WHERE [u].[RefreshToken] = @__request_RefreshToken_0
+2025-05-23 22:39:37.588 +03:00 [INF] Executed DbCommand (51ms) [Parameters=[@p7='120', @p0='2025-05-23T19:33:19.1355349', @p1='0', @p2='2025-05-30T19:33:19.1325486', @p3='False', @p4='True', @p5='qUk82xOLjHuLq0DirMiAeSgiCh6z0tkLcujyOWCevt8=' (Nullable = false) (Size = 450), @p6='25', @p8='2025-05-23T19:39:37.5037110Z', @p9='0', @p10='2025-05-30T19:39:37.5036622Z', @p11='False', @p12='False', @p13='TZJBYdKDJn38XFE2qN/vxf2b+CJV/hxospb+C1rYy6U=' (Nullable = false) (Size = 450), @p14='25'], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [UserRefreshTokens] SET [CreatedAt] = @p0, [ExpiresIn] = @p1, [ExpiryDate] = @p2, [IsRevoked] = @p3, [IsUsed] = @p4, [RefreshToken] = @p5, [UserId] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-05-23 22:39:37.684 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RefreshTokenResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 22:39:37.689 +03:00 [INF] Executed action e_learning.Controllers.AuthController.RefreshToken (e_learning) in 349.8708ms
+2025-05-23 22:39:37.692 +03:00 [INF] Executed DbCommand (159ms) [Parameters=[@p7='120', @p0='2025-05-23T19:33:19.1355349', @p1='0', @p2='2025-05-30T19:33:19.1325486', @p3='False', @p4='True', @p5='qUk82xOLjHuLq0DirMiAeSgiCh6z0tkLcujyOWCevt8=' (Nullable = false) (Size = 450), @p6='25', @p8='2025-05-23T19:39:37.5053206Z', @p9='0', @p10='2025-05-30T19:39:37.5052826Z', @p11='False', @p12='False', @p13='ncENCdXvN46duyfJxGR5xXO60rY7zL45N7uKCkNHgo0=' (Nullable = false) (Size = 450), @p14='25'], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [UserRefreshTokens] SET [CreatedAt] = @p0, [ExpiresIn] = @p1, [ExpiryDate] = @p2, [IsRevoked] = @p3, [IsUsed] = @p4, [RefreshToken] = @p5, [UserId] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-05-23 22:39:37.698 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 22:39:37.714 +03:00 [INF] HTTP POST /api/Auth/refresh-token responded 200 in 394.4188 ms
+2025-05-23 22:39:37.721 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - 200 null application/json; charset=utf-8 419.2661ms
+2025-05-23 22:39:37.730 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RefreshTokenResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 22:39:37.738 +03:00 [INF] Executed action e_learning.Controllers.AuthController.RefreshToken (e_learning) in 396.9946ms
+2025-05-23 22:39:37.740 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 22:39:37.742 +03:00 [INF] HTTP POST /api/Auth/refresh-token responded 200 in 416.7282 ms
+2025-05-23 22:39:37.754 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - 200 null application/json; charset=utf-8 452.3107ms
+2025-05-23 22:44:03.765 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - null null
+2025-05-23 22:44:03.768 +03:00 [INF] CORS policy execution successful.
+2025-05-23 22:44:03.773 +03:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 4.3972 ms
+2025-05-23 22:44:03.776 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - 204 null null 11.6873ms
+2025-05-23 22:44:03.789 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 22:44:03.799 +03:00 [INF] CORS policy execution successful.
+2025-05-23 22:44:03.800 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 22:44:03.801 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 22:44:03.856 +03:00 [INF] Executed DbCommand (25ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 22:44:04.138 +03:00 [INF] Executed DbCommand (12ms) [Parameters=[@p0='2025-05-23T19:44:04.1226737Z', @p1='0', @p2='2025-05-30T19:44:04.1226284Z', @p3='False', @p4='False', @p5='J0lEQG/ywbwWp0soOH6v6C7TbBPytfd6xIx9tb4HJsA=' (Nullable = false) (Size = 450), @p6='25'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-23 22:44:04.154 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-23 22:44:04.156 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 22:44:04.158 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 351.5243ms
+2025-05-23 22:44:04.160 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 22:44:04.163 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 364.6147 ms
+2025-05-23 22:44:04.169 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 379.8377ms
+2025-05-23 22:44:33.139 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - application/json 63
+2025-05-23 22:44:33.139 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - application/json 63
+2025-05-23 22:44:33.145 +03:00 [INF] CORS policy execution successful.
+2025-05-23 22:44:33.149 +03:00 [INF] CORS policy execution successful.
+2025-05-23 22:44:33.154 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 22:44:33.157 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 22:44:33.161 +03:00 [INF] Route matched with {action = "RefreshToken", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RefreshToken(e_learning.Models.RefreshTokenRequest) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 22:44:33.159 +03:00 [INF] Route matched with {action = "RefreshToken", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RefreshToken(e_learning.Models.RefreshTokenRequest) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 22:44:33.923 +03:00 [INF] Executed DbCommand (745ms) [Parameters=[@__request_RefreshToken_0='J0lEQG/ywbwWp0soOH6v6C7TbBPytfd6xIx9tb4HJsA=' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[ExpiresIn], [u].[ExpiryDate], [u].[IsRevoked], [u].[IsUsed], [u].[RefreshToken], [u].[UserId], [u0].[Id], [u0].[CreatedAt], [u0].[Email], [u0].[FullName], [u0].[IsActive], [u0].[IsEmailConfirmed], [u0].[PasswordHash], [u0].[Role], [u0].[UpdatedAt]
+FROM [UserRefreshTokens] AS [u]
+INNER JOIN [Users] AS [u0] ON [u].[UserId] = [u0].[Id]
+WHERE [u].[RefreshToken] = @__request_RefreshToken_0
+2025-05-23 22:44:33.923 +03:00 [INF] Executed DbCommand (379ms) [Parameters=[@__request_RefreshToken_0='J0lEQG/ywbwWp0soOH6v6C7TbBPytfd6xIx9tb4HJsA=' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[ExpiresIn], [u].[ExpiryDate], [u].[IsRevoked], [u].[IsUsed], [u].[RefreshToken], [u].[UserId], [u0].[Id], [u0].[CreatedAt], [u0].[Email], [u0].[FullName], [u0].[IsActive], [u0].[IsEmailConfirmed], [u0].[PasswordHash], [u0].[Role], [u0].[UpdatedAt]
+FROM [UserRefreshTokens] AS [u]
+INNER JOIN [Users] AS [u0] ON [u].[UserId] = [u0].[Id]
+WHERE [u].[RefreshToken] = @__request_RefreshToken_0
+2025-05-23 22:44:34.015 +03:00 [INF] Executed DbCommand (15ms) [Parameters=[@p7='123', @p0='2025-05-23T19:44:04.1226737', @p1='0', @p2='2025-05-30T19:44:04.1226284', @p3='False', @p4='True', @p5='J0lEQG/ywbwWp0soOH6v6C7TbBPytfd6xIx9tb4HJsA=' (Nullable = false) (Size = 450), @p6='25', @p8='2025-05-23T19:44:33.9649858Z', @p9='0', @p10='2025-05-30T19:44:33.9649387Z', @p11='False', @p12='False', @p13='6hgmRjZwZQ9hPi3uoS3uPFsXeaC/Ow5AJq6jqhItMsg=' (Nullable = false) (Size = 450), @p14='25'], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [UserRefreshTokens] SET [CreatedAt] = @p0, [ExpiresIn] = @p1, [ExpiryDate] = @p2, [IsRevoked] = @p3, [IsUsed] = @p4, [RefreshToken] = @p5, [UserId] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-05-23 22:44:34.037 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RefreshTokenResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 22:44:34.039 +03:00 [INF] Executed action e_learning.Controllers.AuthController.RefreshToken (e_learning) in 842.5019ms
+2025-05-23 22:44:34.040 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 22:44:34.042 +03:00 [INF] Executed DbCommand (61ms) [Parameters=[@p7='123', @p0='2025-05-23T19:44:04.1226737', @p1='0', @p2='2025-05-30T19:44:04.1226284', @p3='False', @p4='True', @p5='J0lEQG/ywbwWp0soOH6v6C7TbBPytfd6xIx9tb4HJsA=' (Nullable = false) (Size = 450), @p6='25', @p8='2025-05-23T19:44:33.9445016Z', @p9='0', @p10='2025-05-30T19:44:33.9444533Z', @p11='False', @p12='False', @p13='b5umxxK2hVFq0tgZ6C4FmGwjseSHbJtZekT6QBKmrOY=' (Nullable = false) (Size = 450), @p14='25'], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [UserRefreshTokens] SET [CreatedAt] = @p0, [ExpiresIn] = @p1, [ExpiryDate] = @p2, [IsRevoked] = @p3, [IsUsed] = @p4, [RefreshToken] = @p5, [UserId] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-05-23 22:44:34.043 +03:00 [INF] HTTP POST /api/Auth/refresh-token responded 200 in 898.3207 ms
+2025-05-23 22:44:34.057 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - 200 null application/json; charset=utf-8 917.7431ms
+2025-05-23 22:44:34.101 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RefreshTokenResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 22:44:34.264 +03:00 [INF] Executed action e_learning.Controllers.AuthController.RefreshToken (e_learning) in 1101.0425ms
+2025-05-23 22:44:34.268 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 22:44:34.270 +03:00 [INF] HTTP POST /api/Auth/refresh-token responded 200 in 1120.9806 ms
+2025-05-23 22:44:34.272 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - 200 null application/json; charset=utf-8 1132.8153ms
+2025-05-23 22:44:42.347 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 22:44:42.362 +03:00 [INF] CORS policy execution successful.
+2025-05-23 22:44:42.364 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 22:44:42.365 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 22:44:42.427 +03:00 [INF] Executed DbCommand (29ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 22:44:42.781 +03:00 [INF] Executed DbCommand (21ms) [Parameters=[@p0='2025-05-23T19:44:42.7546704Z', @p1='0', @p2='2025-05-30T19:44:42.7543793Z', @p3='False', @p4='False', @p5='jXiMMGwDYXGy2oS7zK2lc2XzqRzbB4IAnlesGWK4qc8=' (Nullable = false) (Size = 450), @p6='25'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-23 22:44:42.797 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-23 22:44:42.798 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 22:44:42.809 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 420.8729ms
+2025-05-23 22:44:42.978 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 22:44:42.988 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 625.3781 ms
+2025-05-23 22:44:43.058 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 710.6995ms
+2025-05-23 22:45:06.807 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - application/json 63
+2025-05-23 22:45:06.813 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - application/json 63
+2025-05-23 22:45:07.040 +03:00 [INF] CORS policy execution successful.
+2025-05-23 22:45:07.043 +03:00 [INF] CORS policy execution successful.
+2025-05-23 22:45:07.044 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 22:45:07.046 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 22:45:07.071 +03:00 [INF] Route matched with {action = "RefreshToken", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RefreshToken(e_learning.Models.RefreshTokenRequest) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 22:45:07.075 +03:00 [INF] Route matched with {action = "RefreshToken", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RefreshToken(e_learning.Models.RefreshTokenRequest) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 22:45:08.140 +03:00 [INF] Executed DbCommand (48ms) [Parameters=[@__request_RefreshToken_0='jXiMMGwDYXGy2oS7zK2lc2XzqRzbB4IAnlesGWK4qc8=' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[ExpiresIn], [u].[ExpiryDate], [u].[IsRevoked], [u].[IsUsed], [u].[RefreshToken], [u].[UserId], [u0].[Id], [u0].[CreatedAt], [u0].[Email], [u0].[FullName], [u0].[IsActive], [u0].[IsEmailConfirmed], [u0].[PasswordHash], [u0].[Role], [u0].[UpdatedAt]
+FROM [UserRefreshTokens] AS [u]
+INNER JOIN [Users] AS [u0] ON [u].[UserId] = [u0].[Id]
+WHERE [u].[RefreshToken] = @__request_RefreshToken_0
+2025-05-23 22:45:08.140 +03:00 [INF] Executed DbCommand (976ms) [Parameters=[@__request_RefreshToken_0='jXiMMGwDYXGy2oS7zK2lc2XzqRzbB4IAnlesGWK4qc8=' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[ExpiresIn], [u].[ExpiryDate], [u].[IsRevoked], [u].[IsUsed], [u].[RefreshToken], [u].[UserId], [u0].[Id], [u0].[CreatedAt], [u0].[Email], [u0].[FullName], [u0].[IsActive], [u0].[IsEmailConfirmed], [u0].[PasswordHash], [u0].[Role], [u0].[UpdatedAt]
+FROM [UserRefreshTokens] AS [u]
+INNER JOIN [Users] AS [u0] ON [u].[UserId] = [u0].[Id]
+WHERE [u].[RefreshToken] = @__request_RefreshToken_0
+2025-05-23 22:45:08.252 +03:00 [INF] Executed DbCommand (54ms) [Parameters=[@p7='126', @p0='2025-05-23T19:44:42.7546704', @p1='0', @p2='2025-05-30T19:44:42.7543793', @p3='False', @p4='True', @p5='jXiMMGwDYXGy2oS7zK2lc2XzqRzbB4IAnlesGWK4qc8=' (Nullable = false) (Size = 450), @p6='25', @p8='2025-05-23T19:45:08.1614830Z', @p9='0', @p10='2025-05-30T19:45:08.1613957Z', @p11='False', @p12='False', @p13='Zfpi5jgMd/oVnhB0u5ISHoKqoLfQiPRCXtdKqBrIt98=' (Nullable = false) (Size = 450), @p14='25'], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [UserRefreshTokens] SET [CreatedAt] = @p0, [ExpiresIn] = @p1, [ExpiryDate] = @p2, [IsRevoked] = @p3, [IsUsed] = @p4, [RefreshToken] = @p5, [UserId] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-05-23 22:45:08.393 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RefreshTokenResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 22:45:08.397 +03:00 [INF] Executed action e_learning.Controllers.AuthController.RefreshToken (e_learning) in 1122.2261ms
+2025-05-23 22:45:08.401 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 22:45:08.406 +03:00 [INF] HTTP POST /api/Auth/refresh-token responded 200 in 1363.4971 ms
+2025-05-23 22:45:08.425 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - 200 null application/json; charset=utf-8 1612.187ms
+2025-05-23 22:45:08.439 +03:00 [INF] Executed DbCommand (212ms) [Parameters=[@p7='126', @p0='2025-05-23T19:44:42.7546704', @p1='0', @p2='2025-05-30T19:44:42.7543793', @p3='False', @p4='True', @p5='jXiMMGwDYXGy2oS7zK2lc2XzqRzbB4IAnlesGWK4qc8=' (Nullable = false) (Size = 450), @p6='25', @p8='2025-05-23T19:45:08.1922839Z', @p9='0', @p10='2025-05-30T19:45:08.1922511Z', @p11='False', @p12='False', @p13='kWVmDY+9W9x5Z5iUlfmsYTDh7RSOmW2zb0tggQHrwPI=' (Nullable = false) (Size = 450), @p14='25'], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [UserRefreshTokens] SET [CreatedAt] = @p0, [ExpiresIn] = @p1, [ExpiryDate] = @p2, [IsRevoked] = @p3, [IsUsed] = @p4, [RefreshToken] = @p5, [UserId] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-05-23 22:45:08.464 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RefreshTokenResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 22:45:08.468 +03:00 [INF] Executed action e_learning.Controllers.AuthController.RefreshToken (e_learning) in 1361.1594ms
+2025-05-23 22:45:08.470 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 22:45:08.471 +03:00 [INF] HTTP POST /api/Auth/refresh-token responded 200 in 1430.7449 ms
+2025-05-23 22:45:08.475 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - 200 null application/json; charset=utf-8 1668.4232ms
+2025-05-23 22:46:59.146 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 22:46:59.150 +03:00 [INF] CORS policy execution successful.
+2025-05-23 22:46:59.151 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 22:46:59.157 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 22:46:59.199 +03:00 [INF] Executed DbCommand (15ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 22:46:59.537 +03:00 [INF] Executed DbCommand (23ms) [Parameters=[@p0='2025-05-23T19:46:59.4973506Z', @p1='0', @p2='2025-05-30T19:46:59.4973116Z', @p3='False', @p4='False', @p5='Fp1yveF97djh4A1aTIoiUsItZgdSgNpgxFZiLTaxZUI=' (Nullable = false) (Size = 450), @p6='25'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-23 22:46:59.551 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-23 22:46:59.553 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 22:46:59.558 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 395.2707ms
+2025-05-23 22:46:59.566 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 22:46:59.567 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 417.2301 ms
+2025-05-23 22:46:59.646 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 500.3184ms
+2025-05-23 22:48:27.087 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - application/json 63
+2025-05-23 22:48:27.103 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - application/json 63
+2025-05-23 22:48:27.135 +03:00 [INF] CORS policy execution successful.
+2025-05-23 22:48:27.139 +03:00 [INF] CORS policy execution successful.
+2025-05-23 22:48:27.140 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 22:48:27.140 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 22:48:27.150 +03:00 [INF] Route matched with {action = "RefreshToken", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RefreshToken(e_learning.Models.RefreshTokenRequest) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 22:48:27.153 +03:00 [INF] Route matched with {action = "RefreshToken", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RefreshToken(e_learning.Models.RefreshTokenRequest) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 22:48:27.269 +03:00 [INF] Executed DbCommand (84ms) [Parameters=[@__request_RefreshToken_0='Fp1yveF97djh4A1aTIoiUsItZgdSgNpgxFZiLTaxZUI=' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[ExpiresIn], [u].[ExpiryDate], [u].[IsRevoked], [u].[IsUsed], [u].[RefreshToken], [u].[UserId], [u0].[Id], [u0].[CreatedAt], [u0].[Email], [u0].[FullName], [u0].[IsActive], [u0].[IsEmailConfirmed], [u0].[PasswordHash], [u0].[Role], [u0].[UpdatedAt]
+FROM [UserRefreshTokens] AS [u]
+INNER JOIN [Users] AS [u0] ON [u].[UserId] = [u0].[Id]
+WHERE [u].[RefreshToken] = @__request_RefreshToken_0
+2025-05-23 22:48:27.269 +03:00 [INF] Executed DbCommand (80ms) [Parameters=[@__request_RefreshToken_0='Fp1yveF97djh4A1aTIoiUsItZgdSgNpgxFZiLTaxZUI=' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[ExpiresIn], [u].[ExpiryDate], [u].[IsRevoked], [u].[IsUsed], [u].[RefreshToken], [u].[UserId], [u0].[Id], [u0].[CreatedAt], [u0].[Email], [u0].[FullName], [u0].[IsActive], [u0].[IsEmailConfirmed], [u0].[PasswordHash], [u0].[Role], [u0].[UpdatedAt]
+FROM [UserRefreshTokens] AS [u]
+INNER JOIN [Users] AS [u0] ON [u].[UserId] = [u0].[Id]
+WHERE [u].[RefreshToken] = @__request_RefreshToken_0
+2025-05-23 22:48:27.439 +03:00 [INF] Executed DbCommand (28ms) [Parameters=[@p7='129', @p0='2025-05-23T19:46:59.4973506', @p1='0', @p2='2025-05-30T19:46:59.4973116', @p3='False', @p4='True', @p5='Fp1yveF97djh4A1aTIoiUsItZgdSgNpgxFZiLTaxZUI=' (Nullable = false) (Size = 450), @p6='25', @p8='2025-05-23T19:48:27.3175325Z', @p9='0', @p10='2025-05-30T19:48:27.3175018Z', @p11='False', @p12='False', @p13='xVelKpg1BnpI77sxUid3JVt3aYw63FPeZUwS+oRR2dg=' (Nullable = false) (Size = 450), @p14='25'], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [UserRefreshTokens] SET [CreatedAt] = @p0, [ExpiresIn] = @p1, [ExpiryDate] = @p2, [IsRevoked] = @p3, [IsUsed] = @p4, [RefreshToken] = @p5, [UserId] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-05-23 22:48:28.103 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RefreshTokenResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 22:48:28.110 +03:00 [INF] Executed action e_learning.Controllers.AuthController.RefreshToken (e_learning) in 949.6636ms
+2025-05-23 22:48:28.111 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 22:48:28.111 +03:00 [INF] HTTP POST /api/Auth/refresh-token responded 200 in 976.1184 ms
+2025-05-23 22:48:28.120 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - 200 null application/json; charset=utf-8 1032.5983ms
+2025-05-23 22:48:28.205 +03:00 [INF] Executed DbCommand (791ms) [Parameters=[@p7='129', @p0='2025-05-23T19:46:59.4973506', @p1='0', @p2='2025-05-30T19:46:59.4973116', @p3='False', @p4='True', @p5='Fp1yveF97djh4A1aTIoiUsItZgdSgNpgxFZiLTaxZUI=' (Nullable = false) (Size = 450), @p6='25', @p8='2025-05-23T19:48:27.3936213Z', @p9='0', @p10='2025-05-30T19:48:27.3935909Z', @p11='False', @p12='False', @p13='UC/VUHWJbeeksBmyQvtdtt8qtSRQf5ypcjhKoXd/GVY=' (Nullable = false) (Size = 450), @p14='25'], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [UserRefreshTokens] SET [CreatedAt] = @p0, [ExpiresIn] = @p1, [ExpiryDate] = @p2, [IsRevoked] = @p3, [IsUsed] = @p4, [RefreshToken] = @p5, [UserId] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-05-23 22:48:28.256 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RefreshTokenResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 22:48:28.267 +03:00 [INF] Executed action e_learning.Controllers.AuthController.RefreshToken (e_learning) in 1097.2662ms
+2025-05-23 22:48:28.268 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-23 22:48:28.268 +03:00 [INF] HTTP POST /api/Auth/refresh-token responded 200 in 1129.0827 ms
+2025-05-23 22:48:28.270 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - 200 null application/json; charset=utf-8 1167.5678ms
+2025-05-23 23:05:00.714 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - null null
+2025-05-23 23:05:00.756 +03:00 [INF] CORS policy execution successful.
+2025-05-23 23:05:00.767 +03:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 26.0441 ms
+2025-05-23 23:05:00.773 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - 204 null null 63.3492ms
+2025-05-23 23:05:00.855 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 23:05:00.981 +03:00 [INF] CORS policy execution successful.
+2025-05-23 23:05:00.999 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 23:05:01.006 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 23:05:01.368 +03:00 [INF] Executed DbCommand (153ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 23:05:01.848 +03:00 [INF] Executed DbCommand (125ms) [Parameters=[@p0='2025-05-23T20:05:01.7002801Z', @p1='0', @p2='2025-05-30T20:05:01.6988303Z', @p3='False', @p4='False', @p5='QdAM6Z4rPoMgsldjE6mSZ3XawWAiNiKY0CJQQtFBpfw=' (Nullable = false) (Size = 450), @p6='25'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-23 23:05:01.873 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-23 23:05:01.883 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 23:05:01.885 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 871.4502ms
+2025-05-23 23:05:01.888 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 23:05:01.899 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 924.8684 ms
+2025-05-23 23:05:01.907 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 1050.4242ms
+2025-05-23 23:05:11.232 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 23:05:11.246 +03:00 [INF] CORS policy execution successful.
+2025-05-23 23:05:11.247 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 23:05:11.248 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 23:05:11.284 +03:00 [INF] Executed DbCommand (13ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 23:05:11.585 +03:00 [INF] Executed DbCommand (18ms) [Parameters=[@p0='2025-05-23T20:05:11.5594305Z', @p1='0', @p2='2025-05-30T20:05:11.5593898Z', @p3='False', @p4='False', @p5='aMj4p69o158Lk+rln1e/7Y3SuuFZ9/fzJZM3ycp5AKw=' (Nullable = false) (Size = 450), @p6='25'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-23 23:05:11.596 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-23 23:05:11.597 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 23:05:11.599 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 348.6947ms
+2025-05-23 23:05:11.601 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 23:05:11.602 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 356.5343 ms
+2025-05-23 23:05:11.651 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 418.7963ms
+2025-05-23 23:05:13.035 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 23:05:13.038 +03:00 [INF] CORS policy execution successful.
+2025-05-23 23:05:13.039 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 23:05:13.044 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 23:05:13.069 +03:00 [INF] Executed DbCommand (16ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 23:05:13.384 +03:00 [INF] Executed DbCommand (16ms) [Parameters=[@p0='2025-05-23T20:05:13.3644747Z', @p1='0', @p2='2025-05-30T20:05:13.3644482Z', @p3='False', @p4='False', @p5='4s1OeY6RjKOyEZODI4T/evpVxV+HXnYwx2guC1gA8VU=' (Nullable = false) (Size = 450), @p6='25'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-23 23:05:13.398 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-23 23:05:13.400 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 23:05:13.402 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 354.6688ms
+2025-05-23 23:05:13.406 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 23:05:13.410 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 372.1142 ms
+2025-05-23 23:05:13.479 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 443.5746ms
+2025-05-23 23:05:14.948 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 23:05:14.952 +03:00 [INF] CORS policy execution successful.
+2025-05-23 23:05:14.960 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 23:05:14.979 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 23:05:15.013 +03:00 [INF] Executed DbCommand (15ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 23:05:15.323 +03:00 [INF] Executed DbCommand (19ms) [Parameters=[@p0='2025-05-23T20:05:15.2886474Z', @p1='0', @p2='2025-05-30T20:05:15.2886094Z', @p3='False', @p4='False', @p5='u4s3obcrm61RPPLYoR8yQ+6sFChEcujWyxzt5i5Xxe0=' (Nullable = false) (Size = 450), @p6='25'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-23 23:05:15.409 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-23 23:05:15.433 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 23:05:15.441 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 458.6359ms
+2025-05-23 23:05:15.449 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 23:05:15.450 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 498.0176 ms
+2025-05-23 23:05:15.498 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 549.9255ms
+2025-05-23 23:05:35.692 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 23:05:35.748 +03:00 [INF] CORS policy execution successful.
+2025-05-23 23:05:35.753 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 23:05:35.761 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 23:05:35.851 +03:00 [INF] Executed DbCommand (36ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 23:05:36.603 +03:00 [INF] Executed DbCommand (126ms) [Parameters=[@p0='2025-05-23T20:05:36.3635267Z', @p1='0', @p2='2025-05-30T20:05:36.3634897Z', @p3='False', @p4='False', @p5='Z6kuEDO9bh+GAfp1clQk15oLwh7ArRI9Vijgvrw6Zuc=' (Nullable = false) (Size = 450), @p6='25'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-23 23:05:37.283 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-23 23:05:37.500 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 23:05:37.502 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 1725.3887ms
+2025-05-23 23:05:37.513 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 23:05:37.514 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 1766.7021 ms
+2025-05-23 23:05:37.618 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 1925.6736ms
+2025-05-23 23:12:39.692 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 23:12:39.742 +03:00 [INF] CORS policy execution successful.
+2025-05-23 23:12:39.763 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 23:12:39.772 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 23:12:40.410 +03:00 [INF] Executed DbCommand (34ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 23:12:40.894 +03:00 [INF] Executed DbCommand (31ms) [Parameters=[@p0='2025-05-23T20:12:40.8253741Z', @p1='0', @p2='2025-05-30T20:12:40.8190023Z', @p3='False', @p4='False', @p5='JqylYJ3WZAWQB5y1W8Ut0Kjm38B6QufcKOs4HavMoxg=' (Nullable = false) (Size = 450), @p6='25'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-23 23:12:40.910 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-23 23:12:40.913 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 23:12:40.916 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 1141.1205ms
+2025-05-23 23:12:40.925 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 23:12:40.927 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 1203.7004 ms
+2025-05-23 23:12:40.930 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 1240.8379ms
+2025-05-23 23:33:21.244 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - null null
+2025-05-23 23:33:21.275 +03:00 [INF] CORS policy execution successful.
+2025-05-23 23:33:21.342 +03:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 72.8899 ms
+2025-05-23 23:33:21.349 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - 204 null null 106.7979ms
+2025-05-23 23:33:21.376 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-23 23:33:21.400 +03:00 [INF] CORS policy execution successful.
+2025-05-23 23:33:21.411 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 23:33:21.417 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 23:33:21.643 +03:00 [INF] Executed DbCommand (73ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 23:33:22.044 +03:00 [INF] Executed DbCommand (49ms) [Parameters=[@p0='2025-05-23T20:33:21.9502584Z', @p1='0', @p2='2025-05-30T20:33:21.9500225Z', @p3='False', @p4='False', @p5='kViOC4s8jeuVDMvrxS71iNszqBwH9x8ChuT1xXDc6lQ=' (Nullable = false) (Size = 450), @p6='25'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-23 23:33:22.063 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-23 23:33:22.069 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 23:33:22.075 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 655.3249ms
+2025-05-23 23:33:22.103 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 23:33:22.104 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 706.5524 ms
+2025-05-23 23:33:22.201 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 825.1172ms
+2025-05-23 23:56:49.879 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - null null
+2025-05-23 23:56:49.983 +03:00 [INF] CORS policy execution successful.
+2025-05-23 23:56:50.091 +03:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 136.0173 ms
+2025-05-23 23:56:50.116 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - 204 null null 251.5373ms
+2025-05-23 23:56:50.160 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 76
+2025-05-23 23:56:50.169 +03:00 [INF] CORS policy execution successful.
+2025-05-23 23:56:50.192 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 23:56:50.210 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-23 23:56:50.759 +03:00 [INF] Executed DbCommand (170ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-23 23:56:51.513 +03:00 [INF] Executed DbCommand (67ms) [Parameters=[@p0='2025-05-23T20:56:51.4028215Z', @p1='0', @p2='2025-05-30T20:56:51.4006041Z', @p3='False', @p4='False', @p5='yym0TqBHapk1nuxaLSDvWGzDjnJVaDAHB9/VidaqUBs=' (Nullable = false) (Size = 450), @p6='25'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-23 23:56:51.542 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-23 23:56:51.551 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-23 23:56:51.559 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 1342.2695ms
+2025-05-23 23:56:51.563 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-23 23:56:51.568 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 1399.0171 ms
+2025-05-23 23:56:51.575 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 1415.6679ms

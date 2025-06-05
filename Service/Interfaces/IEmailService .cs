@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using e_learning.Models;
 
 namespace e_learning.Service.Interfaces
 {
@@ -7,5 +8,7 @@ namespace e_learning.Service.Interfaces
         Task<bool> SendConfirmationEmailAsync(string email, string confirmationCode);
         Task<bool> SendPasswordResetEmailAsync(string email, string resetCode);
         Task<bool> SendEmailAsync(string toEmail, string subject, string body);
+        Task<bool> SendContactFormEmailAsync(ContactFormDto form);
+
     }
 }

@@ -23,6 +23,9 @@ public class Course
     [Url]
     public string? ImageUrl { get; set; }
 
+    [NotMapped]
+    public bool IsFree => Price == 0;
+
     public bool IsActive { get; set; } = true;
 
     // Foreign Keys - Note CategoryId is nullable

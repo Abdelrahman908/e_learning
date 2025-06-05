@@ -12,7 +12,7 @@ namespace e_learning.DTOs
         public string Code { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "كلمة المرور الجديدة مطلوبة")]
-        [MinLength(6, ErrorMessage = "كلمة المرور يجب أن تكون على الأقل 6 حروف")]
+        [MinLength(8, ErrorMessage = "كلمة المرور يجب أن تكون على الأقل 6 حروف")]
         public string NewPassword { get; set; } = string.Empty;
     }
 }

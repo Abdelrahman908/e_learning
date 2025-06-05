@@ -3,10 +3,7 @@ using e_learning.Data;
 using e_learning.DTOs;
 using e_learning.DTOs.Responses;
 using e_learning.Models;
-using e_learning.Models.e_learning.Models;
 using e_learning.Service.Interfaces;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace e_learning.Service.Implementations
@@ -14,50 +11,37 @@ namespace e_learning.Service.Implementations
     public class LessonFileService : ILessonFileService
     {
         private readonly AppDbContext _context;
-        private readonly IWebHostEnvironment _env;
         private readonly IMapper _mapper;
+        private readonly IGoogleDriveService _googleDriveService;
+        private readonly ILessonService _lessonService;
 
-        public LessonFileService(AppDbContext context, IWebHostEnvironment env, IMapper mapper)
+        public LessonFileService(
+            AppDbContext context,
+            IMapper mapper,
+            IGoogleDriveService googleDriveService,
+            ILessonService lessonService)
         {
             _context = context;
-            _env = env;
             _mapper = mapper;
-        }
-
-        public async Task<string> SaveFileAsync(IFormFile file, string folderName)
-        {
-            var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads", folderName);
-            if (!Directory.Exists(uploadsFolder))
-                Directory.CreateDirectory(uploadsFolder);
-
-            var uniqueFileName = $"{Guid.NewGuid()}_{file.FileName}";
-            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-            return $"/uploads/{folderName}/{uniqueFileName}";
-        }
-
-        public async Task DeleteFileAsync(string filePath)
-        {
-            var fullPath = Path.Combine(_env.WebRootPath, filePath.TrimStart('/'));
-            if (System.IO.File.Exists(fullPath))
-            {
-                System.IO.File.Delete(fullPath);
-            }
+            _googleDriveService = googleDriveService;
+            _lessonService = lessonService;
         }
 
         public async Task<ApiResponse<LessonMaterialDto>> SaveLessonMaterialAsync(int lessonId, UploadMaterialDto dto, string uploadedById)
         {
-            var fileUrl = await SaveFileAsync(dto.File, "lesson-materials");
+            // التحقق من وجود الدرس
+            var lessonExists = await _context.Lessons.AnyAsync(l => l.Id == lessonId);
+            if (!lessonExists)
+                return ApiResponse<LessonMaterialDto>.NotFound("الدرس غير موجود");
+
+            string driveFileId = await _googleDriveService.UploadFileAsync(dto.File, "YOUR_DRIVE_FOLDER_ID");
+            string fileUrl = $"https://drive.google.com/file/d/{driveFileId}/view";
 
             var material = new LessonMaterial
             {
                 FileName = dto.File.FileName,
                 FileUrl = fileUrl,
+                DriveFileId = driveFileId,
                 Description = dto.Description,
                 FileSize = dto.File.Length,
                 UploadedAt = DateTime.UtcNow,
@@ -77,7 +61,11 @@ namespace e_learning.Service.Implementations
             if (material == null)
                 return ApiResponse.NotFound("المادة غير موجودة");
 
-            await DeleteFileAsync(material.FileUrl);
+            if (!string.IsNullOrEmpty(material.DriveFileId))
+            {
+                await _googleDriveService.DeleteFileAsync(material.DriveFileId);
+            }
+
             _context.LessonMaterials.Remove(material);
             await _context.SaveChangesAsync();
 
@@ -99,7 +87,8 @@ namespace e_learning.Service.Implementations
                 .Where(m => m.LessonId == lessonId)
                 .ToListAsync();
 
-            return ApiResponse<List<LessonMaterialDto>>.SuccessResponse(_mapper.Map<List<LessonMaterialDto>>(materials));
+            return ApiResponse<List<LessonMaterialDto>>.SuccessResponse(
+                _mapper.Map<List<LessonMaterialDto>>(materials));
         }
     }
 }

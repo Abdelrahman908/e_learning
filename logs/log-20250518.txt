@@ -1,0 +1,272 @@
+2025-05-18 01:23:16.510 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - null null
+2025-05-18 01:23:16.697 +03:00 [INF] CORS policy execution successful.
+2025-05-18 01:23:16.708 +03:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 33.7090 ms
+2025-05-18 01:23:16.714 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - 204 null null 211.68ms
+2025-05-18 01:23:16.731 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 75
+2025-05-18 01:23:16.751 +03:00 [INF] CORS policy execution successful.
+2025-05-18 01:23:16.780 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-18 01:23:16.807 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-18 01:23:17.404 +03:00 [INF] Executed DbCommand (280ms) [Parameters=[@__dto_Email_0='abdomoka2018@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-18 01:23:18.066 +03:00 [INF] Executed DbCommand (150ms) [Parameters=[@p0='2025-05-17T22:23:17.8609119Z', @p1='0', @p2='2025-05-24T22:23:17.8551404Z', @p3='False', @p4='False', @p5='P4LFo+YqIy3js9G2GYzFfaw2C9dGA7PFQOkIJJ+WjhA=' (Nullable = false) (Size = 450), @p6='23'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-18 01:23:18.089 +03:00 [INF] Successful login for: abdomoka2018@gmail.com
+2025-05-18 01:23:18.096 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-18 01:23:18.109 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 1269.1273ms
+2025-05-18 01:23:18.116 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-18 01:23:18.130 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 1381.2381 ms
+2025-05-18 01:23:18.205 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 1473.9895ms
+2025-05-18 01:24:19.682 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/register - null null
+2025-05-18 01:24:19.688 +03:00 [INF] CORS policy execution successful.
+2025-05-18 01:24:19.712 +03:00 [INF] HTTP OPTIONS /api/Auth/register responded 204 in 25.0762 ms
+2025-05-18 01:24:19.714 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/register - 204 null null 32.5066ms
+2025-05-18 01:24:19.737 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/register - application/json 88
+2025-05-18 01:24:19.746 +03:00 [INF] CORS policy execution successful.
+2025-05-18 01:24:20.111 +03:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '5/17/2025 10:23:17 PM', Current time (UTC): '5/17/2025 10:24:20 PM'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2025-05-18 01:24:20.202 +03:00 [ERR] JWT Authentication Failed
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '5/17/2025 10:23:17 PM', Current time (UTC): '5/17/2025 10:24:20 PM'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2025-05-18 01:24:20.214 +03:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '5/17/2025 10:23:17 PM', Current time (UTC): '5/17/2025 10:24:20 PM'.
+2025-05-18 01:24:20.217 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-18 01:24:20.278 +03:00 [INF] Route matched with {action = "Register", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Register(e_learning.DTOs.UserRegisterDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-18 01:24:20.461 +03:00 [INF] Executed DbCommand (32ms) [Parameters=[@__dto_Email_0='ahhm9570@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[Email] = @__dto_Email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2025-05-18 01:24:20.983 +03:00 [INF] Executed DbCommand (163ms) [Parameters=[@p0='2025-05-17T22:24:20.7741039Z', @p1='ahhm9570@gmail.com' (Size = 450), @p2='Ahmed' (Size = 4000), @p3='True', @p4='False', @p5='$2a$11$6qz7HuzYp3dgeuXiLZ1T2.4xl08ECZluqFOK6HhbKSduqGwwqzb1a' (Size = 4000), @p6='Student' (Nullable = false) (Size = 4000), @p7=NULL (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Users] ([CreatedAt], [Email], [FullName], [IsActive], [IsEmailConfirmed], [PasswordHash], [Role], [UpdatedAt])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2025-05-18 01:24:21.075 +03:00 [INF] Executed DbCommand (10ms) [Parameters=[@__ToLower_0='ahhm9570@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[Code], [e].[CreatedAt], [e].[Email], [e].[ExpiryDate]
+FROM [EmailConfirmationCodes] AS [e]
+WHERE [e].[Email] = @__ToLower_0
+2025-05-18 01:24:21.210 +03:00 [INF] Executed DbCommand (59ms) [Parameters=[@p0='6'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+DELETE FROM [EmailConfirmationCodes]
+OUTPUT 1
+WHERE [Id] = @p0;
+2025-05-18 01:24:21.258 +03:00 [INF] Executed DbCommand (9ms) [Parameters=[@p0='625984' (Nullable = false) (Size = 6), @p1='2025-05-17T22:24:21.2374117Z', @p2='ahhm9570@gmail.com' (Nullable = false) (Size = 450), @p3='2025-05-17T22:34:21.2372560Z'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [EmailConfirmationCodes] ([Code], [CreatedAt], [Email], [ExpiryDate])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3);
+2025-05-18 01:24:27.290 +03:00 [INF] Email sent to ahhm9570@gmail.com
+2025-05-18 01:24:27.292 +03:00 [INF] New user registered - ID: 24
+2025-05-18 01:24:27.295 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RegisterResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-18 01:24:27.318 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Register (e_learning) in 7036.925ms
+2025-05-18 01:24:27.321 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Register (e_learning)'
+2025-05-18 01:24:27.324 +03:00 [INF] HTTP POST /api/Auth/register responded 200 in 7580.7610 ms
+2025-05-18 01:24:27.336 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/register - 200 null application/json; charset=utf-8 7599.027ms
+2025-05-18 01:24:50.979 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/confirm-email - null null
+2025-05-18 01:24:50.998 +03:00 [INF] CORS policy execution successful.
+2025-05-18 01:24:51.006 +03:00 [INF] HTTP OPTIONS /api/Auth/confirm-email responded 204 in 8.1435 ms
+2025-05-18 01:24:51.010 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/confirm-email - 204 null null 30.6481ms
+2025-05-18 01:24:51.013 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/confirm-email - application/json 46
+2025-05-18 01:24:51.191 +03:00 [INF] CORS policy execution successful.
+2025-05-18 01:24:51.194 +03:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '5/17/2025 10:23:17 PM', Current time (UTC): '5/17/2025 10:24:51 PM'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2025-05-18 01:24:51.199 +03:00 [ERR] JWT Authentication Failed
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '5/17/2025 10:23:17 PM', Current time (UTC): '5/17/2025 10:24:51 PM'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2025-05-18 01:24:51.207 +03:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '5/17/2025 10:23:17 PM', Current time (UTC): '5/17/2025 10:24:51 PM'.
+2025-05-18 01:24:51.209 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.ConfirmEmail (e_learning)'
+2025-05-18 01:24:51.222 +03:00 [INF] Route matched with {action = "ConfirmEmail", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ConfirmEmail(e_learning.DTOs.ConfirmEmailDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-18 01:24:51.496 +03:00 [INF] Executed DbCommand (214ms) [Parameters=[@__ToLower_0='ahhm9570@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[Code], [e].[CreatedAt], [e].[Email], [e].[ExpiryDate]
+FROM [EmailConfirmationCodes] AS [e]
+WHERE [e].[Email] = @__ToLower_0 AND [e].[ExpiryDate] > GETUTCDATE()
+ORDER BY [e].[ExpiryDate] DESC
+2025-05-18 01:24:51.519 +03:00 [INF] Executed DbCommand (8ms) [Parameters=[@__dto_Email_0='ahhm9570@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-18 01:24:51.557 +03:00 [INF] Executed DbCommand (22ms) [Parameters=[@p1='24', @p0='True'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Users] SET [IsEmailConfirmed] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+2025-05-18 01:24:51.596 +03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__ToLower_0='ahhm9570@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[Code], [e].[CreatedAt], [e].[Email], [e].[ExpiryDate]
+FROM [EmailConfirmationCodes] AS [e]
+WHERE [e].[Email] = @__ToLower_0
+2025-05-18 01:24:51.643 +03:00 [INF] Executed DbCommand (13ms) [Parameters=[@p0='27'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+DELETE FROM [EmailConfirmationCodes]
+OUTPUT 1
+WHERE [Id] = @p0;
+2025-05-18 01:24:51.679 +03:00 [INF] Email confirmed for: ahhm9570@gmail.com
+2025-05-18 01:24:51.684 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-18 01:24:51.701 +03:00 [INF] Executed action e_learning.Controllers.AuthController.ConfirmEmail (e_learning) in 476.0025ms
+2025-05-18 01:24:51.711 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.ConfirmEmail (e_learning)'
+2025-05-18 01:24:51.714 +03:00 [INF] HTTP POST /api/Auth/confirm-email responded 200 in 523.0505 ms
+2025-05-18 01:24:51.726 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/confirm-email - 200 null application/json; charset=utf-8 712.8556ms
+2025-05-18 01:25:26.606 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - null null
+2025-05-18 01:25:26.630 +03:00 [INF] CORS policy execution successful.
+2025-05-18 01:25:26.651 +03:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 21.7340 ms
+2025-05-18 01:25:26.657 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/login - 204 null null 50.247ms
+2025-05-18 01:25:26.671 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 70
+2025-05-18 01:25:26.688 +03:00 [INF] CORS policy execution successful.
+2025-05-18 01:25:26.689 +03:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '5/17/2025 10:23:17 PM', Current time (UTC): '5/17/2025 10:25:26 PM'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2025-05-18 01:25:26.698 +03:00 [ERR] JWT Authentication Failed
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '5/17/2025 10:23:17 PM', Current time (UTC): '5/17/2025 10:25:26 PM'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2025-05-18 01:25:26.755 +03:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '5/17/2025 10:23:17 PM', Current time (UTC): '5/17/2025 10:25:26 PM'.
+2025-05-18 01:25:26.759 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-18 01:25:26.760 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-18 01:25:26.784 +03:00 [INF] Executed DbCommand (9ms) [Parameters=[@__dto_Email_0='ahhm9570@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-18 01:25:27.106 +03:00 [WRN] Failed login attempt for email: ahhm9570@gmail.com
+2025-05-18 01:25:27.108 +03:00 [INF] Executing UnauthorizedObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse'.
+2025-05-18 01:25:27.111 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 345.8382ms
+2025-05-18 01:25:27.125 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-18 01:25:27.136 +03:00 [INF] HTTP POST /api/Auth/login responded 401 in 448.1681 ms
+2025-05-18 01:25:27.142 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 401 null application/json; charset=utf-8 470.4555ms
+2025-05-18 01:25:27.160 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7056/api/Auth/refresh-token - null null
+2025-05-18 01:25:27.166 +03:00 [INF] CORS policy execution successful.
+2025-05-18 01:25:27.169 +03:00 [INF] HTTP OPTIONS /api/Auth/refresh-token responded 204 in 2.9164 ms
+2025-05-18 01:25:27.172 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7056/api/Auth/refresh-token - 204 null null 11.9691ms
+2025-05-18 01:25:27.178 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - application/json 63
+2025-05-18 01:25:27.188 +03:00 [INF] CORS policy execution successful.
+2025-05-18 01:25:27.190 +03:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '5/17/2025 10:23:17 PM', Current time (UTC): '5/17/2025 10:25:27 PM'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2025-05-18 01:25:27.195 +03:00 [ERR] JWT Authentication Failed
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '5/17/2025 10:23:17 PM', Current time (UTC): '5/17/2025 10:25:27 PM'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2025-05-18 01:25:27.202 +03:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '5/17/2025 10:23:17 PM', Current time (UTC): '5/17/2025 10:25:27 PM'.
+2025-05-18 01:25:27.204 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-18 01:25:27.208 +03:00 [INF] Route matched with {action = "RefreshToken", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RefreshToken(e_learning.Models.RefreshTokenRequest) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-18 01:25:27.244 +03:00 [INF] Executed DbCommand (22ms) [Parameters=[@__request_RefreshToken_0='P4LFo+YqIy3js9G2GYzFfaw2C9dGA7PFQOkIJJ+WjhA=' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[ExpiresIn], [u].[ExpiryDate], [u].[IsRevoked], [u].[IsUsed], [u].[RefreshToken], [u].[UserId], [u0].[Id], [u0].[CreatedAt], [u0].[Email], [u0].[FullName], [u0].[IsActive], [u0].[IsEmailConfirmed], [u0].[PasswordHash], [u0].[Role], [u0].[UpdatedAt]
+FROM [UserRefreshTokens] AS [u]
+INNER JOIN [Users] AS [u0] ON [u].[UserId] = [u0].[Id]
+WHERE [u].[RefreshToken] = @__request_RefreshToken_0
+2025-05-18 01:25:27.319 +03:00 [INF] Executed DbCommand (25ms) [Parameters=[@p7='96', @p0='2025-05-17T22:23:17.8609119', @p1='0', @p2='2025-05-24T22:23:17.8551404', @p3='False', @p4='True', @p5='P4LFo+YqIy3js9G2GYzFfaw2C9dGA7PFQOkIJJ+WjhA=' (Nullable = false) (Size = 450), @p6='23', @p8='2025-05-17T22:25:27.2624779Z', @p9='0', @p10='2025-05-24T22:25:27.2624339Z', @p11='False', @p12='False', @p13='PhEOgLcAVDTYMpOhKEEW8Q0xpDgdyJgFdTc3TBiOeW8=' (Nullable = false) (Size = 450), @p14='23'], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [UserRefreshTokens] SET [CreatedAt] = @p0, [ExpiresIn] = @p1, [ExpiryDate] = @p2, [IsRevoked] = @p3, [IsUsed] = @p4, [RefreshToken] = @p5, [UserId] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-05-18 01:25:27.336 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RefreshTokenResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-18 01:25:27.338 +03:00 [INF] Executed action e_learning.Controllers.AuthController.RefreshToken (e_learning) in 127.4891ms
+2025-05-18 01:25:27.340 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-18 01:25:27.341 +03:00 [INF] HTTP POST /api/Auth/refresh-token responded 200 in 154.6382 ms
+2025-05-18 01:25:27.347 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - 200 null application/json; charset=utf-8 168.9116ms
+2025-05-18 01:25:38.674 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/login - application/json 70
+2025-05-18 01:25:38.677 +03:00 [INF] CORS policy execution successful.
+2025-05-18 01:25:38.679 +03:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '5/17/2025 10:23:17 PM', Current time (UTC): '5/17/2025 10:25:38 PM'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2025-05-18 01:25:38.734 +03:00 [ERR] JWT Authentication Failed
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '5/17/2025 10:23:17 PM', Current time (UTC): '5/17/2025 10:25:38 PM'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2025-05-18 01:25:38.778 +03:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '5/17/2025 10:23:17 PM', Current time (UTC): '5/17/2025 10:25:38 PM'.
+2025-05-18 01:25:38.780 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-18 01:25:38.786 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(e_learning.DTOs.UserLoginDto) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-18 01:25:38.804 +03:00 [INF] Executed DbCommand (9ms) [Parameters=[@__dto_Email_0='ahhm9570@gmail.com' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[IsActive], [u].[IsEmailConfirmed], [u].[PasswordHash], [u].[Role], [u].[UpdatedAt]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__dto_Email_0
+2025-05-18 01:25:39.101 +03:00 [INF] Executed DbCommand (10ms) [Parameters=[@p0='2025-05-17T22:25:39.0856804Z', @p1='0', @p2='2025-05-24T22:25:39.0856577Z', @p3='False', @p4='False', @p5='ZUCpmHbcfjT4LTEPR73V81RlvJWtt6yPAZmmPrs3j1s=' (Nullable = false) (Size = 450), @p6='24'], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-05-18 01:25:39.120 +03:00 [INF] Successful login for: ahhm9570@gmail.com
+2025-05-18 01:25:39.123 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.LoginResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-18 01:25:39.126 +03:00 [INF] Executed action e_learning.Controllers.AuthController.Login (e_learning) in 336.9772ms
+2025-05-18 01:25:39.128 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.Login (e_learning)'
+2025-05-18 01:25:39.129 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 451.9153 ms
+2025-05-18 01:25:39.136 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/login - 200 null application/json; charset=utf-8 461.5487ms
+2025-05-18 01:30:23.862 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - application/json 63
+2025-05-18 01:30:23.867 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - application/json 63
+2025-05-18 01:30:23.958 +03:00 [INF] CORS policy execution successful.
+2025-05-18 01:30:23.964 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-18 01:30:23.968 +03:00 [INF] Route matched with {action = "RefreshToken", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RefreshToken(e_learning.Models.RefreshTokenRequest) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-18 01:30:23.995 +03:00 [INF] CORS policy execution successful.
+2025-05-18 01:30:24.254 +03:00 [INF] Executing endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-18 01:30:24.471 +03:00 [INF] Route matched with {action = "RefreshToken", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RefreshToken(e_learning.Models.RefreshTokenRequest) on controller e_learning.Controllers.AuthController (e_learning).
+2025-05-18 01:30:26.295 +03:00 [INF] Executed DbCommand (1,251ms) [Parameters=[@__request_RefreshToken_0='ZUCpmHbcfjT4LTEPR73V81RlvJWtt6yPAZmmPrs3j1s=' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[ExpiresIn], [u].[ExpiryDate], [u].[IsRevoked], [u].[IsUsed], [u].[RefreshToken], [u].[UserId], [u0].[Id], [u0].[CreatedAt], [u0].[Email], [u0].[FullName], [u0].[IsActive], [u0].[IsEmailConfirmed], [u0].[PasswordHash], [u0].[Role], [u0].[UpdatedAt]
+FROM [UserRefreshTokens] AS [u]
+INNER JOIN [Users] AS [u0] ON [u].[UserId] = [u0].[Id]
+WHERE [u].[RefreshToken] = @__request_RefreshToken_0
+2025-05-18 01:30:26.297 +03:00 [INF] Executed DbCommand (1,818ms) [Parameters=[@__request_RefreshToken_0='ZUCpmHbcfjT4LTEPR73V81RlvJWtt6yPAZmmPrs3j1s=' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[ExpiresIn], [u].[ExpiryDate], [u].[IsRevoked], [u].[IsUsed], [u].[RefreshToken], [u].[UserId], [u0].[Id], [u0].[CreatedAt], [u0].[Email], [u0].[FullName], [u0].[IsActive], [u0].[IsEmailConfirmed], [u0].[PasswordHash], [u0].[Role], [u0].[UpdatedAt]
+FROM [UserRefreshTokens] AS [u]
+INNER JOIN [Users] AS [u0] ON [u].[UserId] = [u0].[Id]
+WHERE [u].[RefreshToken] = @__request_RefreshToken_0
+2025-05-18 01:30:27.180 +03:00 [INF] Executed DbCommand (635ms) [Parameters=[@p7='98', @p0='2025-05-17T22:25:39.0856804', @p1='0', @p2='2025-05-24T22:25:39.0856577', @p3='False', @p4='True', @p5='ZUCpmHbcfjT4LTEPR73V81RlvJWtt6yPAZmmPrs3j1s=' (Nullable = false) (Size = 450), @p6='24', @p8='2025-05-17T22:30:26.4433691Z', @p9='0', @p10='2025-05-24T22:30:26.4423201Z', @p11='False', @p12='False', @p13='om/CeSNVeaKIZH8Q7pjoLv9Uwv89HNTr/GmDl4LIxEk=' (Nullable = false) (Size = 450), @p14='24'], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [UserRefreshTokens] SET [CreatedAt] = @p0, [ExpiresIn] = @p1, [ExpiryDate] = @p2, [IsRevoked] = @p3, [IsUsed] = @p4, [RefreshToken] = @p5, [UserId] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-05-18 01:30:27.270 +03:00 [INF] Executed DbCommand (685ms) [Parameters=[@p7='98', @p0='2025-05-17T22:25:39.0856804', @p1='0', @p2='2025-05-24T22:25:39.0856577', @p3='False', @p4='True', @p5='ZUCpmHbcfjT4LTEPR73V81RlvJWtt6yPAZmmPrs3j1s=' (Nullable = false) (Size = 450), @p6='24', @p8='2025-05-17T22:30:26.4539959Z', @p9='0', @p10='2025-05-24T22:30:26.4539588Z', @p11='False', @p12='False', @p13='Vjq0+aRXHSPN+ESWhsyA900/z1+NYtw3snoiRDGgLGU=' (Nullable = false) (Size = 450), @p14='24'], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [UserRefreshTokens] SET [CreatedAt] = @p0, [ExpiresIn] = @p1, [ExpiryDate] = @p2, [IsRevoked] = @p3, [IsUsed] = @p4, [RefreshToken] = @p5, [UserId] = @p6
+OUTPUT 1
+WHERE [Id] = @p7;
+INSERT INTO [UserRefreshTokens] ([CreatedAt], [ExpiresIn], [ExpiryDate], [IsRevoked], [IsUsed], [RefreshToken], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p8, @p9, @p10, @p11, @p12, @p13, @p14);
+2025-05-18 01:30:27.271 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RefreshTokenResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-18 01:30:27.353 +03:00 [INF] Executed action e_learning.Controllers.AuthController.RefreshToken (e_learning) in 2855.5312ms
+2025-05-18 01:30:27.371 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-18 01:30:27.394 +03:00 [INF] HTTP POST /api/Auth/refresh-token responded 200 in 3399.3837 ms
+2025-05-18 01:30:27.411 +03:00 [INF] Executing OkObjectResult, writing value of type 'e_learning.DTOs.Responses.ApiResponse`1[[e_learning.DTOs.Responses.RefreshTokenResponse, e_learning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-05-18 01:30:27.462 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - 200 null application/json; charset=utf-8 3594.3033ms
+2025-05-18 01:30:27.467 +03:00 [INF] Executed action e_learning.Controllers.AuthController.RefreshToken (e_learning) in 3495.6648ms
+2025-05-18 01:30:27.536 +03:00 [INF] Executed endpoint 'e_learning.Controllers.AuthController.RefreshToken (e_learning)'
+2025-05-18 01:30:27.565 +03:00 [INF] HTTP POST /api/Auth/refresh-token responded 200 in 3613.6917 ms
+2025-05-18 01:30:27.636 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7056/api/Auth/refresh-token - 200 null application/json; charset=utf-8 3775.0157ms
+2025-05-18 01:30:50.264 +03:00 [INF] Application is shutting down...

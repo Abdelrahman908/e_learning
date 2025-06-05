@@ -4,9 +4,10 @@ using e_learning.Service.Interfaces;
 using System.Security.Claims;
 using e_learning.DTOs;
 using e_learning.DTOs.Responses;
-using e_learning.DTOs.e_learning.DTOs.Lessons;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using e_learning.DTOs.e_learning.DTOs.Lessons;
+using System.Collections.Generic;
 
 namespace e_learning.Controllers
 {
@@ -38,13 +39,14 @@ namespace e_learning.Controllers
 
         [Authorize(Roles = "Instructor,Admin")]
         [HttpPost]
+        [Consumes("multipart/form-data")]
         [ProducesResponseType(typeof(ApiResponse<LessonResponseDto>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<ApiResponse<LessonResponseDto>>> CreateLesson(
             int courseId,
-            [FromBody] CreateLessonDto dto)
+            [FromForm] CreateLessonDto dto)
         {
             if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out int userId))
             {
@@ -52,7 +54,7 @@ namespace e_learning.Controllers
             }
 
             var response = await _lessonService.CreateLesson(courseId, dto, userId);
-            return HandleCreatedResponse(response, nameof(GetLesson), new { courseId });
+            return HandleCreatedResponse(response, nameof(GetLesson), new { courseId, lessonId = response.Data?.Id });
         }
 
         [HttpGet("{lessonId}")]
@@ -77,6 +79,10 @@ namespace e_learning.Controllers
             int lessonId,
             [FromForm] UploadMaterialDto dto)
         {
+            var lessonExists = await _lessonService.LessonExists(courseId, lessonId);
+            if (!lessonExists)
+                return NotFound(ApiResponse<LessonMaterialDto>.NotFound("الدرس غير موجود"));
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var response = await _lessonFileService.SaveLessonMaterialAsync(lessonId, dto, userId);
             return HandleResponse(response);
@@ -117,42 +123,54 @@ namespace e_learning.Controllers
         }
 
         #region Helper Methods
-        private ActionResult HandleResponse<T>(ApiResponse<T> response)
+
+        private ActionResult<ApiResponse<T>> HandleResponse<T>(ApiResponse<T> response)
         {
-            // تحقق من Success وهي خاصية bool وليست دالة
-            if (response == null || response.Success == false)
+            if (response == null)
             {
-                return StatusCode(response?.StatusCode ?? 400, response);
+                return StatusCode(StatusCodes.Status500InternalServerError, ApiResponse<T>.Error("Unexpected null response"));
             }
-            return Ok(response); // في حالة نجاح الاستجابة
+
+            if (!response.Success)
+            {
+                return StatusCode(response.StatusCode ?? StatusCodes.Status400BadRequest, response);
+            }
+
+            return Ok(response);
         }
 
-        private ActionResult HandleCreatedResponse<T>(
-            ApiResponse<T> response,
-            string actionName,
-            object routeValues)
+
+        private ActionResult<ApiResponse<T>> HandleCreatedResponse<T>(ApiResponse<T> response, string actionName, object routeValues)
         {
-            // تحقق من Success وهي خاصية bool وليست دالة
-            if (response == null || response.Success == false)
+            if (response == null)
             {
-                return StatusCode(response?.StatusCode ?? 400, response);
+                return StatusCode(StatusCodes.Status500InternalServerError, ApiResponse<T>.Error("Unexpected null response"));
             }
-            return CreatedAtAction(actionName, routeValues, response); // في حالة نجاح الاستجابة
+
+            if (!response.Success)
+            {
+                return StatusCode(response.StatusCode ?? StatusCodes.Status400BadRequest, response);
+            }
+
+            return CreatedAtAction(actionName, routeValues, response);
         }
 
-        private ActionResult HandleNoContentResponse(ApiResponse response)
+        private ActionResult<ApiResponse> HandleNoContentResponse(ApiResponse response)
         {
-            // تحقق من Success وهي خاصية bool وليست دالة
-            if (response == null || response.Success == false)
+            if (response == null)
             {
-                return StatusCode(response?.StatusCode ?? 400, response);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponse(false, "Unexpected null response", 500));
             }
-            return NoContent(); // في حالة نجاح الاستجابة
+
+            if (!response.Success)
+            {
+                return StatusCode(response.StatusCode ?? StatusCodes.Status400BadRequest, response);
+            }
+
+            return NoContent();
         }
+
+
         #endregion
-
-
-
-
     }
 }

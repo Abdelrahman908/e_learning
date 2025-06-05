@@ -6,6 +6,7 @@ using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using e_learning.Service.Interfaces;
+using e_learning.Models;
 
 namespace e_learning.Services
 {
@@ -34,6 +35,19 @@ namespace e_learning.Services
             var body = $"<h2>رمز إعادة التعيين: {resetCode}</h2><p>صالح لمدة 10 دقائق</p>";
             return await SendEmailAsync(email, subject, body);
         }
+        public async Task<bool> SendContactFormEmailAsync(ContactFormDto form)
+        {
+            var subject = $"[Framy Contact] {form.Subject ?? "No Subject"}";
+            var body = $@"
+        <h3>Contact Form Message from {form.Name}</h3>
+        <p><strong>Email:</strong> {form.Email}</p>
+        <p><strong>Message:</strong><br />{form.Message}</p>
+    ";
+
+            var recipient = _config["EmailSettings:ContactRecipient"] ?? "contactframyy@gmail.com";
+            return await SendEmailAsync(recipient, subject, body);
+        }
+
 
         public async Task<bool> SendEmailAsync(string toEmail, string subject, string body)
         {

@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using e_learning.Models;
-using e_learning.Enums;
-using System.ComponentModel.DataAnnotations.Schema;
-using e_learning.Models.e_learning.Models;
 using e_learning.models;
 
 namespace e_learning.Data
@@ -38,6 +35,8 @@ namespace e_learning.Data
         public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
         public DbSet<EmailConfirmationCode> EmailConfirmationCodes { get; set; }
         public DbSet<PasswordResetCode> PasswordResetCodes { get; set; }
+        public DbSet<ContactForm> ContactForms { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

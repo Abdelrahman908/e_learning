@@ -41,6 +41,17 @@ namespace e_learning.Controllers
             if (alreadyEnrolled)
                 return BadRequest(new ApiResponse(false, "⚠️ أنت مسجل بالفعل في هذا الكورس."));
 
+            // ✅ تحقق من أن الطالب دفع، إذا لم يكن الكورس مجاني
+            if (!course.IsFree)
+            {
+                var hasPaid = await _context.Payments
+                    .AnyAsync(p => p.CourseId == courseId && p.UserId == userId && p.IsSuccessful);
+
+                if (!hasPaid)
+                    return BadRequest(new ApiResponse(false, "❌ لا يمكنك التسجيل إلا بعد الدفع."));
+            }
+
+
             var enrollment = new Enrollment
             {
                 UserId = userId.Value,
@@ -49,7 +60,6 @@ namespace e_learning.Controllers
 
             _context.Enrollments.Add(enrollment);
 
-            // إضافة إشعار للمُدرس عند انضمام طالب جديد
             if (course.InstructorId != userId)
             {
                 var student = await _context.Users.FindAsync(userId);
@@ -59,7 +69,7 @@ namespace e_learning.Controllers
                     {
                         Title = "📥 انضمام جديد",
                         Message = $"👤 {student.FullName} انضم إلى كورسك: {course.Title}",
-                        UserId = course.InstructorId // تم تعديلها لتكون int بدلًا من ToString()
+                        UserId = course.InstructorId
                     });
                 }
             }
@@ -67,6 +77,7 @@ namespace e_learning.Controllers
             await _context.SaveChangesAsync();
             return Ok(new ApiResponse(true, "✅ تم التسجيل بنجاح"));
         }
+
 
         /// <summary>عرض كورسات الطالب</summary>
         [HttpGet("my-courses")]

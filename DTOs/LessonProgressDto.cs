@@ -2,6 +2,8 @@
 {
     public class LessonProgressDto
     {
+        public int Id { get; set; } // أضف هذه إن كانت مطلوبة
+
         public int LessonId { get; set; }
         public string LessonTitle { get; set; }
         public bool IsCompleted { get; set; }

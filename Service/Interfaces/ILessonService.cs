@@ -12,5 +12,7 @@ namespace e_learning.Service.Interfaces
         Task<ApiResponse<LessonResponseDto>> CreateLesson(int courseId, CreateLessonDto dto, int userId);
         Task<ApiResponse<LessonResponseDto>> UpdateLesson(int courseId, int lessonId, UpdateLessonDto dto);
         Task<ApiResponse> DeleteLesson(int courseId, int lessonId);
+        Task<bool> LessonExists(int courseId, int lessonId);
+
     }
 }

@@ -169,6 +169,7 @@ namespace e_learning.Controllers
                 return StatusCode(500, new ApiResponse(false, "An error occurred while processing your request"));
             }
         }
+
         [HttpPost("resend-confirmation-code")]
         [ProducesResponseType(typeof(ApiResponse), 200)]
         [ProducesResponseType(typeof(ApiResponse), 400)]

@@ -1,11 +1,10 @@
 ﻿using e_learning.DTOs;
 using e_learning.DTOs.Responses;
-using e_learning.DTOs.e_learning.DTOs.Lessons;
 using Microsoft.AspNetCore.Http;
 
 namespace e_learning.Service.Interfaces
 {
-    public interface ILessonFileService : IFileService
+    public interface ILessonFileService
     {
         Task<ApiResponse<LessonMaterialDto>> SaveLessonMaterialAsync(int lessonId, UploadMaterialDto dto, string uploadedById);
         Task<ApiResponse> DeleteLessonMaterialAsync(int materialId);

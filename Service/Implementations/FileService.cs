@@ -1,16 +1,9 @@
 ﻿using e_learning.Data;
 using e_learning.DTOs;
-using e_learning.Models;
-using e_learning.Models.e_learning.Models;
 using e_learning.Service.Interfaces;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+using e_learning.Models;
+
 
 namespace e_learning.Services
 {
@@ -110,7 +103,9 @@ namespace e_learning.Services
                 Description = material.Description,
                 FileSize = material.FileSize,
                 UploadedAt = material.UploadedAt,
-                LessonId = material.LessonId
+                LessonId = material.LessonId,
+                DriveFileId = material.DriveFileId // << أضف هذا
+
             };
         }
     }
