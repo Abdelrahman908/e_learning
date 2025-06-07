@@ -77,6 +77,19 @@ namespace e_learning.Controllers
             await _context.SaveChangesAsync();
             return Ok(new ApiResponse(true, "✅ تم التسجيل بنجاح"));
         }
+        [HttpGet("is-enrolled/{courseId}")]
+        public async Task<IActionResult> IsEnrolled(int courseId)
+        {
+            var userId = GetUserId();
+            if (userId == null)
+                return Unauthorized(new ApiResponse(false, "⚠️ لم يتم التحقق من هوية المستخدم."));
+
+            var isEnrolled = await _context.Enrollments
+                .AnyAsync(e => e.CourseId == courseId && e.UserId == userId);
+
+            return Ok(isEnrolled);
+        }
+
 
 
         /// <summary>عرض كورسات الطالب</summary>

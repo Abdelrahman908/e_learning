@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "DRGwyKkREV1jlNIMVUWnjf33n5975Y0XXf6HRWJPzW8=",
+  "Hash": "HKCEKY8LmD7NBRsqe789PUU8tJitcENJeZY+OmDRKpc=",
   "Source": "e_learning",
   "BasePath": "_content/e_learning",
   "Mode": "Default",
@@ -16,6 +16,48 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\courses\\0c7f8831-e601-4ac1-989f-bfe2feca2e60.jpeg",
+      "SourceId": "e_learning",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\",
+      "BasePath": "_content/e_learning",
+      "RelativePath": "images/courses/0c7f8831-e601-4ac1-989f-bfe2feca2e60#[.{fingerprint}]?.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "gv1r65z9v6",
+      "Integrity": "PKyITyKOHmFD6TyAOYO4L7ZJ2ZNaausFX1yqSjc9AcE=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\courses\\0c7f8831-e601-4ac1-989f-bfe2feca2e60.jpeg"
+    },
+    {
+      "Identity": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\courses\\4da0f3f7-8c54-4a92-9cc6-6fa3dd256baf.jpeg",
+      "SourceId": "e_learning",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\",
+      "BasePath": "_content/e_learning",
+      "RelativePath": "images/courses/4da0f3f7-8c54-4a92-9cc6-6fa3dd256baf#[.{fingerprint}]?.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "jit0w6wqcr",
+      "Integrity": "lfLOu+M0SCKg+TBKHkApIZFkl74kxZDVvRH6rQnw3xU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\courses\\4da0f3f7-8c54-4a92-9cc6-6fa3dd256baf.jpeg"
+    },
     {
       "Identity": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\courses\\80744c4e-fb85-4143-94e7-ff6e5ad531f0.jpg",
       "SourceId": "e_learning",
@@ -36,6 +78,48 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\courses\\80744c4e-fb85-4143-94e7-ff6e5ad531f0.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\courses\\e404b294-22e3-469a-8dfc-52966f3acb48.jpeg",
+      "SourceId": "e_learning",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\",
+      "BasePath": "_content/e_learning",
+      "RelativePath": "images/courses/e404b294-22e3-469a-8dfc-52966f3acb48#[.{fingerprint}]?.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "f7b2cevv51",
+      "Integrity": "O9kfm7gKCS9xeZhdwZiRzMTzDvcbgB3Xi9Zfcsqa+Zg=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\courses\\e404b294-22e3-469a-8dfc-52966f3acb48.jpeg"
+    },
+    {
+      "Identity": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\profiles\\43d4e1a1-42a1-4669-a60d-0761d438ae94.jpeg",
+      "SourceId": "e_learning",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\",
+      "BasePath": "_content/e_learning",
+      "RelativePath": "images/profiles/43d4e1a1-42a1-4669-a60d-0761d438ae94#[.{fingerprint}]?.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "7yzkl0t79f",
+      "Integrity": "/7cG0+t7Lk0LAeHoe/wyaPCzFeYVq30fQflxEaDutxY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\profiles\\43d4e1a1-42a1-4669-a60d-0761d438ae94.jpeg"
     },
     {
       "Identity": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\profiles\\722fab0f-016a-4c95-b6b2-04f4ff376c2e.jpg",
@@ -124,6 +208,170 @@
   ],
   "Endpoints": [
     {
+      "Route": "images/courses/0c7f8831-e601-4ac1-989f-bfe2feca2e60.gv1r65z9v6.jpeg",
+      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\courses\\0c7f8831-e601-4ac1-989f-bfe2feca2e60.jpeg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "47674"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PKyITyKOHmFD6TyAOYO4L7ZJ2ZNaausFX1yqSjc9AcE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 06 Jun 2025 16:46:32 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "gv1r65z9v6"
+        },
+        {
+          "Name": "label",
+          "Value": "images/courses/0c7f8831-e601-4ac1-989f-bfe2feca2e60.jpeg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-PKyITyKOHmFD6TyAOYO4L7ZJ2ZNaausFX1yqSjc9AcE="
+        }
+      ]
+    },
+    {
+      "Route": "images/courses/0c7f8831-e601-4ac1-989f-bfe2feca2e60.jpeg",
+      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\courses\\0c7f8831-e601-4ac1-989f-bfe2feca2e60.jpeg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "47674"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PKyITyKOHmFD6TyAOYO4L7ZJ2ZNaausFX1yqSjc9AcE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 06 Jun 2025 16:46:32 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-PKyITyKOHmFD6TyAOYO4L7ZJ2ZNaausFX1yqSjc9AcE="
+        }
+      ]
+    },
+    {
+      "Route": "images/courses/4da0f3f7-8c54-4a92-9cc6-6fa3dd256baf.jit0w6wqcr.jpeg",
+      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\courses\\4da0f3f7-8c54-4a92-9cc6-6fa3dd256baf.jpeg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "214079"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lfLOu+M0SCKg+TBKHkApIZFkl74kxZDVvRH6rQnw3xU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 06 Jun 2025 16:45:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "jit0w6wqcr"
+        },
+        {
+          "Name": "label",
+          "Value": "images/courses/4da0f3f7-8c54-4a92-9cc6-6fa3dd256baf.jpeg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-lfLOu+M0SCKg+TBKHkApIZFkl74kxZDVvRH6rQnw3xU="
+        }
+      ]
+    },
+    {
+      "Route": "images/courses/4da0f3f7-8c54-4a92-9cc6-6fa3dd256baf.jpeg",
+      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\courses\\4da0f3f7-8c54-4a92-9cc6-6fa3dd256baf.jpeg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "214079"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lfLOu+M0SCKg+TBKHkApIZFkl74kxZDVvRH6rQnw3xU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 06 Jun 2025 16:45:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-lfLOu+M0SCKg+TBKHkApIZFkl74kxZDVvRH6rQnw3xU="
+        }
+      ]
+    },
+    {
       "Route": "images/courses/80744c4e-fb85-4143-94e7-ff6e5ad531f0.jpg",
       "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\courses\\80744c4e-fb85-4143-94e7-ff6e5ad531f0.jpg",
       "Selectors": [],
@@ -202,6 +450,170 @@
         {
           "Name": "integrity",
           "Value": "sha256-Bv1m4ZBN/BAwa5JtKz2JYf8K/b2zrxv0C7s6W5WzOMc="
+        }
+      ]
+    },
+    {
+      "Route": "images/courses/e404b294-22e3-469a-8dfc-52966f3acb48.f7b2cevv51.jpeg",
+      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\courses\\e404b294-22e3-469a-8dfc-52966f3acb48.jpeg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "114219"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"O9kfm7gKCS9xeZhdwZiRzMTzDvcbgB3Xi9Zfcsqa+Zg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 06 Jun 2025 16:27:18 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "f7b2cevv51"
+        },
+        {
+          "Name": "label",
+          "Value": "images/courses/e404b294-22e3-469a-8dfc-52966f3acb48.jpeg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-O9kfm7gKCS9xeZhdwZiRzMTzDvcbgB3Xi9Zfcsqa+Zg="
+        }
+      ]
+    },
+    {
+      "Route": "images/courses/e404b294-22e3-469a-8dfc-52966f3acb48.jpeg",
+      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\courses\\e404b294-22e3-469a-8dfc-52966f3acb48.jpeg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "114219"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"O9kfm7gKCS9xeZhdwZiRzMTzDvcbgB3Xi9Zfcsqa+Zg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 06 Jun 2025 16:27:18 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-O9kfm7gKCS9xeZhdwZiRzMTzDvcbgB3Xi9Zfcsqa+Zg="
+        }
+      ]
+    },
+    {
+      "Route": "images/profiles/43d4e1a1-42a1-4669-a60d-0761d438ae94.7yzkl0t79f.jpeg",
+      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\profiles\\43d4e1a1-42a1-4669-a60d-0761d438ae94.jpeg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6979"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/7cG0+t7Lk0LAeHoe/wyaPCzFeYVq30fQflxEaDutxY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 07 Jun 2025 02:37:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "7yzkl0t79f"
+        },
+        {
+          "Name": "label",
+          "Value": "images/profiles/43d4e1a1-42a1-4669-a60d-0761d438ae94.jpeg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/7cG0+t7Lk0LAeHoe/wyaPCzFeYVq30fQflxEaDutxY="
+        }
+      ]
+    },
+    {
+      "Route": "images/profiles/43d4e1a1-42a1-4669-a60d-0761d438ae94.jpeg",
+      "AssetFile": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\profiles\\43d4e1a1-42a1-4669-a60d-0761d438ae94.jpeg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6979"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/7cG0+t7Lk0LAeHoe/wyaPCzFeYVq30fQflxEaDutxY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 07 Jun 2025 02:37:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/7cG0+t7Lk0LAeHoe/wyaPCzFeYVq30fQflxEaDutxY="
         }
       ]
     },

@@ -20,12 +20,22 @@ namespace e_learning.Controllers
             _context = context;
         }
 
+        // ✅ دالة موحدة لجلب UserId من Claims
+        private int GetUserId()
+        {
+            var claim = User.FindFirst("sub")
+                      ?? User.FindFirst(ClaimTypes.NameIdentifier)
+                      ?? throw new UnauthorizedAccessException("المستخدم غير معروف");
+
+            return int.Parse(claim.Value);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateProfile([FromBody] CreateProfileDto dto)
         {
             try
             {
-                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+                var userId = GetUserId();
 
                 if (await _context.Profiles.AnyAsync(p => p.UserId == userId))
                     return BadRequest("البروفايل موجود بالفعل.");
@@ -57,7 +67,7 @@ namespace e_learning.Controllers
         {
             try
             {
-                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+                var userId = GetUserId();
 
                 var profile = await _context.Profiles.Include(p => p.User)
                     .FirstOrDefaultAsync(p => p.UserId == userId);
@@ -73,7 +83,9 @@ namespace e_learning.Controllers
                     Address = profile.Address,
                     Phone = profile.Phone,
                     UserId = profile.UserId,
-                    UserName = profile.User?.FullName
+                    UserName = profile.User?.FullName,
+                    Email = profile.User?.Email,
+                    UpdatedAt = profile.UpdatedAt
                 };
 
                 return Ok(response);
@@ -89,7 +101,8 @@ namespace e_learning.Controllers
         {
             try
             {
-                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+                var userId = GetUserId();
+
                 var profile = await _context.Profiles
                     .Include(p => p.User)
                     .FirstOrDefaultAsync(p => p.UserId == userId);
@@ -113,7 +126,6 @@ namespace e_learning.Controllers
                 profile.UpdatedAt = DateTime.UtcNow;
                 await _context.SaveChangesAsync();
 
-                // إعادة البيانات المحدثة باستخدام DTO
                 var updatedProfile = new ProfileResponseDto
                 {
                     Id = profile.Id,
@@ -122,8 +134,8 @@ namespace e_learning.Controllers
                     Address = profile.Address,
                     Phone = profile.Phone,
                     UserId = profile.UserId,
-                    UserName = profile.User.FullName,  // جلب اسم المستخدم
-                    Email = profile.User.Email,        // جلب البريد الإلكتروني
+                    UserName = profile.User.FullName,
+                    Email = profile.User.Email,
                     UpdatedAt = profile.UpdatedAt
                 };
 
@@ -139,13 +151,12 @@ namespace e_learning.Controllers
             }
         }
 
-
         [HttpDelete]
         public async Task<IActionResult> DeleteProfile()
         {
             try
             {
-                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+                var userId = GetUserId();
 
                 var profile = await _context.Profiles.FirstOrDefaultAsync(p => p.UserId == userId);
 
@@ -177,7 +188,8 @@ namespace e_learning.Controllers
                 if (!allowedExtensions.Contains(fileExtension))
                     return BadRequest("امتداد الملف غير مسموح. الرجاء اختيار صورة بصيغة JPG أو PNG.");
 
-                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+                var userId = GetUserId();
+
                 var profile = await _context.Profiles.FirstOrDefaultAsync(p => p.UserId == userId);
 
                 if (profile == null)

@@ -84,6 +84,17 @@ namespace e_learning.Controllers
                 await _context.Users.AddAsync(user);
                 await _context.SaveChangesAsync();
 
+                // ✅ إنشاء بروفايل فارغ تلقائيًا للمستخدم الجديد
+                var profile = new Profile
+                {
+                    UserId = user.Id,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                };
+
+                await _context.Profiles.AddAsync(profile);
+                await _context.SaveChangesAsync();
+
                 var confirmationCode = GenerateSixDigitCode();
                 await StoreConfirmationCode(dto.Email, confirmationCode);
 
@@ -104,6 +115,7 @@ namespace e_learning.Controllers
                 return StatusCode(500, new ApiResponse(false, "An error occurred while processing your request"));
             }
         }
+
 
         [HttpPost("login")]
         [ProducesResponseType(typeof(ApiResponse<LoginResponse>), 200)]

@@ -1,4 +1,5 @@
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using e_learning.Data;
@@ -13,13 +14,15 @@ namespace e_learning.Controllers
     public class UserController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly PasswordHasher<User> _passwordHasher;
 
         public UserController(AppDbContext context)
         {
             _context = context;
+            _passwordHasher = new PasswordHasher<User>();
         }
 
-        // ? Get All Users with optional filtering and pagination
+        // ✅ Get All Users with optional filtering and pagination
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDisplayDto>>> GetUsers(
             [FromQuery] string? name,
@@ -51,13 +54,13 @@ namespace e_learning.Controllers
             return Ok(users);
         }
 
-        // ? Get Specific User
+        // ✅ Get Specific User
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDisplayDto>> GetUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
             if (user == null)
-                return NotFound("???????? ??? ?????");
+                return NotFound("المستخدم غير موجود.");
 
             return Ok(new UserDisplayDto
             {
@@ -68,17 +71,23 @@ namespace e_learning.Controllers
             });
         }
 
-        // ? Create User (Admin only)
+        // ✅ Create User (Admin only)
         [HttpPost]
         public async Task<ActionResult<UserDisplayDto>> CreateUser([FromBody] UserCreateDto dto)
         {
+            // تحقق من البريد الإلكتروني
+            if (await _context.Users.AnyAsync(u => u.Email == dto.Email))
+                return BadRequest("البريد الإلكتروني مستخدم مسبقًا.");
+
             var newUser = new User
             {
                 FullName = dto.FullName,
                 Email = dto.Email,
-                PasswordHash = dto.Password,
                 Role = dto.Role
             };
+
+            // تشفير كلمة المرور
+            newUser.PasswordHash = _passwordHasher.HashPassword(newUser, dto.Password);
 
             _context.Users.Add(newUser);
             await _context.SaveChangesAsync();
@@ -92,34 +101,33 @@ namespace e_learning.Controllers
             });
         }
 
-        // ? Update User
+        // ✅ Update User
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UserUpdateDto dto)
         {
             var user = await _context.Users.FindAsync(id);
             if (user == null)
-                return NotFound("???????? ??? ?????");
+                return NotFound("المستخدم غير موجود.");
 
             user.FullName = dto.FullName ?? user.FullName;
             user.Email = dto.Email ?? user.Email;
             user.Role = dto.Role ?? user.Role;
 
             await _context.SaveChangesAsync();
-            return Ok("?? ????? ?????? ???????? ????? ?");
+            return Ok("تم تحديث المستخدم بنجاح.");
         }
 
-        // ? Delete User
+        // ✅ Delete User
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
             if (user == null)
-                return NotFound("User not found");
+                return NotFound("المستخدم غير موجود.");
 
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
-            return Ok("The user has been deleted successfully ?");
+            return Ok("تم حذف المستخدم بنجاح.");
         }
     }
-
 }

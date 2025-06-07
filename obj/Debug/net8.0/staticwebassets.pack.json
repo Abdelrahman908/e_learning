@@ -1,8 +1,24 @@
 {
   "Files": [
     {
+      "Id": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\courses\\0c7f8831-e601-4ac1-989f-bfe2feca2e60.jpeg",
+      "PackagePath": "staticwebassets\\images\\courses\\0c7f8831-e601-4ac1-989f-bfe2feca2e60.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\courses\\4da0f3f7-8c54-4a92-9cc6-6fa3dd256baf.jpeg",
+      "PackagePath": "staticwebassets\\images\\courses\\4da0f3f7-8c54-4a92-9cc6-6fa3dd256baf.jpeg"
+    },
+    {
       "Id": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\courses\\80744c4e-fb85-4143-94e7-ff6e5ad531f0.jpg",
       "PackagePath": "staticwebassets\\images\\courses\\80744c4e-fb85-4143-94e7-ff6e5ad531f0.jpg"
+    },
+    {
+      "Id": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\courses\\e404b294-22e3-469a-8dfc-52966f3acb48.jpeg",
+      "PackagePath": "staticwebassets\\images\\courses\\e404b294-22e3-469a-8dfc-52966f3acb48.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\profiles\\43d4e1a1-42a1-4669-a60d-0761d438ae94.jpeg",
+      "PackagePath": "staticwebassets\\images\\profiles\\43d4e1a1-42a1-4669-a60d-0761d438ae94.jpeg"
     },
     {
       "Id": "C:\\Users\\ta\\OneDrive\\Desktop\\e_learning\\wwwroot\\images\\profiles\\722fab0f-016a-4c95-b6b2-04f4ff376c2e.jpg",
